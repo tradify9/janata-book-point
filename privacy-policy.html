@@ -1,0 +1,1189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Janata Book Point</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+ * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all .3s ease;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #f0fdf4; /* Light green background */
+    color: #1f2937;
+}
+
+section {
+    padding: 3rem 9%;
+}
+
+.heading {
+    text-align: center;
+    font-size: 4rem;
+    color: #14532d; /* Dark green for headings */
+    padding: 1.5rem;
+    margin: 2rem 0;
+    background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(244, 114, 182, 0.1)); /* Green and pink gradient */
+    border-radius: 1rem;
+}
+
+.heading span {
+    color: #ec4899; /* Bright pink for highlighted text */
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    border-radius: 5rem;
+    background: linear-gradient(90deg, #22c55e, #ec4899); /* Green to pink gradient */
+    color: #fff;
+    font-size: 1.8rem;
+    font-weight: 600;
+    padding: 1rem 3rem;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #ec4899, #22c55e); /* Reversed gradient on hover */
+    transform: translateY(-2px);
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 9%;
+}
+
+.header .logo {
+    height: 6rem;
+}
+
+.header .search-form {
+    width: 50rem;
+    height: 5rem;
+    background: #f9fafb;
+    border-radius: 5rem;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.header .search-form input {
+    width: 100%;
+    padding: 0 1.5rem;
+    font-size: 1.6rem;
+    color: #1f2937;
+    background: none;
+    text-transform: none;
+}
+
+.header .search-form label {
+    font-size: 2rem;
+    padding-right: 1.5rem;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.header .search-form label:hover {
+    color: #ec4899; /* Pink on hover */
+}
+
+.header .icons div, .header .icons a {
+    font-size: 2.5rem;
+    margin-left: 2rem;
+    color: #14532d; /* Dark green for icons */
+    cursor: pointer;
+}
+
+.header .icons div:hover, .header .icons a:hover {
+    color: #ec4899; /* Pink on hover */
+    transform: scale(1.1);
+}
+
+/* Navigation */
+.header-2 {
+    background: linear-gradient(135deg, #4caf50, #4caf50);
+    padding: 1rem 5%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar a,
+.dropbtn {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.navbar a:hover,
+.dropbtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background-color: #ec4899;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 0.8rem 1rem;
+    display: block;
+    font-size: 1.5rem;
+}
+
+.dropdown-content a:hover {
+    background-color: #f3e8f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navbar-toggle {
+    display: none;
+    font-size: 2.8rem;
+    color: #1a1a1a;
+    cursor: pointer;
+    margin-left: 2.5rem;
+}
+
+.cart {
+    background: #fff;
+    padding: 3rem;
+    border-radius: 1rem;
+    margin: 2rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart h3 {
+    font-size: 2.2rem;
+    color: #14532d; /* Dark green for cart headings */
+    margin-bottom: 1.5rem;
+}
+
+.cart p {
+    font-size: 1.6rem;
+    color: #6b7280;
+    margin: .5rem 0;
+}
+
+/* Enhanced Privacy Policy Styling */
+.privacy-policy {
+    background: #fff;
+    padding: 4rem 9%;
+    margin: 3rem auto;
+    border-radius: 1.2rem;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-width: 90rem;
+}
+
+.privacy-policy .content {
+    padding: 2rem;
+}
+
+.privacy-policy .content h3 {
+    font-size: 2.8rem;
+    color: #14532d;
+    margin: 2.5rem 0 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    border-bottom: 2px solid #ec4899;
+    padding-bottom: 0.8rem;
+    position: relative;
+}
+
+.privacy-policy .content p {
+    font-size: 1.6rem;
+    color: #374151;
+    line-height: 2.6rem;
+    margin-bottom: 1.8rem;
+    font-weight: 400;
+    text-align: justify;
+    letter-spacing: 0.02rem;
+}
+
+.privacy-policy .content ul, .privacy-policy .content ol {
+    margin: 2rem 0;
+    padding-left: 3.5rem;
+}
+
+.privacy-policy .content ul li, .privacy-policy .content ol li {
+    font-size: 1.6rem;
+    color: #374151;
+    margin-bottom: 1.2rem;
+    line-height: 2.4rem;
+}
+
+.privacy-policy .content a {
+    color: #ec4899;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.privacy-policy .content a:hover {
+    color: #22c55e;
+    text-decoration: none;
+}
+
+.privacy-policy .content blockquote {
+    border-left: 4px solid #22c55e;
+    padding: 1.2rem 1.8rem;
+    background: #f0fdf4;
+    margin: 2rem 0;
+    border-radius: 0.5rem;
+    font-style: italic;
+    font-size: 1.6rem;
+    color: #1f2937;
+}
+
+/* Original Footer */
+.footer .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 2rem;
+}
+
+.footer .box-container .box h3 {
+    font-size: 2.5rem;
+    color: #14532d; /* Dark green for footer headings */
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a {
+    display: block;
+    font-size: 1.5rem;
+    color: #6b7280;
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a i {
+    color: #ec4899; /* Pink for footer icons */
+    padding-right: .5rem;
+}
+
+.footer .box-container .box a:hover {
+    color: #ec4899; /* Pink on hover */
+    padding-left: .5rem;
+}
+
+.footer .box-container .box .map {
+    width: 100%;
+    border-radius: .5rem;
+}
+
+.footer .share {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.footer .share a {
+    height: 5rem;
+    width: 5rem;
+    line-height: 5rem;
+    font-size: 2rem;
+    color: #fff;
+    background: #14532d; /* Dark green for social icons */
+    margin: 0 .3rem;
+    border-radius: 50%;
+}
+
+.footer .share a:hover {
+    background: #ec4899; /* Pink on hover */
+    transform: rotate(360deg);
+}
+
+.footer .credit {
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+    color: #6b7280;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.footer .credit span {
+    color: #ec4899; /* Pink for footer credit */
+}
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    transition: top .5s ease;
+}
+
+.loader-container.fade-out {
+    top: -100%;
+}
+
+@media (max-width: 991px) {
+    html {
+        font-size: 55%;
+    }
+    section {
+        padding: 2rem;
+    }
+    .header-1 {
+        padding: 2rem;
+    }
+    .privacy-policy {
+        padding: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #search-btn {
+        display: none;
+    }
+    .header .search-form {
+        position: absolute;
+        top: 110%;
+        right: 2rem;
+        width: 90%;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        border-radius: .5rem;
+    }
+    .header .search-form.active {
+        top: 100%;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar {
+        display: none;
+        flex-direction: column;
+        background: #fff;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .navbar.active {
+        display: flex;
+    }
+    .privacy-policy .content h3 {
+        font-size: 2.4rem;
+    }
+    .privacy-policy .content p, .privacy-policy .content li {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+    .heading {
+        font-size: 3rem;
+    }
+    .privacy-policy {
+        padding: 2rem;
+    }
+    .privacy-policy .content {
+        padding: 1.5rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- header section -->
+    <header class="header">
+        <div class="header-1">
+             <a href="./index.html">    <img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Book Point Logo" class="logo" height="100"></a>
+            <!-- <img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Janata Book Point Logo" class="logo" height="60"> -->
+            <!-- <form class="search-form" id="searchForm"> 
+                <input type="search" name="search" placeholder="Search books..." id="search-box">
+                <label for="search-box" class="fas fa-search"></label>
+            </form>
+            -->
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <!-- <a href="#" class="fas fa-heart"></a> -->
+                <!-- <a href="#cart" class="fas fa-shopping-cart" id="cart-btn"></a> -->
+                <!-- <div id="login-btn" class="fas fa-user"></div> -->
+            </div>
+        </div>
+        
+           
+            <!-- HTML -->
+<div class="header-2">
+  <nav class="navbar" id="navbar">
+    <a href="index.html">Home</a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Publishers</button>
+      <div class="dropdown-content">
+        <a href="#">NCERT</a>
+       
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Shop By Class</button>
+      <div class="dropdown-content">
+        <a href="index.html#classbook">Class 1</a>
+        <a href="index.html#classbook">Class 2</a>
+        <a href="index.html#classbook">Class 3</a>
+         <a href="index.html#classbook">Class 4</a>
+          <a href="index.html#classbook">Class 5</a>
+           <a href="index.html#classbook">Class 6</a>
+            <a href="index.html#classbook">Class 7</a>
+             <a href="index.html#classbook">Class 8</a>
+              <a href="index.html#classbook">Class 9</a>
+               <a href="index.html#classbook">Class 10</a>
+                <a href="index.html#classbook">Class 11</a>
+                 <a href="index.html#classbook">Class 12</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Shop By Subject</button>
+      <div class="dropdown-content">
+        <a href="index.html#classbook">Accountancy</a>
+<a href="index.html#classbook">Arts</a>
+<a href="index.html#classbook">Biology</a>
+<a href="index.html#classbook">Biotechnology</a>
+<a href="index.html#classbook">Business Studies</a>
+<a href="index.html#classbook">Chemistry</a>
+<a href="index.html#classbook">Civics</a>
+<a href="index.html#classbook">Computer</a>
+<a href="index.html#classbook">Economics</a>
+<a href="index.html#classbook">English</a>
+<a href="index.html#classbook">Environmental Studies</a>
+<a href="index.html#classbook">Ganit</a>
+<a href="index.html#classbook">Geography</a>
+<a href="index.html#classbook">Hindi</a>
+<a href="index.html#classbook">History</a>
+<a href="index.html#classbook">Mathematics</a>
+<a href="index.html#classbook">Physical Education</a>
+<a href="index.html#classbook">Physics</a>
+<a href="index.html#classbook">Political Science</a>
+<a href="index.html#classbook">Psychology</a>
+<a href="index.html#classbook">Sanskrit</a>
+<a href="index.html#classbook">Science</a>
+<a href="index.html#classbook">Social Science</a>
+<a href="index.html#classbook">Vigyan</a>
+<a href="index.html#classbook">Vocational</a>
+<a href="index.html#classbook">Yoga</a>
+      </div>
+    </div>
+ <div class="dropdown">
+      <button class="dropbtn">More</button>
+      <div class="dropdown-content">
+        <a href="Aboutus.html">About us</a>
+        <a href="contact.html">Contact Us</a>
+       
+      </div>
+    </div>
+    <!-- <a href="shop.html">Shop Now</a> -->
+    <a href="bulkorder.html" id="bulk-order-btn">Bulk Order</a>
+    <!-- <a href="contact.html">Contact</a> -->
+  </nav>
+</div>
+    </header>
+   
+
+    <!-- privacy policy section -->
+    <section class="privacy-policy">
+        <h1 class="heading">Privacy <span>Policy</span></h1>
+        <div class="content" style="max-width: 80rem; margin: 0 auto;">
+            <h3>1. Introduction</h3>
+            <p>At Janata Book Point, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, disclose, and safeguard your personal information when you visit our website or make a purchase. By using our services, you agree to the terms of this policy.</p>
+            <h3>2. Information We Collect</h3>
+            <p>We collect personal information to provide and improve our services. This includes:</p>
+            <ul>
+                <li><strong>Personal Identification Information:</strong> Name, email address, phone number, shipping and billing addresses.</li>
+                <li><strong>Payment Information:</strong> Credit/debit card details, bank account information, and other payment-related information.</li>
+                <li><strong>Technical Data:</strong> IP address, browser type, operating system, referring URLs, and other technical information collected through cookies and similar technologies.</li>
+            </ul>
+            <h3>3. How We Use Your Information</h3>
+            <p>We use the collected information for various purposes, including:</p>
+            <ul>
+                <li><strong>Order Processing:</strong> To process and fulfill your orders, including shipping and delivery.</li>
+                <li><strong>Communication:</strong> To contact you regarding your orders, respond to inquiries, and send promotional materials if you have opted in.</li>
+                <li><strong>Improvement of Services:</strong> To analyze usage and improve our website, products, and services.</li>
+                <li><strong>Legal Compliance:</strong> To comply with applicable laws, regulations, and legal processes.</li>
+            </ul>
+            <h3>4. Data Security</h3>
+            <p>We implement reasonable security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the internet or electronic storage is 100% secure.</p>
+            <h3>5. Sharing Your Information</h3>
+            <p>We do not sell or rent your personal information to third parties. However, we may share your information with:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> Third-party vendors who assist in operations such as payment processing, shipping, and marketing.</li>
+                <li><strong>Legal Authorities:</strong> When required by law or to protect our rights and property.</li>
+            </ul>
+            <h3>6. Cookies and Tracking Technologies</h3>
+            <p>We use cookies and similar tracking technologies to enhance your experience on our website. You can control the use of cookies through your browser settings.</p>
+            <h3>7. Your Rights</h3>
+            <p>Depending on your jurisdiction, you may have the right to:</p>
+            <ul>
+                <li><strong>Access:</strong> Request a copy of the personal information we hold about you.</li>
+                <li><strong>Correction:</strong> Request correction of any inaccurate or incomplete information.</li>
+                <li><strong>Deletion:</strong> Request deletion of your personal information, subject to certain legal obligations.</li>
+            </ul>
+            <p>To exercise these rights, please contact us using the information provided below.</p>
+            <h3>8. Changes to This Privacy Policy</h3>
+            <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.</p>
+            <h3>9. Contact Us</h3>
+            <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:</p>
+            <p>Janata Book Point<br>
+            C-40, Sector 15, Vasundhara, Ghaziabad, Uttar Pradesh 201012<br>
+            <a href="mailto:janatabookspoint@gmail.com">janatabookspoint@gmail.com</a><br>
+            +91 9821586944</p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>Our Locations</h3>
+
+                <a href="#">
+                    <img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Company Logo" style="width: 100px; height: auto;">
+                </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> India </a>
+                
+            </div>
+            <div class="box">
+                <h3>Quick Links</h3>
+                <a href="#home"> <i class="fas fa-arrow-right"></i> Home </a>
+               <a href="index.html#classbook" class="d-flex align-items-center mb-2"><i class="fas fa-arrow-right me-2"></i> All Subjects </a>
+                        <a href="index.html#allclass" class="d-flex align-items-center mb-2"><i class="fas fa-arrow-right me-2"></i> Classes </a>
+                    
+                <!-- <a href="#reviews"> <i class="fas fa-arrow-right"></i> Reviews </a> -->
+                <!-- <a href="#blogs"> <i class="fas fa-arrow-right"></i> Blogs </a> -->
+                <a href="#" id="bulk-order-footer-btn"> <i class="fas fa-arrow-right"></i> Bulk Order </a>
+                <a href="contact.html"> <i class="fas fa-arrow-right"></i> Contact </a>
+                                        <a href="Aboutus.html" class="d-flex align-items-center mb-2"><i class="fas fa-arrow-right me-2"></i> About Us</a>
+
+            </div>
+            <div class="box">
+                <h3>Extra Links</h3>
+                <a href="./privacy-policy.html"> <i class="fas fa-arrow-right"></i> Privacy Policy </a>
+                <a href="./refund.html"> <i class="fas fa-arrow-right"></i> Refund & Returns </a>
+                <a href="./shipping-policy.html"> <i class="fas fa-arrow-right"></i> Shipping Policy </a>
+                <a href="./Terms.html"> <i class="fas fa-arrow-right"></i> Terms & Conditions </a>
+                <a href="trackorder.html"> <i class="fas fa-arrow-right"></i> Track Order </a>
+                <!-- <a href="#"> <i class="fas fa-arrow-right"></i> Faqs </a> -->
+               
+            </div>
+            <div class="box">
+                <!-- <h3>Contact Info</h3> -->
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9821586944 </a>
+                <a href="#"> <i class="fas fa-clock"></i> Everyday: 10:00 AM -7:30 PM</a>
+                <a href="#"> <i class="fas fa-envelope"></i> janatabookspoint@gmail.com </a>
+                <img src="https://i.ibb.co/mFXb5R4G/Blue-Grey-Minimalist-Modern-Business-Card.png" class="map" alt="">
+            </div>
+        </div>
+        <div class="share">
+            <a href="#" class="fab fa-facebook-f" aria-label="Facebook"></a>
+            <a href="#" class="fab fa-whatsapp" aria-label="x"></a>
+            <a href="#" class="fab fa-instagram" aria-label="Instagram"></a>
+            <a href="#" class="fab fa-linkedin" aria-label="LinkedIn"></a>
+            <!-- <a href="#" class="fab fa-pinterest" aria-label="Pinterest"></a> -->
+        </div>
+        <div class="credit"> created by <span>Janata books Point</span> | all rights reserved! </div>
+    </section>
+
+    <!-- loader -->
+    <div class="loader-container">
+        <img src="image/loader-img.gif" alt="Loading">
+    </div>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script>
+        // Prevent right-click and developer tools
+        document.addEventListener('contextmenu', (e) => {
+            alert("Right-click is disabled for security.");
+            e.preventDefault();
+        });
+
+        document.onkeydown = (e) => {
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+                alert("Developer tools and view source are disabled.");
+                return false;
+            }
+        };
+
+        // Loader
+        window.addEventListener('load', () => {
+            document.querySelector('.loader-container').classList.add('fade-out');
+            setTimeout(() => checkLoginStatus(), 500);
+        });
+
+        // Mock book data
+        const books = [
+            { id: 1, name: "NCERT Mathematics Class 1", price: 100 },
+            { id: 2, name: "NCERT English Class 1", price: 120 }
+        ];
+
+        // Authentication
+        const authContainer = document.getElementById('authContainer');
+        const signInForm = document.getElementById('signInForm');
+        const registerForm = document.getElementById('registerForm');
+        const changePasswordForm = document.getElementById('changePasswordForm');
+        const formTitle = document.getElementById('formTitle');
+        const closeLoginBtn = document.getElementById('close-login-btn');
+        const loginBtn = document.getElementById('login-btn');
+        const searchBtn = document.getElementById('search-btn');
+        const searchForm = document.querySelector('.search-form');
+
+        loginBtn.addEventListener('click', () => authContainer.classList.add('active'));
+        closeLoginBtn.addEventListener('click', () => {
+            authContainer.classList.remove('active');
+            signInForm.style.display = 'block';
+            registerForm.style.display = 'none';
+            changePasswordForm.style.display = 'none';
+            formTitle.textContent = 'Sign In';
+        });
+
+        searchBtn.addEventListener('click', () => searchForm.classList.toggle('active'));
+
+        document.getElementById('createAccount').addEventListener('click', (e) => {
+            e.preventDefault();
+            signInForm.style.display = 'none';
+            registerForm.style.display = 'block';
+            formTitle.textContent = 'Register';
+        });
+
+        document.getElementById('backToLogin').addEventListener('click', (e) => {
+            e.preventDefault();
+            registerForm.style.display = 'none';
+            signInForm.style.display = 'block';
+            formTitle.textContent = 'Sign In';
+        });
+
+        document.getElementById('forgotPassword').addEventListener('click', (e) => {
+            e.preventDefault();
+            signInForm.style.display = 'none';
+            changePasswordForm.style.display = 'block';
+            formTitle.textContent = 'Change Password';
+        });
+
+        document.getElementById('backToLoginFromChange').addEventListener('click', (e) => {
+            e.preventDefault();
+            changePasswordForm.style.display = 'none';
+            signInForm.style.display = 'block';
+            formTitle.textContent = 'Sign In';
+        });
+
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const password = document.getElementById('registerPassword').value;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(user => user.email === email)) {
+                alert('Email already registered!');
+                return;
+            }
+            users.push({ name, email, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Registration successful! Please sign in.');
+            registerForm.style.display = 'none';
+            signInForm.style.display = 'block';
+            formTitle.textContent = 'Sign In';
+            registerForm.reset();
+        });
+
+        signInForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(user => user.email === email && user.password === password);
+            if (user) {
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                alert('Login successful!');
+                authContainer.classList.remove('active');
+                checkLoginStatus();
+            } else {
+                alert('Invalid email or password!');
+            }
+        });
+
+        changePasswordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('changeEmail').value.trim();
+            const newPassword = document.getElementById('newPassword').value;
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const userIndex = users.findIndex(user => user.email === email);
+            if (userIndex !== -1) {
+                users[userIndex].password = newPassword;
+                localStorage.setItem('users', JSON.stringify(users));
+                alert('Password changed successfully!');
+                changePasswordForm.style.display = 'none';
+                signInForm.style.display = 'block';
+                formTitle.textContent = 'Sign In';
+                checkLoginStatus();
+                changePasswordForm.reset();
+            } else {
+                alert('Email not found!');
+            }
+        });
+
+        // Account Info
+        function checkLoginStatus() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const userName = document.getElementById('userName');
+            const userEmail = document.getElementById('userEmail');
+            const editProfileBtn = document.getElementById('editProfileBtn');
+            const changePasswordBtn = document.getElementById('changePasswordBtn');
+            const updateProfileForm = document.getElementById('updateProfileForm');
+
+            if (currentUser) {
+                userName.textContent = currentUser.name;
+                userEmail.textContent = currentUser.email;
+                editProfileBtn.style.display = 'inline-block';
+                changePasswordBtn.style.display = 'inline-block';
+            } else {
+                userName.textContent = 'Please sign in';
+                userEmail.textContent = 'Please sign in';
+                editProfileBtn.style.display = 'none';
+                changePasswordBtn.style.display = 'none';
+                updateProfileForm.style.display = 'none';
+                authContainer.classList.add('active');
+            }
+        }
+
+        document.getElementById('editProfileBtn')?.addEventListener('click', () => {
+            const updateProfileForm = document.getElementById('updateProfileForm');
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            document.getElementById('updateName').value = currentUser.name;
+            document.getElementById('updateEmail').value = currentUser.email;
+            updateProfileForm.style.display = 'block';
+        });
+
+        document.getElementById('updateProfileForm')?.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const newName = document.getElementById('updateName').value.trim();
+            const newEmail = document.getElementById('updateEmail').value.trim();
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(newEmail)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+
+            if (users.some(user => user.email === newEmail && user.email !== currentUser.email)) {
+                alert('Email already registered!');
+                return;
+            }
+
+            const userIndex = users.findIndex(user => user.email === currentUser.email);
+            if (userIndex !== -1) {
+                users[userIndex].name = newName;
+                users[userIndex].email = newEmail;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(users[userIndex]));
+                alert('Profile updated successfully!');
+                updateProfileForm.style.display = 'none';
+                checkLoginStatus();
+            }
+        });
+
+        document.getElementById('changePasswordBtn')?.addEventListener('click', () => {
+            authContainer.classList.add('active');
+            signInForm.style.display = 'none';
+            changePasswordForm.style.display = 'block';
+            formTitle.textContent = 'Change Password';
+            document.getElementById('changeEmail').value = JSON.parse(localStorage.getItem('currentUser')).email;
+        });
+
+        // Modal Handling
+        const bulkOrderModal = document.getElementById('bulkOrderModal');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const closeModalBtns = document.querySelectorAll('.close-modal-btn');
+        const bulkOrderBtn = document.getElementById('bulk-order-btn');
+        const bulkOrderMobileBtn = document.getElementById('bulk-order-mobile-btn');
+        const bulkOrderFooterBtn = document.getElementById('bulk-order-footer-btn');
+
+        [bulkOrderBtn, bulkOrderMobileBtn, bulkOrderFooterBtn].forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    alert('Please sign in to submit a bulk order request.');
+                    authContainer.classList.add('active');
+                    return;
+                }
+                bulkOrderModal.classList.add('active');
+                document.getElementById('bulkName').value = currentUser.name;
+                document.getElementById('bulkEmail').value = currentUser.email;
+            });
+        });
+
+        closeModalBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                bulkOrderModal.classList.remove('active');
+                checkoutModal.classList.remove('active');
+            });
+        });
+
+        // Bulk Order Form Submission
+        document.getElementById('bulkOrderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const name = document.getElementById('bulkName').value.trim();
+            const email = document.getElementById('bulkEmail').value.trim();
+            const phone = document.getElementById('bulkPhone').value.trim();
+            const organization = document.getElementById('organization').value.trim() || 'N/A';
+            const booksRequested = document.getElementById('bulkBooks').value.trim();
+            const address = document.getElementById('bulkAddress').value.trim();
+            const notes = document.getElementById('bulkNotes').value.trim() || 'None';
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            if (!/^\d{10}$/.test(phone)) {
+                alert('Please enter a valid 10-digit phone number.');
+                return;
+            }
+
+            const formData = {
+                access_key: '8f814c56-3e30-4f2f-9764-41f6fd39eeaa',
+                subject: 'Bulk Order Request - Janata Book Point',
+                from_name: name,
+                email: currentUser.email,
+                name,
+                phone,
+                organization,
+                books: booksRequested,
+                address,
+                notes
+            };
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    alert('Bulk order request submitted successfully! You will receive a confirmation email.');
+                    bulkOrderModal.classList.remove('active');
+                    document.getElementById('bulkOrderForm').reset();
+                } else {
+                    alert('Failed to submit request. Please try again.');
+                }
+            } catch (error) {
+                alert('An error occurred. Please try again later.');
+                console.error(error);
+            }
+        });
+
+        // Cart Management
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartSection = document.getElementById('cart');
+        const cartItemsDiv = document.getElementById('cartItems');
+        const cartTotalDiv = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const cartBtn = document.getElementById('cart-btn');
+
+        cartBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            cartSection.style.display = 'block';
+            updateCart();
+        });
+
+        function updateCart() {
+            cartItemsDiv.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <p style="display: flex; justify-content: space-between; align-items: center;">
+                        ${item.name} - ₹${item.price.toFixed(2)}
+                        <button class="btn" style="font-size: 1.4rem; padding: .5rem 1rem;" onclick="removeFromCart(${item.id})">Remove</button>
+                    </p>`;
+                cartItemsDiv.appendChild(itemDiv);
+            });
+            cartTotalDiv.innerHTML = `<h3 style="margin-top: 1.5rem;">Total: ₹${total.toFixed(2)}</h3>`;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            checkoutBtn.style.display = cart.length ? 'inline-block' : 'none';
+        }
+
+        window.removeFromCart = (id) => {
+            cart = cart.filter(item => item.id !== id);
+            updateCart();
+        };
+
+        checkoutBtn.addEventListener('click', () => {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            if (!currentUser) {
+                alert('Please sign in to proceed to checkout.');
+                authContainer.classList.add('active');
+                return;
+            }
+            if (cart.length === 0) {
+                alert('Your cart is empty.');
+                return;
+            }
+            cartSection.style.display = 'none';
+            displayCheckoutItems(cart);
+            checkoutModal.classList.add('active');
+            document.getElementById('checkoutName').value = currentUser.name;
+        });
+
+        // Checkout Items Display
+        function displayCheckoutItems(items) {
+            const checkoutItemsDiv = document.getElementById('checkoutItems');
+            const checkoutTotalDiv = document.getElementById('checkoutTotal');
+            checkoutItemsDiv.innerHTML = '<h4 style="margin-bottom: 1rem;">Order Summary</h4>';
+            let total = 0;
+            items.forEach(item => {
+                total += item.price;
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `<p>${item.name} - ₹${item.price.toFixed(2)}</p>`;
+                checkoutItemsDiv.appendChild(itemDiv);
+            });
+            checkoutTotalDiv.innerHTML = `<h3 style="margin-top: 1.5rem;">Total: ₹${total.toFixed(2)}</h3>`;
+        }
+
+        // Checkout and Payment
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const name = document.getElementById('checkoutName').value.trim();
+            const mobile = document.getElementById('checkoutMobile').value.trim();
+            const address = document.getElementById('checkoutAddress').value.trim();
+            const pincode = document.getElementById('checkoutPincode').value.trim();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(currentUser.email)) {
+                alert('Invalid email. Please sign in again.');
+                authContainer.classList.add('active');
+                return;
+            }
+            if (!/^\d{10}$/.test(mobile)) {
+                alert('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+            if (!/^\d{6}$/.test(pincode)) {
+                alert('Please enter a valid 6-digit pincode.');
+                return;
+            }
+
+            const orderDetails = {
+                orderId: `BP${Date.now()}`,
+                userEmail: currentUser.email,
+                cart: cart,
+                name,
+                mobile,
+                pincode,
+                address,
+                paymentMethod,
+                total: cart.reduce((sum, item) => sum + item.price, 0),
+                orderDate: new Date().toISOString(),
+                status: paymentMethod === 'cod' ? 'Pending' : 'Processing'
+            };
+
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(orderDetails);
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            const formData = {
+                access_key: '8f814c56-3e30-4f2f-9764-41f6fd39eeaa',
+                subject: 'Order Confirmation - Janata Book Point',
+                from_name: 'Janata Book Point',
+                email: currentUser.email,
+                order_id: orderDetails.orderId,
+                name,
+                mobile,
+                address,
+                pincode,
+                payment_method: paymentMethod,
+                total: orderDetails.total.toFixed(2),
+                order_date: orderDetails.orderDate,
+                items: cart.map(item => `${item.name} - ₹${item.price.toFixed(2)}`).join(', ')
+            };
+
+            if (paymentMethod === 'razorpay') {
+                const options = {
+                    key: 'rzp_test_6Lp8t7QGxvrniq',
+                    amount: orderDetails.total * 100,
+                    currency: 'INR',
+                    name: 'Janata Book Point',
+                    description: 'Book Purchase',
+                    handler: async (response) => {
+                        formData.payment_id = response.razorpay_payment_id;
+                        await sendOrderToWeb3Form(formData);
+                        alert('Payment successful! Order placed. Check your email for confirmation.');
+                        cart = [];
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        checkoutModal.classList.remove('active');
+                        document.getElementById('checkoutForm').reset();
+                        updateCart();
+                    },
+                    prefill: {
+                        name: orderDetails.name,
+                        email: orderDetails.userEmail,
+                        contact: orderDetails.mobile
+                    }
+                };
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } else {
+                await sendOrderToWeb3Form(formData);
+                alert('Order placed with Cash on Delivery! Check your email for confirmation.');
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                checkoutModal.classList.remove('active');
+                document.getElementById('checkoutForm').reset();
+                updateCart();
+            }
+        });
+
+        async function sendOrderToWeb3Form(formData) {
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                const result = await response.json();
+                if (!result.success) {
+                    alert('Failed to send order confirmation email. Please contact support.');
+                }
+            } catch (error) {
+                alert('An error occurred while sending the confirmation email.');
+                console.error(error);
+            }
+        }
+
+        // Search Functionality
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = document.getElementById('search-box').value.trim();
+            if (query) {
+                window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+            }
+        });
+    </script>
+    
+  <script>
+    // Create the WhatsApp button element
+    const toggleButton = document.createElement('div');
+    const whatsappIcon = document.createElement('img');
+
+    // Set the WhatsApp image (replace with your own if needed)
+    whatsappIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg';
+    whatsappIcon.alt = 'WhatsApp';
+    whatsappIcon.style.width = '35px';
+    whatsappIcon.style.height = '35px';
+
+    // Style the toggle button
+    Object.assign(toggleButton.style, {
+      position: 'fixed',
+      left: '20px',
+      bottom: '20px',
+      width: '60px',
+      height: '60px',
+      backgroundColor: '#25D366',
+      borderRadius: '50%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      cursor: 'pointer',
+      boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+      transition: 'transform 0.4s ease, background-color 0.4s ease',
+      zIndex: '9999'
+    });
+
+    // Add the icon to the toggle button
+    toggleButton.appendChild(whatsappIcon);
+
+    // Append the toggle button to the body
+    document.body.appendChild(toggleButton);
+
+    // On click, animate and redirect
+    toggleButton.addEventListener('click', () => {
+      // Animate
+      toggleButton.style.transform = 'scale(1.2) rotate(45deg)';
+      toggleButton.style.backgroundColor = '#075e54';
+
+      // After a short delay, redirect to WhatsApp
+      setTimeout(() => {
+        // Replace 'YOUR_PHONE_NUMBER' with the actual number (with country code, no '+')
+        window.location.href = 'https://wa.me/+91 9821586944';
+      }, 200); // delay in ms
+    });
+  </script>
+</body>
+</html>

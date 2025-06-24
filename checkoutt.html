@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Janata Book Point</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            transition: all .3s ease;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: linear-gradient(135deg, #e0e7ff, #f4f6f8);
+            color: #1a1a1a;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem 10%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .header .logo {
+            height: 8rem;
+            transition: transform 0.3s;
+        }
+        .header .logo:hover {
+            transform: scale(1.05);
+        }
+        .header .back-btn {
+            font-size: 1.8rem;
+            color: #1a1a1a;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            cursor: pointer;
+        }
+        .header .back-btn:hover {
+            color: #1e88e5;
+        }
+        section {
+            padding: 5rem 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        .heading {
+            text-align: center;
+            font-size: 4.2rem;
+            color: #1a1a1a;
+            padding: 2rem 0;
+            margin-bottom: 4rem;
+            background: linear-gradient(135deg, #ffffff, #dbeafe);
+            border-radius: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+        .heading span {
+            color: #1e88e5;
+            font-weight: 700;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            font-weight: 700;
+            font-size: 1.9rem;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(135deg, #1e88e5, #1565c0);
+            padding: 1.3rem 3.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+        .btn i {
+            margin-right: 1rem;
+        }
+        .btn-small {
+            font-size: 1.6rem;
+            padding: 1rem 2rem;
+        }
+        .quantity-btn {
+            background: #1e88e5;
+            color: #fff;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            font-size: 1.6rem;
+            cursor: pointer;
+            margin: 0 0.5rem;
+        }
+        .quantity-btn:hover {
+            background: #1565c0;
+            transform: scale(1.05);
+        }
+        .checkout-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            background: #fff;
+            padding: 4rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.6s ease-in-out;
+        }
+        .checkout-container .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        .checkout-container .product-details h3 {
+            font-size: 3rem;
+            color: #1a1a1a;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .checkout-container .product-details .image {
+            text-align: center;
+        }
+        .checkout-container .product-details img {
+            max-width: 100%;
+            height: 35rem;
+            object-fit: contain;
+            border-radius: 1.2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s;
+        }
+        .checkout-container .product-details img:hover {
+            transform: scale(1.05);
+        }
+        .checkout-container .product-details .info p {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 1rem 0;
+            line-height: 1.8;
+        }
+        .checkout-container .product-details .info p span {
+            font-weight: 600;
+            color: #1e88e5;
+        }
+        .checkout-container .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        .checkout-container .form-container h3 {
+            font-size: 3rem;
+            color: #1a1a1a;
+            font-weight: 700;
+            margin-bottom: 2rem;
+        }
+        .checkout-container .form-container span {
+            font-size: 1.7rem;
+            color: #333;
+            font-weight: 600;
+        }
+        .checkout-container .form-container .box {
+            width: 100%;
+            border: 2px solid #e0e0e0;
+            border-radius: 1rem;
+            padding: 1.4rem;
+            font-size: 1.8rem;
+            color: #333;
+            background: #f9fafb;
+            margin: 0.8rem 0;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .checkout-container .form-container .box:focus {
+            border-color: #1e88e5;
+            box-shadow: 0 2px 8px rgba(30, 136, 229, 0.2);
+        }
+        .checkout-container .form-container textarea.box {
+            height: 12rem;
+            resize: vertical;
+        }
+        .checkout-container .form-container .pincode-result, .coupon-result {
+            font-size: 1.7rem;
+            margin: 1rem 0;
+        }
+        .checkout-container .form-container .pincode-result.success, .coupon-result.success {
+            color: #1e88e5;
+        }
+        .checkout-container .form-container .pincode-result.error, .coupon-result.error {
+            color: #e33;
+        }
+        .checkout-container .form-container .cost {
+            font-size: 1.8rem;
+            color: #333;
+            margin: 1rem 0;
+        }
+        .checkout-container .form-container .total {
+            font-size: 2.4rem;
+            color: #1e88e5;
+            font-weight: 700;
+            margin: 1.5rem 0;
+        }
+        .coupon-section {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin: 1rem 0;
+        }
+        .coupon-section .box {
+            flex: 1;
+            font-size: 1.6rem;
+            padding: 1.2rem;
+        }
+        .success-message {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #fff;
+            padding: 4rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.25);
+            text-align: center;
+            z-index: 10001;
+            animation: fadeIn 0.5s ease-in-out;
+            max-width: 50rem;
+        }
+        .success-message.active {
+            display: block;
+        }
+        .success-message h3 {
+            font-size: 3.2rem;
+            color: #1e88e5;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+        .success-message p {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+        .success-message .btn {
+            animation: pulse 2s infinite;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        @media (max-width: 991px) {
+            html { font-size: 55%; }
+            section { padding: 4rem; }
+            .header { padding: 2rem 4rem; }
+            .checkout-container { grid-template-columns: 1fr; gap: 3rem; padding: 3rem; }
+        }
+        @media (max-width: 768px) {
+            .checkout-container .product-details img { height: 28rem; }
+            .header .logo { height: 7rem; }
+        }
+        @media (max-width: 450px) {
+            html { font-size: 50%; }
+            .heading { font-size: 3.5rem; }
+            .checkout-container { padding: 2.5rem; }
+            .checkout-container .product-details img { height: 22rem; }
+            .btn { font-size: 1.6rem; padding: 1rem 2.5rem; }
+            .success-message { width: 90%; padding: 3rem; }
+            .coupon-section .box { font-size: 1.4rem; padding: 1rem; }
+            .coupon-section .btn-small { font-size: 1.4rem; padding: 0.8rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html"><img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" class="logo" alt="Janata Book Point Logo"></a>
+        <a href="index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+    </header>
+
+    <section class="heading">
+        <h1>Complete Your <span>Order</span></h1>
+    </section>
+
+    <section class="checkout-container">
+        <div class="product-details">
+            <h3 id="productName"></h3>
+            <div class="image">
+                <img id="productImage" src="" alt="Product Image">
+            </div>
+            <div class="info">
+                <p>Price: <span id="productPrice"></span></p>
+                <p>Quantity: 
+                    <button class="quantity-btn" onclick="updateQuantity(-1)">-</button>
+                    <span id="productQuantity"></span>
+                    <button class="quantity-btn" onclick="updateQuantity(1)">+</button>
+                </p>
+                <p>Subtotal: <span id="subtotal"></span></p>
+                <p>Discount: <span id="discountAmount">₹0.00</span></p>
+            </div>
+        </div>
+        <div class="form-container">
+            <h3>Billing Details</h3>
+            <form id="checkoutForm" action="https://api.web3forms.com/submit" method="POST">
+                <input type="hidden" name="access_key" value="8f814c56-3e30-4f2f-9764-41f6fd39eeaa"> <!-- Replace with your Web3Forms access key -->
+                <input type="hidden" name="subject" value="Order Confirmation - Janata Book Point">
+                <input type="hidden" name="from_name" value="Janata Book Point">
+                <input type="hidden" name="email" value="janatabookspoint@gmail.com"> <!-- Replace with your store email -->
+                <input type="hidden" name="order_id" id="orderIdInput">
+                <input type="hidden" name="payment_id" id="paymentIdInput">
+                <input type="hidden" name="book_name" id="bookNameInput">
+                <input type="hidden" name="book_price" id="bookPriceInput">
+                <input type="hidden" name="quantity" id="quantityInput">
+                <input type="hidden" name="subtotal" id="subtotalInput">
+                <input type="hidden" name="shipping_cost" id="shippingCostInput">
+                <input type="hidden" name="shipping_discount" id="shippingDiscountInput">
+                <input type="hidden" name="shipping_zone" id="shippingZoneInput">
+                <input type="hidden" name="delivery_days" id="deliveryDaysInput">
+                <input type="hidden" name="coupon" id="couponInputHidden">
+                <input type="hidden" name="discount" id="discountInput">
+                <input type="hidden" name="total" id="totalInput">
+                <input type="hidden" name="order_date" id="orderDateInput">
+                <input type="hidden" name="customer_confirmation" value="true">
+                <span>Full Name</span>
+                <input type="text" class="box" placeholder="Enter your name" id="checkoutName" name="name" required aria-label="Name">
+                <span>Email</span>
+                <input type="email" class="box" placeholder="Enter your email" id="checkoutEmail" name="customer_email" required aria-label="Email">
+                <span>Phone</span>
+                <input type="tel" class="box" placeholder="Enter your phone number" id="checkoutPhone" name="phone" required pattern="[0-9]{10}" aria-label="Phone">
+                <span>Delivery Address with Landmark</span>
+                <textarea class="box" placeholder="Enter delivery address with Landmark" id="checkoutAddress" name="address" required aria-label="Address"></textarea>
+                <span>State/Union Territory</span>
+                <select class="box" id="checkoutState" name="state" required aria-label="State">
+                    <option value="">Select State/Union Territory</option>
+                    <option value="Andhra Pradesh">Andhra Pradesh</option>
+                    <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                    <option value="Assam">Assam</option>
+                    <option value="Bihar">Bihar</option>
+                    <option value="Chhattisgarh">Chhattisgarh</option>
+                    <option value="Goa">Goa</option>
+                    <option value="Gujarat">Gujarat</option>
+                    <option value="Haryana">Haryana</option>
+                    <option value="Himachal Pradesh">Himachal Pradesh</option>
+                    <option value="Jharkhand">Jharkhand</option>
+                    <option value="Karnataka">Karnataka</option>
+                    <option value="Kerala">Kerala</option>
+                    <option value="Madhya Pradesh">Madhya Pradesh</option>
+                    <option value="Maharashtra">Maharashtra</option>
+                    <option value="Manipur">Manipur</option>
+                    <option value="Meghalaya">Meghalaya</option>
+                    <option value="Mizoram">Mizoram</option>
+                    <option value="Nagaland">Nagaland</option>
+                    <option value="Odisha">Odisha</option>
+                    <option value="Punjab">Punjab</option>
+                    <option value="Rajasthan">Rajasthan</option>
+                    <option value="Sikkim">Sikkim</option>
+                    <option value="Tamil Nadu">Tamil Nadu</option>
+                    <option value="Telangana">Telangana</option>
+                    <option value="Tripura">Tripura</option>
+                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                    <option value="Uttarakhand">Uttarakhand</option>
+                    <option value="West Bengal">West Bengal</option>
+                    <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                    <option value="Chandigarh">Chandigarh</option>
+                    <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                    <option value="Delhi">Delhi (National Capital Territory)</option>
+                    <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                    <option value="Ladakh">Ladakh</option>
+                    <option value="Lakshadweep">Lakshadweep</option>
+                    <option value="Puducherry">Puducherry</option>
+                </select>
+                <span>Pincode</span>
+                <input type="text" class="box" placeholder="Enter 6-digit pincode" id="checkoutPincode" name="pincode" required pattern="[0-9]{6}" aria-label="Pincode">
+                <div class="pincode-result" id="pincodeResult"></div>
+                <span>Coupon Code</span>
+                <div class="coupon-section">
+                    <input type="text" class="box" placeholder="Enter coupon code" id="couponInput" aria-label="Coupon Code">
+                    <button type="button" class="btn btn-small" id="applyCouponBtn">Apply</button>
+                </div>
+                <div class="coupon-result" id="couponResult"></div>
+                <div class="cost" id="shippingCost"></div>
+                <div class="cost" id="discountCost">Discount: ₹0.00</div>
+                <div class="total" id="totalCost"></div>
+                <input type="button" value="Proceed to Payment" class="btn" id="proceedToPay" aria-label="Proceed">
+            </form>
+        </div>
+    </section>
+
+    <div class="success-message" id="successMessage">
+        <h3>Order Confirmed!</h3>
+        <p>Your order has been successfully placed. A confirmation email has been sent to your email address.</p>
+        <button class="btn" onclick="closeSuccessMessage()"><i class="fas fa-shopping-bag"></i> Continue Shopping</button>
+    </div>
+
+    <script>
+        let selectedBook = JSON.parse(localStorage.getItem('selectedBook')) || {};
+        let quantity = parseInt(localStorage.getItem('quantity')) || 1;
+        let shippingCost = 0;
+        let deliveryDays = '';
+        let shippingZone = '';
+        let discount = 0;
+        let appliedCoupon = null;
+        let shippingDiscount = 0;
+
+        const coupons = {
+            'JBP50': 50,
+            'JBP100': 100,
+            'JBP150': 150,
+            'JBP200': 200
+        };
+
+        const shippingRates = {
+            'Andhra Pradesh': 100,
+            'Arunachal Pradesh': 100,
+            'Assam': 100,
+            'Bihar': 80,
+            'Chhattisgarh': 100,
+            'Goa': 100,
+            'Gujarat': 100,
+            'Haryana': 80,
+            'Himachal Pradesh': 80,
+            'Jharkhand': 100,
+            'Karnataka': 100,
+            'Kerala': 100,
+            'Madhya Pradesh': 100,
+            'Maharashtra': 100,
+            'Manipur': 100,
+            'Meghalaya': 100,
+            'Mizoram': 100,
+            'Nagaland': 100,
+            'Odisha': 100,
+            'Punjab': 80,
+            'Rajasthan': 80,
+            'Sikkim': 100,
+            'Tamil Nadu': 100,
+            'Telangana': 100,
+            'Tripura': 100,
+            'Uttar Pradesh': 80,
+            'Uttarakhand': 80,
+            'West Bengal': 100,
+            'Andaman and Nicobar Islands': 120,
+            'Chandigarh': 80,
+            'Dadra and Nagar Haveli and Daman and Diu': 100,
+            'Delhi': 80,
+            'Jammu and Kashmir': 100,
+            'Ladakh': 120,
+            'Lakshadweep': 120,
+            'Puducherry': 100
+        };
+
+        const elements = {
+            productName: document.getElementById('productName'),
+            productImage: document.getElementById('productImage'),
+            productPrice: document.getElementById('productPrice'),
+            productQuantity: document.getElementById('productQuantity'),
+            subtotal: document.getElementById('subtotal'),
+            discountAmount: document.getElementById('discountAmount'),
+            checkoutForm: document.getElementById('checkoutForm'),
+            checkoutPincode: document.getElementById('checkoutPincode'),
+            checkoutState: document.getElementById('checkoutState'),
+            pincodeResult: document.getElementById('pincodeResult'),
+            couponInput: document.getElementById('couponInput'),
+            applyCouponBtn: document.getElementById('applyCouponBtn'),
+            couponResult: document.getElementById('couponResult'),
+            shippingCost: document.getElementById('shippingCost'),
+            discountCost: document.getElementById('discountCost'),
+            totalCost: document.getElementById('totalCost'),
+            successMessage: document.getElementById('successMessage'),
+            proceedToPay: document.getElementById('proceedToPay')
+        };
+
+        function initializeCheckoutPage() {
+            if (!selectedBook.id) {
+                elements.productName.textContent = 'Product not found.';
+                elements.checkoutForm.style.display = 'none';
+                return;
+            }
+            elements.productName.textContent = selectedBook.name;
+            elements.productImage.src = selectedBook.image || 'https://i.ibb.co/0jW5XqL/book-placeholder.jpg';
+            elements.productPrice.textContent = `₹${selectedBook.price.toFixed(2)}`;
+            elements.productQuantity.textContent = quantity;
+            updateTotals();
+            elements.checkoutPincode.addEventListener('input', updateShippingCost);
+            elements.checkoutState.addEventListener('change', updateShippingCost);
+            elements.applyCouponBtn.addEventListener('click', applyCoupon);
+            elements.proceedToPay.addEventListener('click', handleCheckoutSubmit);
+        }
+
+        function calculateShipping(state, pincode = '') {
+            if (!state || !shippingRates[state]) {
+                return { cost: 0, days: '', zone: '' };
+            }
+
+            let baseCost = shippingRates[state];
+            let finalCost = 0;
+            shippingDiscount = 0;
+            if (quantity >= 1) {
+                finalCost = baseCost;
+                if (quantity > 1) {
+                    shippingDiscount = (quantity - 1) * (baseCost * 0.5);
+                    finalCost += (quantity - 1) * (baseCost * 0.5);
+                }
+            }
+
+            const deliveryDays = state === 'Ladakh' || state === 'Lakshadweep' || state === 'Andaman and Nicobar Islands' ? '6–10 days' : '3–5 days';
+            const zone = state === 'Ladakh' || state === 'Lakshadweep' || state === 'Andaman and Nicobar Islands' ? 'Remote Area' : 'Standard';
+
+            if (state === 'Ladakh' || state === 'Lakshadweep') {
+                return { cost: 0, days: '', zone: '' };
+            }
+
+            if (pincode && !/^\d{6}$/.test(pincode)) {
+                return { cost: 0, days: '', zone: '' };
+            }
+
+            return { cost: finalCost, days: deliveryDays, zone: zone };
+        }
+
+        function updateShippingCost() {
+            const pincode = elements.checkoutPincode.value.trim();
+            const state = elements.checkoutState.value;
+            const { cost, days, zone } = calculateShipping(state, pincode);
+
+            if (!state) {
+                elements.pincodeResult.textContent = 'Please select a state or union territory.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                shippingCost = 0;
+                shippingDiscount = 0;
+                deliveryDays = '';
+                shippingZone = '';
+            } else if (cost === 0 && (state === 'Ladakh' || state === 'Lakshadweep')) {
+                elements.pincodeResult.textContent = 'Delivery not available for this area.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                shippingCost = 0;
+                shippingDiscount = 0;
+                deliveryDays = '';
+                shippingZone = '';
+            } else if (pincode && !/^\d{6}$/.test(pincode)) {
+                elements.pincodeResult.textContent = 'Enter a valid 6-digit pincode.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                shippingCost = 0;
+                shippingDiscount = 0;
+                deliveryDays = '';
+                shippingZone = '';
+            } else if (cost > 0) {
+                const discountText = quantity > 1 ? ` (50% shipping discount on ${quantity - 1} additional item${quantity > 2 ? 's' : ''})` : '';
+                if (pincode && /^\d{6}$/.test(pincode)) {
+                    elements.pincodeResult.textContent = `Delivery available to ${state}! Shipping: ₹${cost.toFixed(2)}${discountText}, Expected Delivery: ${days}, Zone: ${zone}`;
+                    deliveryDays = days;
+                    shippingZone = zone;
+                } else {
+                    elements.pincodeResult.textContent = `Shipping to ${state}: ₹${cost.toFixed(2)}${discountText}`;
+                    deliveryDays = '';
+                    shippingZone = '';
+                }
+                elements.pincodeResult.classList.add('success');
+                elements.pincodeResult.classList.remove('error');
+                shippingCost = cost;
+            } else {
+                elements.pincodeResult.textContent = 'Delivery not available for this area.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                shippingCost = 0;
+                shippingDiscount = 0;
+                deliveryDays = '';
+                shippingZone = '';
+            }
+            updateTotals();
+        }
+
+        window.updateQuantity = function(change) {
+            quantity = Math.max(1, quantity + change);
+            localStorage.setItem('quantity', quantity);
+            elements.productQuantity.textContent = quantity;
+            if (elements.checkoutState.value) {
+                updateShippingCost();
+            }
+            updateTotals();
+        };
+
+        function applyCoupon() {
+            const code = elements.couponInput.value.trim().toUpperCase();
+            if (coupons[code]) {
+                discount = coupons[code];
+                appliedCoupon = code;
+                elements.couponResult.textContent = `₹${discount} discount applied!`;
+                elements.couponResult.classList.add('success');
+                elements.couponResult.classList.remove('error');
+            } else {
+                discount = 0;
+                appliedCoupon = null;
+                elements.couponResult.textContent = 'Invalid coupon code.';
+                elements.couponResult.classList.add('error');
+                elements.couponResult.classList.remove('success');
+            }
+            updateTotals();
+        }
+
+        function updateTotals() {
+            const subtotal = selectedBook.price * quantity;
+            elements.subtotal.textContent = `₹${subtotal.toFixed(2)}`;
+            elements.discountAmount.textContent = `₹${(discount + shippingDiscount).toFixed(2)}`;
+            elements.shippingCost.textContent = `Shipping Charges: ₹${shippingCost.toFixed(2)}`;
+            elements.discountCost.textContent = `Discount: ₹${(discount + shippingDiscount).toFixed(2)}`;
+            elements.totalCost.textContent = `Total: ₹${Math.max(0, subtotal + shippingCost - discount - shippingDiscount).toFixed(2)}`;
+        }
+
+        function generateOrderId() {
+            const timestamp = Date.now();
+            const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+            return `JBP${timestamp}-${random}`;
+        }
+
+        function validateForm() {
+            const form = elements.checkoutForm;
+            const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#e33';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#e0e0e0';
+                }
+            });
+
+            const email = document.getElementById('checkoutEmail');
+            if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                email.style.borderColor = '#e33';
+                isValid = false;
+            }
+
+            const phone = document.getElementById('checkoutPhone');
+            if (phone.value && !/^\d{10}$/.test(phone.value)) {
+                phone.style.borderColor = '#e33';
+                isValid = false;
+            }
+
+            const pincode = document.getElementById('checkoutPincode');
+            if (pincode.value && !/^\d{6}$/.test(pincode.value)) {
+                pincode.style.borderColor = '#e33';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function handleCheckoutSubmit(e) {
+            e.preventDefault();
+            const formData = {
+                name: document.getElementById('checkoutName').value,
+                email: document.getElementById('checkoutEmail').value,
+                phone: document.getElementById('checkoutPhone').value,
+                address: document.getElementById('checkoutAddress').value,
+                pincode: document.getElementById('checkoutPincode').value,
+                state: document.getElementById('checkoutState').value
+            };
+
+            if (!selectedBook.id) {
+                alert('No product selected. Please select a product.');
+                return;
+            }
+
+            if (!validateForm()) {
+                alert('Please fill all required fields correctly.');
+                return;
+            }
+
+            if (!/^\d{6}$/.test(formData.pincode)) {
+                alert('Invalid pincode. Please enter a valid 6-digit pin code.');
+                elements.pincodeResult.textContent = 'Invalid pincode. Please enter a valid 6-digit pincode.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                return;
+            }
+
+            if (!formData.state) {
+                alert('Please select a state or union territory.');
+                elements.pincodeResult.textContent = 'Please select a state or union territory.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                return;
+            }
+
+            const { cost } = calculateShipping(formData.state, formData.pincode);
+            if (cost === 0) {
+                alert('Pincode not serviceable. Please select a serviceable state and pincode.');
+                elements.pincodeResult.textContent = 'Pincode not serviceable.';
+                elements.pincodeResult.classList.add('error');
+                elements.pincodeResult.classList.remove('success');
+                return;
+            }
+
+            const subtotal = selectedBook.price * quantity;
+            const totalAmount = Math.max(0, subtotal + shippingCost - discount - shippingDiscount);
+            const orderId = generateOrderId();
+            const orderDate = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
+            const orderData = {
+                orderId,
+                bookName: selectedBook.name,
+                bookPrice: selectedBook.price,
+                quantity,
+                subtotal,
+                shippingCost,
+                shippingDiscount,
+                shippingZone: shippingZone || 'None',
+                deliveryDays: deliveryDays || 'None',
+                coupon: appliedCoupon || 'None',
+                discount,
+                total: totalAmount,
+                formData,
+                paymentId: null,
+                orderDate
+            };
+
+            // Populate hidden form fields
+            document.getElementById('orderIdInput').value = orderId;
+            document.getElementById('bookNameInput').value = selectedBook.name;
+            document.getElementById('bookPriceInput').value = `₹${selectedBook.price.toFixed(2)}`;
+            document.getElementById('quantityInput').value = quantity;
+            document.getElementById('subtotalInput').value = `₹${subtotal.toFixed(2)}`;
+            document.getElementById('shippingCostInput').value = `₹${shippingCost.toFixed(2)}`;
+            document.getElementById('shippingDiscountInput').value = `₹${shippingDiscount.toFixed(2)}`;
+            document.getElementById('shippingZoneInput').value = shippingZone || 'None';
+            document.getElementById('deliveryDaysInput').value = deliveryDays || 'None';
+            document.getElementById('couponInputHidden').value = appliedCoupon || 'None';
+            document.getElementById('discountInput').value = `₹${discount.toFixed(2)}`;
+            document.getElementById('totalInput').value = `₹${totalAmount.toFixed(2)}`;
+            document.getElementById('orderDateInput').value = orderDate;
+
+            const options = {
+                key: 'rzp_test_XXXXXXXXXXXX', // Replace with your Razorpay test key
+                amount: totalAmount * 100,
+                currency: 'INR',
+                name: 'Janata Book Point',
+                description: `Purchase of ${selectedBook.name} (${quantity})`,
+                image: 'https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png',
+                handler: function(response) {
+                    // Set payment ID
+                    orderData.paymentId = response.razorpay_payment_id;
+                    document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
+
+                    // Store order data for success message
+                    localStorage.setItem('orderData', JSON.stringify(orderData));
+
+                    // Submit form to Web3Forms
+                    elements.checkoutForm.submit();
+
+                    // Show success message
+                    elements.successMessage.classList.add('active');
+
+                    // Clear state
+                    elements.checkoutForm.reset();
+                    elements.couponInput.value = '';
+                    elements.couponResult.textContent = '';
+                    discount = 0;
+                    shippingDiscount = 0;
+                    appliedCoupon = null;
+                    localStorage.removeItem('selectedBook');
+                    localStorage.removeItem('quantity');
+                },
+                onerror: function(error) {
+                    console.error('Payment failed:', error);
+                    window.location.href = 'failuree.html';
+                },
+                prefill: {
+                    name: formData.name,
+                    email: formData.email,
+                    contact: formData.phone
+                },
+                theme: { color: '#1e88e5' }
+            };
+            try {
+                const rzp = new Razorpay(options);
+                rzp.open();
+            } catch (error) {
+                alert('Error initiating payment: ' + error.message);
+            }
+        }
+
+        window.closeSuccessMessage = function() {
+            elements.successMessage.classList.remove('active');
+            window.location.href = 'index.html';
+        };
+
+        window.onload = initializeCheckoutPage;
+    </script>
+</body>
+</html>

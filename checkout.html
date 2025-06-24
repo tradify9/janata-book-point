@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Janata Books Point</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #ff6b6b;
+            --text-color: #2d2d2d;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #22c55e;
+            --error-color: #ef4444;
+            --muted-color: #6b7280;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e5e5e5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .card, body.dark-mode .summary {
+            background-color: var(--dark-card);
+            border-color: #333;
+        }
+
+        body.dark-mode .form-control, body.dark-mode .form-select {
+            background-color: #2a2a2a;
+            color: var(--dark-text);
+            border-color: #444;
+        }
+
+        body.dark-mode .form-control:focus, body.dark-mode .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(255, 107, 107, 0.2);
+        }
+
+        .checkout-container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .back-to-shop {
+            color: var(--accent-color);
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .back-to-shop:hover {
+            color: #ff8787;
+            transform: translateX(-3px);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .checkout-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        body.dark-mode .checkout-title {
+            color: var(--dark-text);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background: transparent;
+            padding: 1.25rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        body.dark-mode .card-header {
+            color: var(--dark-text);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-right: 1rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item .content {
+            flex-grow: 1;
+        }
+
+        .cart-item .content h4 {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+            color: var(--text-color);
+        }
+
+        body.dark-mode .cart-item .content h4 {
+            color: var(--dark-text);
+        }
+
+        .cart-item .content p {
+            font-size: 0.8rem;
+            color: var(--muted-color);
+            margin: 0;
+        }
+
+        .cart-item .quantity {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cart-item .quantity button {
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            padding: 0.4rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .cart-item .quantity button:hover {
+            background: #ff8787;
+            transform: scale(1.05);
+        }
+
+        .cart-item .quantity span {
+            font-size: 0.85rem;
+            font-weight: 500;
+            min-width: 1.5rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+
+        body.dark-mode .cart-item .quantity span {
+            color: var(--dark-text);
+        }
+
+        .form-label {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-color);
+            margin-bottom: 0.4rem;
+        }
+
+        body.dark-mode .form-label {
+            color: var(--dark-text);
+        }
+
+        .form-control, .form-select {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            font-size: 0.85rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.15);
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: var(--muted-color);
+        }
+
+        .form-control.is-invalid, .form-select.is-invalid {
+            border-color: var(--error-color);
+        }
+
+        .invalid-feedback {
+            font-size: 0.7rem;
+            color: var(--error-color);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .pincode-result, .coupon-result {
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 0.4rem;
+        }
+
+        .pincode-result.success, .coupon-result.success {
+            color: var(--success-color);
+        }
+
+        .pincode-result.error, .coupon-result.error {
+            color: var(--error-color);
+        }
+
+        .summary {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 2rem;
+        }
+
+        .summary h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        body.dark-mode .summary h4 {
+            color: var(--dark-text);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            color: var(--muted-color);
+        }
+
+        body.dark-mode .summary-item {
+            color: #b0b0b0;
+        }
+
+        .summary-item span:last-child {
+            color: var(--text-color);
+        }
+
+        body.dark-mode .summary-item span:last-child {
+            color: var(--dark-text);
+        }
+
+        .summary-item.total {
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--text-color);
+            border-top: 1px solid var(--border-color);
+            padding-top: 0.8rem;
+        }
+
+        body.dark-mode .summary-item.total {
+            color: var(--dark-text);
+        }
+
+        .btn-custom {
+            background: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.7rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            width: 100%;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-custom:hover {
+            background: #ff8787;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-custom:disabled {
+            background: #d1d5db;
+            box-shadow: none;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .error-message {
+            background: #fef2f2;
+            color: var(--error-color);
+            padding: 0.6rem;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            text-align: center;
+            margin: 0.8rem 0;
+        }
+
+        body.dark-mode .error-message {
+            background: #3d1a1a;
+            color: #ff8787;
+        }
+
+        .coupon-section {
+            margin: 0.8rem 0;
+        }
+
+        .coupon-input {
+            display: flex;
+            gap: 0.4rem;
+        }
+
+        .coupon-input .form-control {
+            font-size: 0.8rem;
+            padding: 0.5rem 0.7rem;
+        }
+
+        .coupon-input .btn-custom {
+            padding: 0.5rem 0.8rem;
+            font-size: 0.8rem;
+            width: auto;
+        }
+
+        @media (max-width: 992px) {
+            .summary {
+                position: static;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .checkout-title {
+                font-size: 1.5rem;
+            }
+
+            .card-header, .summary h4 {
+                font-size: 1rem;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+
+            .cart-item img {
+                width: 50px;
+                height: 75px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .card-body {
+                padding: 1rem;
+            }
+
+            .btn-custom {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <div class="header">
+            <a href="index.html" class="back-to-shop"><i class="fas fa-arrow-left me-2"></i>Back to Shop</a>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        
+        <h2 class="checkout-title">Secure Checkout</h2>
+        <div class="row">
+            <div class="col-lg-8 mb-4">
+                <div class="card">
+                    <div class="card-header">Your Cart</div>
+                    <div class="card-body" id="cartItems"></div>
+                </div>
+                <div class="card">
+                    <div class="card-header">Shipping Details</div>
+                    <div class="card-body">
+                        <form id="checkoutForm" action="https://api.web3forms.com/submit" method="POST" class="form-section">
+                            <input type="hidden" name="access_key" value="8f814c56-3e30-4f2f-9764-41f6fd39eeaa"> <!-- Replace with your Web3Forms access key -->
+                            <input type="hidden" name="subject" value="New Order from Janata Books Point">
+                            <input type="hidden" name="from_name" value="Janata Books Point">
+                            <input type="hidden" name="email" value="janatabookspoint@gmail.com"> <!-- Replace with your store email -->
+                            <input type="hidden" name="order_id" id="orderIdInput">
+                            <input type="hidden" name="payment_id" id="paymentIdInput">
+                            <input type="hidden" name="cart_details" id="cartDetailsInput">
+                            <input type="hidden" name="shipping_cost" id="shippingCostInput">
+                            <input type="hidden" name="shipping_discount" id="shippingDiscountInput">
+                            <input type="hidden" name="coupon" id="couponInputHidden">
+                            <input type="hidden" name="coupon_discount" id="couponDiscountInput">
+                            <input type="hidden" name="total_amount" id="totalAmountInput">
+                            <input type="hidden" name="delivery_days" id="deliveryDaysInput">
+                            <input type="hidden" name="redirect_success" value="success.html">
+                            <input type="hidden" name="redirect_error" value="failure.html">
+                            <input type="hidden" name="customer_confirmation" value="true"> <!-- Custom field to trigger customer email -->
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="buyName" class="form-label">Full Name</label>
+                                    <input type="text" class="form-control" id="buyName" name="name" placeholder="Enter your full name" required>
+                                    <div class="invalid-feedback">Please enter your full name.</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="buyEmail" class="form-label">Email</label>
+                                    <input type="email" class="form-control" id="buyEmail" name="customer_email" placeholder="Enter your email" required>
+                                    <div class="invalid-feedback">Please enter a valid email address.</div>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="buyPhone" class="form-label">Phone</label>
+                                <input type="tel" class="form-control" id="buyPhone" name="phone" placeholder="Enter your phone number" required>
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="buyAddress" class="form-label">Enter Address and Landmark</label>
+                                <textarea class="form-control" id="buyAddress" name="address" rows="3" placeholder="Enter your full address" required></textarea>
+                                <div class="invalid-feedback">Please enter your address.</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="stateSelect" class="form-label">State/Union Territory</label>
+                                    <select class="form-select" id="stateSelect" name="state" required>
+                                        <option value="">Select State/Union Territory</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Arunachal Pradesh">Arunachal Pradesh</option>
+                                        <option value="Assam">Assam</option>
+                                        <option value="Bihar">Bihar</option>
+                                        <option value="Chhattisgarh">Chhattisgarh</option>
+                                        <option value="Goa">Goa</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Haryana">Haryana</option>
+                                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                        <option value="Jharkhand">Jharkhand</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Kerala">Kerala</option>
+                                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Manipur">Manipur</option>
+                                        <option value="Meghalaya">Meghalaya</option>
+                                        <option value="Mizoram">Mizoram</option>
+                                        <option value="Nagaland">Nagaland</option>
+                                        <option value="Odisha">Odisha</option>
+                                        <option value="Punjab">Punjab</option>
+                                        <option value="Rajasthan">Rajasthan</option>
+                                        <option value="Sikkim">Sikkim</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="Tripura">Tripura</option>
+                                        <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                        <option value="Uttarakhand">Uttarakhand</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                        <option value="Andaman and Nicobar Islands">Andaman and Nicobar Islands</option>
+                                        <option value="Chandigarh">Chandigarh</option>
+                                        <option value="Dadra and Nagar Haveli and Daman and Diu">Dadra and Nagar Haveli and Daman and Diu</option>
+                                        <option value="Delhi">Delhi (National Capital Territory)</option>
+                                        <option value="Jammu and Kashmir">Jammu and Kashmir</option>
+                                        <option value="Ladakh">Ladakh</option>
+                                        <option value="Lakshadweep">Lakshadweep</option>
+                                        <option value="Puducherry">Puducherry</option>
+                                    </select>
+                                    <div class="invalid-feedback">Please select a state or union territory.</div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="pincodeInput" class="form-label">Pincode</label>
+                                    <input type="text" class="form-control" id="pincodeInput" name="pincode" maxlength="6" placeholder="Enter 6-digit pincode" required>
+                                    <div class="invalid-feedback">Please enter a valid 6-digit pincode.</div>
+                                    <div id="pincodeResult" class="pincode-result"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="summary">
+                    <h4>Order Summary</h4>
+                    <div id="summaryItems"></div>
+                    <div class="summary-item">
+                        <span>Subtotal</span>
+                        <span id="cartTotal">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span id="shippingCost">₹0.00</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Discount</span>
+                        <span id="discountAmount">₹0.00</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total</span>
+                        <span id="grandTotal">₹0.00</span>
+                    </div>
+                    <div class="coupon-section">
+                        <div class="coupon-input">
+                            <input type="text" class="form-control" id="couponInput" placeholder="Enter coupon code">
+                            <button class="btn btn-custom" id="applyCouponBtn">Apply</button>
+                        </div>
+                        <div id="couponResult" class="coupon-result"></div>
+                    </div>
+                    <button class="btn btn-custom" id="proceedToPay">Proceed to Pay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        window.cart = JSON.parse(localStorage.getItem('cart')) || [];
+        window.shippingCost = 0;
+        window.deliveryDays = '';
+        window.shippingZone = '';
+        window.discount = 0;
+        window.appliedCoupon = null;
+        window.shippingDiscount = 0;
+
+        const coupons = {
+            'JBP50': 50,
+            'JBP100': 100,
+            'JBP150': 150,
+            'JBP200': 200
+        };
+
+        const shippingRates = {
+            'Andhra Pradesh': 100,
+            'Arunachal Pradesh': 100,
+            'Assam': 100,
+            'Bihar': 80,
+            'Chhattisgarh': 100,
+            'Goa': 100,
+            'Gujarat': 100,
+            'Haryana': 80,
+            'Himachal Pradesh': 80,
+            'Jharkhand': 100,
+            'Karnataka': 100,
+            'Kerala': 100,
+            'Madhya Pradesh': 100,
+            'Maharashtra': 100,
+            'Manipur': 100,
+            'Meghalaya': 100,
+            'Mizoram': 100,
+            'Nagaland': 100,
+            'Odisha': 100,
+            'Punjab': 80,
+            'Rajasthan': 80,
+            'Sikkim': 100,
+            'Tamil Nadu': 100,
+            'Telangana': 100,
+            'Tripura': 100,
+            'Uttar Pradesh': 80,
+            'Uttarakhand': 80,
+            'West Bengal': 100,
+            'Andaman and Nicobar Islands': 120,
+            'Chandigarh': 80,
+            'Dadra and Nagar Haveli and Daman and Diu': 100,
+            'Delhi': 80,
+            'Jammu and Kashmir': 100,
+            'Ladakh': 120,
+            'Lakshadweep': 120,
+            'Puducherry': 100
+        };
+
+        const themeToggleBtn = document.getElementById('themeToggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                themeToggleBtn.innerHTML = `<i class="fas fa-${document.body.classList.contains('dark-mode') ? 'sun' : 'moon'}"></i>`;
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+        }
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        function validateCartItems() {
+            const validCart = window.cart.filter(item => item.id && item.name && item.image && Number.isFinite(item.price) && Number.isFinite(item.quantity));
+            window.cart = validCart;
+            localStorage.setItem('cart', JSON.stringify(window.cart));
+            return validCart.length > 0;
+        }
+
+        function calculateShipping(state, pincode = '') {
+            if (!state || !shippingRates[state]) {
+                return { cost: 0, days: '', zone: '' };
+            }
+
+            let baseCost = shippingRates[state];
+            const totalItems = window.cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            let finalCost = 0;
+            window.shippingDiscount = 0;
+            if (totalItems >= 1) {
+                finalCost = baseCost;
+                if (totalItems > 1) {
+                    window.shippingDiscount = (totalItems - 1) * (baseCost * 0.5);
+                    finalCost += (totalItems - 1) * (baseCost * 0.5);
+                }
+            }
+
+            const deliveryDays = state === 'Ladakh' || state === 'Lakshadweep' || state === 'Andaman and Nicobar Islands' ? '6–10 days' : '3–5 days';
+            const zone = state === 'Ladakh' || state === 'Lakshadweep' || state === 'Andaman and Nicobar Islands' ? 'Remote Area' : 'Standard';
+
+            if (state === 'Ladakh' || state === 'Lakshadweep') {
+                return { cost: 0, days: '', zone: '' };
+            }
+
+            if (pincode && !/^\d{6}$/.test(pincode)) {
+                return { cost: 0, days: '', zone: '' };
+            }
+
+            return { cost: finalCost, days: deliveryDays, zone: zone };
+        }
+
+        window.updateCartDisplay = function() {
+            const cartItemsContainer = document.getElementById('cartItems');
+            const summaryItemsContainer = document.getElementById('summaryItems');
+            const cartTotalDisplay = document.getElementById('cartTotal');
+            const shippingTotalDisplay = document.getElementById('shippingCost');
+            const discountDisplay = document.getElementById('discountAmount');
+            const grandTotalDisplay = document.getElementById('grandTotal');
+            const proceedToPayBtn = document.getElementById('proceedToPay');
+
+            if (!cartItemsContainer || !summaryItemsContainer || !cartTotalDisplay || !shippingTotalDisplay || !discountDisplay || !grandTotalDisplay || !proceedToPayBtn) return;
+
+            cartItemsContainer.innerHTML = '';
+            summaryItemsContainer.innerHTML = '';
+            let total = 0;
+
+            if (!validateCartItems()) {
+                cartItemsContainer.innerHTML = '<p class="error-message">Your cart is empty or invalid. Please add items.</p>';
+                proceedToPayBtn.disabled = true;
+            } else {
+                window.cart.forEach(item => {
+                    const itemDiv = document.createElement('div');
+                    itemDiv.classList.add('cart-item');
+                    itemDiv.innerHTML = `
+                        <img src="${item.image}" alt="${item.name}">
+                        <div class="content">
+                            <h4>${item.name}</h4>
+                            <p>₹${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                        <div class="quantity">
+                            <button onclick="updateItemQuantity(${item.id}, -1)">-</button>
+                            <span>${item.quantity}</span>
+                            <button onclick="updateItemQuantity(${item.id}, 1)">+</button>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(itemDiv);
+
+                    const summaryItem = document.createElement('div');
+                    summaryItem.classList.add('summary-item');
+                    summaryItem.innerHTML = `<span>${item.name} x ${item.quantity}</span><span>₹${(item.price * item.quantity).toFixed(2)}</span>`;
+                    summaryItemsContainer.appendChild(summaryItem);
+
+                    total += item.price * item.quantity;
+                });
+                proceedToPayBtn.disabled = false;
+            }
+
+            cartTotalDisplay.textContent = `₹${total.toFixed(2)}`;
+            shippingTotalDisplay.textContent = `₹${window.shippingCost.toFixed(2)}`;
+            discountDisplay.textContent = `₹${(window.discount + window.shippingDiscount).toFixed(2)}`;
+            grandTotalDisplay.textContent = `₹${Math.max(0, total + window.shippingCost - window.discount - window.shippingDiscount).toFixed(2)}`;
+        };
+
+        window.updateItemQuantity = function(bookId, change) {
+            const item = window.cart.find(i => i.id === bookId);
+            if (item) {
+                item.quantity = Math.max(0, item.quantity + change);
+                if (item.quantity === 0) window.cart = window.cart.filter(i => i.id !== bookId);
+                localStorage.setItem('cart', JSON.stringify(window.cart));
+                const stateSelect = document.getElementById('stateSelect');
+                const pincodeInput = document.getElementById('pincodeInput');
+                if (stateSelect && stateSelect.value) {
+                    const shippingInfo = calculateShipping(stateSelect.value, pincodeInput ? pincodeInput.value : '');
+                    window.shippingCost = shippingInfo.cost;
+                    window.deliveryDays = shippingInfo.days;
+                    window.shippingZone = shippingInfo.zone;
+                }
+                window.updateCartDisplay();
+            }
+        };
+
+        function validateForm() {
+            const form = document.getElementById('checkoutForm');
+            if (!form) return false;
+
+            const inputs = form.querySelectorAll('input[required], textarea[required], select[required]');
+            let isValid = true;
+
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.classList.add('is-invalid');
+                    isValid = false;
+                } else {
+                    input.classList.remove('is-invalid');
+                }
+            });
+
+            const email = document.getElementById('buyEmail');
+            if (email.value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+                email.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            const phone = document.getElementById('buyPhone');
+            if (phone.value && !/^\d{10}$/.test(phone.value)) {
+                phone.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            const pincode = document.getElementById('pincodeInput');
+            if (pincode.value && !/^\d{6}$/.test(pincode.value)) {
+                pincode.classList.add('is-invalid');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        const pincodeInput = document.getElementById('pincodeInput');
+        const stateSelect = document.getElementById('stateSelect');
+        if (pincodeInput && stateSelect) {
+            const updateShippingDisplay = () => {
+                const pincode = pincodeInput.value;
+                const state = stateSelect.value;
+                const pincodeResult = document.getElementById('pincodeResult');
+                if (!pincodeResult) return;
+
+                const { cost, days, zone } = calculateShipping(state, pincode);
+                if (!state) {
+                    pincodeResult.textContent = 'Please select a state or union territory.';
+                    pincodeResult.classList.add('error');
+                    pincodeResult.classList.remove('success');
+                    window.shippingCost = 0;
+                    window.shippingDiscount = 0;
+                    window.deliveryDays = '';
+                    window.shippingZone = '';
+                } else if (cost === 0 && (state === 'Ladakh' || state === 'Lakshadweep')) {
+                    pincodeResult.textContent = 'Delivery not available for this area.';
+                    pincodeResult.classList.add('error');
+                    pincodeResult.classList.remove('success');
+                    window.shippingCost = 0;
+                    window.shippingDiscount = 0;
+                    window.deliveryDays = '';
+                    window.shippingZone = '';
+                } else if (pincode && !/^\d{6}$/.test(pincode)) {
+                    pincodeResult.textContent = 'Enter a valid 6-digit pincode.';
+                    pincodeResult.classList.add('error');
+                    pincodeResult.classList.remove('success');
+                    window.shippingCost = 0;
+                    window.shippingDiscount = 0;
+                    window.deliveryDays = '';
+                    window.shippingZone = '';
+                } else if (cost > 0) {
+                    const totalItems = window.cart.reduce((sum, item) => sum + item.quantity, 0);
+                    const discountText = totalItems > 1 ? ` (50% shipping discount on ${totalItems - 1} additional item${totalItems > 2 ? 's' : ''})` : '';
+                    if (pincode && /^\d{6}$/.test(pincode)) {
+                        pincodeResult.textContent = `Delivery available to ${state}! Shipping: ₹${cost.toFixed(2)}${discountText}, Expected Delivery: ${days}, Zone: ${zone}`;
+                    } else {
+                        pincodeResult.textContent = `Shipping to ${state}: ₹${cost.toFixed(2)}${discountText}`;
+                    }
+                    pincodeResult.classList.add('success');
+                    pincodeResult.classList.remove('error');
+                    window.shippingCost = cost;
+                    window.deliveryDays = pincode && /^\d{6}$/.test(pincode) ? days : '';
+                    window.shippingZone = pincode && /^\d{6}$/.test(pincode) ? zone : '';
+                } else {
+                    pincodeResult.textContent = 'Delivery not available for this area.';
+                    pincodeResult.classList.add('error');
+                    pincodeResult.classList.remove('success');
+                    window.shippingCost = 0;
+                    window.shippingDiscount = 0;
+                    window.deliveryDays = '';
+                    window.shippingZone = '';
+                }
+                window.updateCartDisplay();
+            };
+
+            pincodeInput.addEventListener('input', updateShippingDisplay);
+            stateSelect.addEventListener('change', updateShippingDisplay);
+        }
+
+        const applyCouponBtn = document.getElementById('applyCouponBtn');
+        const couponInput = document.getElementById('couponInput');
+        const couponResult = document.getElementById('couponResult');
+        if (applyCouponBtn && couponInput && couponResult) {
+            applyCouponBtn.addEventListener('click', () => {
+                const code = couponInput.value.trim().toUpperCase();
+                if (coupons[code]) {
+                    window.discount = coupons[code];
+                    window.appliedCoupon = code;
+                    couponResult.textContent = `₹${window.discount} discount applied!`;
+                    couponResult.classList.add('success');
+                    couponResult.classList.remove('error');
+                } else {
+                    window.discount = 0;
+                    window.appliedCoupon = null;
+                    couponResult.textContent = 'Invalid coupon code.';
+                    couponResult.classList.add('error');
+                    couponResult.classList.remove('success');
+                }
+                window.updateCartDisplay();
+            });
+        }
+
+        function generateOrderId() {
+            const timestamp = Date.now();
+            const random = Math.random().toString(36).substr(2, 5).toUpperCase();
+            return `JBP${timestamp}-${random}`;
+        }
+
+        const proceedToPayBtn = document.getElementById('proceedToPay');
+        if (proceedToPayBtn) {
+            proceedToPayBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pincodeInput = document.getElementById('pincodeInput');
+                const stateSelect = document.getElementById('stateSelect');
+                const pincodeResult = document.getElementById('pincodeResult');
+                if (!pincodeInput || !stateSelect || !pincodeResult) return;
+
+                const pincode = pincodeInput.value;
+                const state = stateSelect.value;
+
+                if (!validateCartItems()) {
+                    alert('Your cart is empty or invalid. Please add items.');
+                    return;
+                }
+
+                if (!validateForm()) {
+                    alert('Please fill all required fields correctly.');
+                    return;
+                }
+
+                const { cost } = calculateShipping(state, pincode);
+                if (cost === 0 || !pincode || !/^\d{6}$/.test(pincode)) {
+                    alert('Delivery not available for this area. Please select a serviceable state and valid pincode.');
+                    pincodeResult.textContent = 'Delivery not available for this area.';
+                    pincodeResult.classList.add('error');
+                    pincodeResult.classList.remove('success');
+                    return;
+                }
+
+                const formData = {
+                    name: document.getElementById('buyName').value,
+                    email: document.getElementById('buyEmail').value,
+                    phone: document.getElementById('buyPhone').value,
+                    address: document.getElementById('buyAddress').value,
+                    pincode: pincode,
+                    state: state
+                };
+
+                const subtotal = window.cart.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
+                const totalAmount = Math.max(0, subtotal + window.shippingCost - window.discount - window.shippingDiscount);
+                const orderId = generateOrderId();
+
+                const cartDetails = window.cart.map(item => `
+                    Item: ${item.name}
+                    Quantity: ${item.quantity}
+                    Price: ₹${item.price.toFixed(2)}
+                    Subtotal: ₹${(item.price * item.quantity).toFixed(2)}
+                `).join('\n\n');
+
+                const orderData = {
+                    orderId,
+                    cart: [...window.cart],
+                    formData,
+                    totalAmount,
+                    shippingCost: window.shippingCost,
+                    shippingDiscount: window.shippingDiscount,
+                    coupon: window.appliedCoupon,
+                    couponDiscount: window.discount,
+                    deliveryDays: window.deliveryDays,
+                    paymentId: null
+                };
+
+                // Populate hidden form fields
+                document.getElementById('orderIdInput').value = orderId;
+                document.getElementById('cartDetailsInput').value = cartDetails;
+                document.getElementById('shippingCostInput').value = `₹${window.shippingCost.toFixed(2)}`;
+                document.getElementById('shippingDiscountInput').value = `₹${window.shippingDiscount.toFixed(2)}`;
+                document.getElementById('couponInputHidden').value = window.appliedCoupon || 'None';
+                document.getElementById('couponDiscountInput').value = `₹${window.discount.toFixed(2)}`;
+                document.getElementById('totalAmountInput').value = `₹${totalAmount.toFixed(2)}`;
+                document.getElementById('deliveryDaysInput').value = window.deliveryDays || 'To be confirmed';
+
+                const options = {
+                    key: 'rzp_live_0ZX85z1FASJGfs', // Replace with your Razorpay test key
+                    amount: totalAmount * 100,
+                    currency: 'INR',
+                    name: 'Janata Books Point',
+                    description: 'Checkout Payment',
+                    image: 'https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png',
+                    handler: function (response) {
+                        // Set payment ID
+                        orderData.paymentId = response.razorpay_payment_id;
+                        document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
+
+                        // Store order data for success page
+                        localStorage.setItem('orderData', JSON.stringify(orderData));
+
+                        // Submit form to Web3Forms
+                        const form = document.getElementById('checkoutForm');
+                        form.submit();
+
+                        // Clear state
+                        document.getElementById('couponInput').value = '';
+                        couponResult.textContent = '';
+                        window.cart = [];
+                        window.discount = 0;
+                        window.shippingDiscount = 0;
+                        window.appliedCoupon = null;
+                        localStorage.setItem('cart', JSON.stringify(window.cart));
+                        window.updateCartDisplay();
+                    },
+                    onerror: function (error) {
+                        console.error('Payment failed:', error);
+                        window.location.href = 'failure.html';
+                    },
+                    prefill: {
+                        name: formData.name,
+                        email: formData.email,
+                        contact: formData.phone
+                    },
+                    theme: { color: '#ff6b6b' }
+                };
+
+                const rzp = new Razorpay(options);
+                rzp.open();
+            });
+        }
+
+        window.updateCartDisplay();
+    </script>
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms & Conditions - Janata Book Point</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Verdana', sans-serif;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+    transition: all .5s linear;
+}
+
+html {
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: #ecfdf5; /* Light green background */
+}
+
+section {
+    padding: 2rem 9%;
+}
+
+.heading {
+    text-align: center;
+    font-size: 4rem;
+    color: #14532d; /* Dark green for text */
+    padding: 1rem;
+    margin: 2rem 0;
+    background: rgba(74, 222, 128, .05); /* Light green tint */
+    border-radius: .5rem;
+}
+
+.heading span {
+    color: #ec4899; /* Bright pink for highlighted text */
+}
+
+.btn {
+    display: inline-block;
+    margin-top: 1rem;
+    border-radius: .5rem;
+    border: .2rem solid #14532d; /* Dark green border */
+    font-weight: 500;
+    font-size: 1.7rem;
+    cursor: pointer;
+    color: #14532d; /* Dark green text */
+    background: #fff;
+    padding: .8rem 3rem;
+}
+
+.btn:hover {
+    background: linear-gradient(90deg, #22c55e, #ec4899); /* Green to pink gradient */
+    color: #fff;
+    border-color: transparent;
+}
+
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: #fff;
+    box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+    display: flex;
+    flex-direction: column;
+}
+
+.header-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2rem 9%;
+}
+
+.header .logo {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: #14532d; /* Dark green for logo */
+}
+
+.header .logo img {
+    height: 10rem;
+}
+
+.header .search-form {
+    width: 50rem;
+    height: 5rem;
+    border: .1rem solid rgba(0, 0, 0, .1);
+    background: #f9fafb;
+    display: flex;
+    align-items: center;
+    border-radius: .5rem;
+}
+
+.header .search-form input {
+    width: 100%;
+    padding: 0 1.5rem;
+    font-size: 1.6rem;
+    color: #1f2937;
+    text-transform: none;
+}
+
+.header .search-form label {
+    font-size: 2rem;
+    padding-right: 1.5rem;
+    color: #6b7280;
+    cursor: pointer;
+}
+
+.header .search-form label:hover {
+    color: #ec4899; /* Pink on hover */
+}
+
+.header .icons div, .header .icons a {
+    font-size: 2.5rem;
+    margin-left: 2rem;
+    color: #14532d; /* Dark green for icons */
+    cursor: pointer;
+}
+
+.header .icons div:hover, .header .icons a:hover {
+    color: #ec4899; /* Pink on hover */
+}
+
+/* Navigation */
+.header-2 {
+    background: linear-gradient(135deg, #4caf50, #4caf50);
+    padding: 1rem 5%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.navbar a,
+.dropbtn {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.6rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    background: transparent;
+    cursor: pointer;
+    text-transform: capitalize;
+}
+
+.navbar a:hover,
+.dropbtn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 110%;
+    left: 0;
+    background-color: #fa3480;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 1000;
+}
+
+.dropdown-content a {
+    color: #333;
+    padding: 0.8rem 1rem;
+    display: block;
+    font-size: 1.5rem;
+}
+
+.dropdown-content a:hover {
+    background-color: #f3e8f1;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.navbar-toggle {
+    display: none;
+    font-size: 2.8rem;
+    color: #1a1a1a;
+    cursor: pointer;
+    margin-left: 2.5rem;
+}
+
+.terms-conditions .content {
+    max-width: 80rem;
+    margin: 0 auto;
+    background: #fff;
+    padding: 2rem;
+    border: .1rem solid rgba(0, 0, 0, .1);
+    border-radius: .5rem;
+}
+
+.terms-conditions .content h3 {
+    font-size: 2.5rem;
+    color: #14532d; /* Dark green for headings */
+    margin: 2rem 0 1rem;
+}
+
+.terms-conditions .content p {
+    font-size: 1.6rem;
+    color: #6b7280;
+    line-height: 2;
+    margin-bottom: 1.5rem;
+}
+
+.terms-conditions .content ul {
+    list-style-type: disc;
+    padding-left: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+.terms-conditions .content ul li {
+    font-size: 1.6rem;
+    color: #6b7280;
+    line-height: 2;
+}
+
+.footer .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 1.5rem;
+}
+
+.footer .box-container .box h3 {
+    font-size: 2.2rem;
+    color: #14532d; /* Dark green for footer headings */
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a {
+    display: block;
+    font-size: 1.4rem;
+    color: #6b7280;
+    padding: 1rem 0;
+}
+
+.footer .box-container .box a i {
+    color: #ec4899; /* Pink for footer icons */
+    padding-right: .5rem;
+}
+
+.footer .box-container .box a:hover {
+    color: #ec4899; /* Pink on hover */
+}
+
+.footer .box-container .box .map {
+    width: 100%;
+}
+
+.footer .share {
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.footer .share a {
+    height: 5rem;
+    width: 5rem;
+    line-height: 5rem;
+    font-size: 2rem;
+    color: #fff;
+    background: #14532d; /* Dark green for social icons */
+    margin: 0 .2rem;
+    border-radius: .5rem;
+}
+
+.footer .share a:hover {
+    background: #ec4899; /* Pink on hover */
+}
+
+.footer .credit {
+    padding: 1rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #6b7280;
+    border-top: .1rem solid rgba(0, 0, 0, .1);
+}
+
+.footer .credit span {
+    color: #ec4899; /* Pink for footer credit */
+}
+
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+.loader-container.fade-out {
+    top: -120%;
+}
+
+@media (max-width: 991px) {
+    html {
+        font-size: 55%;
+    }
+    section {
+        padding: 2rem;
+    }
+    .header-1 {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    #search-btn {
+        display: none;
+    }
+    .header .search-form {
+        position: absolute;
+        top: 115%;
+        right: 2rem;
+        width: 90%;
+        box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+    }
+    .header .search-form.active {
+        top: 100%;
+    }
+    .bottom-navbar {
+        display: block;
+    }
+}
+
+@media (max-width: 450px) {
+    html {
+        font-size: 50%;
+    }
+    .heading {
+        font-size: 3rem;
+    }
+    .terms-conditions .content {
+        padding: 1.5rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <!-- header section -->
+    <header class="header">
+        <div class="header-1">
+            <a href="index.html" class="logo">
+                <img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Janata Book Point Logo" >
+            </a>
+           
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search"></div>
+                <!-- <a href="#" class="fas fa-heart"></a> -->
+                <!-- <a href="index.html#cart" class="fas fa-shopping-cart"></a> -->
+                <!-- <div id="login-btn" class="fas fa-user"></div> -->
+            </div>
+        </div>
+   
+            <!-- HTML -->
+<div class="header-2">
+  <nav class="navbar" id="navbar">
+    <a href="index.html">Home</a>
+
+    <div class="dropdown">
+      <button class="dropbtn">Publishers</button>
+      <div class="dropdown-content">
+        <a href="#">NCERT</a>
+       
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Shop By Class</button>
+      <div class="dropdown-content">
+        <a href="index.html#classbook">Class 1</a>
+        <a href="index.html#classbook">Class 2</a>
+        <a href="index.html#classbook">Class 3</a>
+         <a href="index.html#classbook">Class 4</a>
+          <a href="index.html#classbook">Class 5</a>
+           <a href="index.html#classbook">Class 6</a>
+            <a href="index.html#classbook">Class 7</a>
+             <a href="index.html#classbook">Class 8</a>
+              <a href="index.html#classbook">Class 9</a>
+               <a href="index.html#classbook">Class 10</a>
+                <a href="index.html#classbook">Class 11</a>
+                 <a href="index.html#classbook">Class 12</a>
+      </div>
+    </div>
+
+    <div class="dropdown">
+      <button class="dropbtn">Shop By Subject</button>
+      <div class="dropdown-content">
+        <a href="index.html#classbook">Accountancy</a>
+<a href="index.html#classbook">Arts</a>
+<a href="index.html#classbook">Biology</a>
+<a href="index.html#classbook">Biotechnology</a>
+<a href="index.html#classbook">Business Studies</a>
+<a href="index.html#classbook">Chemistry</a>
+<a href="index.html#classbook">Civics</a>
+<a href="index.html#classbook">Computer</a>
+<a href="index.html#classbook">Economics</a>
+<a href="index.html#classbook">English</a>
+<a href="index.html#classbook">Environmental Studies</a>
+<a href="index.html#classbook">Ganit</a>
+<a href="index.html#classbook">Geography</a>
+<a href="index.html#classbook">Hindi</a>
+<a href="index.html#classbook">History</a>
+<a href="index.html#classbook">Mathematics</a>
+<a href="index.html#classbook">Physical Education</a>
+<a href="index.html#classbook">Physics</a>
+<a href="index.html#classbook">Political Science</a>
+<a href="index.html#classbook">Psychology</a>
+<a href="index.html#classbook">Sanskrit</a>
+<a href="index.html#classbook">Science</a>
+<a href="index.html#classbook">Social Science</a>
+<a href="index.html#classbook">Vigyan</a>
+<a href="index.html#classbook">Vocational</a>
+<a href="index.html#classbook">Yoga</a>
+      </div>
+    </div>
+ <div class="dropdown">
+      <button class="dropbtn">More</button>
+      <div class="dropdown-content">
+        <a href="Aboutus.html">About us</a>
+        <a href="contact.html">Contact Us</a>
+       
+      </div>
+    </div>
+    <!-- <a href="shop.html">Shop Now</a> -->
+    <a href="bulkorder.html" id="bulk-order-btn">Bulk Order</a>
+    <!-- <a href="contact.html">Contact</a> -->
+  </nav>
+</div>
+    </header>
+
+
+    <!-- terms and conditions section -->
+    <section class="terms-conditions">
+        <h1 class="heading">Terms & <span>Conditions</span></h1>
+        <div class="content">
+            <h3>Terms & Conditions</h3>
+            <p>Welcome to Janata Book Point. By accessing or using our website, you agree to comply with and be bound by the following terms and conditions. Please read them carefully.</p>
+            
+            <h3>1. Introduction</h3>
+            <p>This document is an electronic record in terms of the Information Technology Act, 2000, and the rules thereunder as applicable. This electronic record is generated by a computer system and does not require any physical or digital signatures.</p>
+            
+            <h3>2. Eligibility</h3>
+            <p>Use of the Janata Book Point website is available only to persons who can form legally binding contracts under the Indian Contract Act, 1872. Persons who are “incompetent to contract” within the meaning of the Indian Contract Act, 1872, including minors, un-discharged insolvents, etc., are not eligible to use the website.</p>
+            
+            <h3>3. User Account</h3>
+            <p>You are responsible for maintaining the confidentiality of your account and password and for restricting access to your computer. You agree to accept responsibility for all activities that occur under your account or password.</p>
+            
+            <h3>4. Product Information</h3>
+            <p>We strive to provide accurate product descriptions. However, we do not warrant that product descriptions or other content on this site are accurate, complete, reliable, current, or error-free. If a product offered by Janata Book Point is not as described, your sole remedy is to return it in unused condition.</p>
+            
+            <h3>5. Pricing</h3>
+            <p>All prices are listed in Indian Rupees (INR) and are inclusive of applicable taxes. We reserve the right to change prices at any time without prior notice.</p>
+            
+            <h3>6. Payment</h3>
+            <p>We accept payments through credit/debit cards, net banking, UPI, and other available payment methods. By providing your payment information, you represent and warrant that you have the legal right to use the payment method provided.</p>
+            
+            <h3>7. Shipping and Delivery</h3>
+            <p>We will ship the products within 7 days of receiving an order. The shipping timeline may vary based on your location and the shipping carrier. Risk of loss and title for such items pass to you upon our delivery to the carrier.</p>
+            
+            <h3>8. Cancellation and Refund Policy</h3>
+            <p>We do not offer cancellations or refunds unless there is a defect in the book or the wrong order is delivered. For defect-related issues, please contact our customer support within 10 days of receiving the product.</p>
+            
+            <h3>9. Bulk Orders</h3>
+            <p>We offer discounts on bulk orders for schools and institutions. To inquire about bulk purchases, please contact us directly at <a href="mailto:janatabookspoint@gmail.com">janatabookspoint@gmail.com</a> or +91 9821586944. Bulk orders are subject to the following terms:</p>
+            <ul>
+                <li><strong>Minimum Order Quantity:</strong> To qualify for bulk discounts, a minimum order value of Rs. 10,000 is required.</li>
+                <li><strong>Pricing and Discounts:</strong> Discounts are offered based on the order quantity and will be communicated upon inquiry.</li>
+                <li><strong>Payment Terms:</strong> All bulk orders must be prepaid in full at the time of placing the order.</li>
+                <li><strong>Shipping and Delivery:</strong> Bulk orders can be shipped to multiple addresses. Our team will coordinate with you to ensure timely delivery.</li>
+                <li><strong>Returns and Exchanges:</strong> Since we offer volume discounts, we cannot accept returns on bulk orders. Only exchanges are possible in case of manufacturing defects.</li>
+            </ul>
+            
+            <h3>10. Intellectual Property Rights</h3>
+            <p>All information, content, and material on the Janata Book Point website, including but not limited to text, graphics, logos, images, and software, is the property of Janata Book Point and is protected under applicable copyright and trademark laws.</p>
+            
+            <h3>11. Limitation of Liability</h3>
+            <p>Janata Book Point shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or in connection with these terms, the website, or the services.</p>
+            
+            <h3>12. Indemnification</h3>
+            <p>You agree to indemnify, defend, and hold harmless Janata Book Point, its affiliates, and their respective officers, directors, agents, and employees from any claim or demand arising out of your breach of these terms or violation of any law or the rights of a third party.</p>
+            
+            <h3>13. Governing Law and Jurisdiction</h3>
+            <p>These terms shall be governed by and construed in accordance with the laws of India. All disputes arising out of or in connection with these terms shall be subject to the exclusive jurisdiction of the courts in New Delhi.</p>
+            
+            <h3>14. Modifications to Terms and Conditions</h3>
+            <p>We reserve the right to modify these terms and conditions at any time without prior notice. Your continued use of the website following any changes signifies your acceptance of the revised terms.</p>
+            
+            <h3>15. Contact Information</h3>
+            <p>If you have any questions about these terms, please contact us at:</p>
+            <p>Janata Book Point<br>
+               C-40, Sector 15, Vasundhara, Ghaziabad, Uttar Pradesh 201012<br>
+               <a href="mailto:janatabookspoint@gmail.com">janatabookspoint@gmail.com</a><br>
+               +91 9821586944</p>
+            
+            <p>By using our website, you acknowledge that you have read, understood, and agree to be bound by these terms and conditions.</p>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>Our Locations</h3>
+
+                <a href="#">
+                    <img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Company Logo" style="width: 100px; height: auto;">
+                </a>
+                <a href="#"> <i class="fas fa-map-marker-alt"></i> India </a>
+                
+            </div>
+            <div class="box">
+                <h3>Quick Links</h3>
+                <a href="#home"> <i class="fas fa-arrow-right"></i> Home </a>
+            <a href="index.html#classbook" class="d-flex align-items-center mb-2"><i class="fas fa-arrow-right me-2"></i> All Subjects </a>
+                        <a href="index.html#allclass" class="d-flex align-items-center mb-2"><i class="fas fa-arrow-right me-2"></i> Classes </a>
+                    
+                <!-- <a href="#reviews"> <i class="fas fa-arrow-right"></i> Reviews </a> -->
+                <!-- <a href="#blogs"> <i class="fas fa-arrow-right"></i> Blogs </a> -->
+                <a href="#" id="bulk-order-footer-btn"> <i class="fas fa-arrow-right"></i> Bulk Order </a>
+                <a href="contact.html"> <i class="fas fa-arrow-right"></i> Contact </a>
+                                        <a href="Aboutus.html" class="d-flex align-items-center mb-2"><i class="fas fa-arrow-right me-2"></i> About Us</a>
+
+            </div>
+            <div class="box">
+                <h3>Extra Links</h3>
+                <a href="./privacy-policy.html"> <i class="fas fa-arrow-right"></i> Privacy Policy </a>
+                <a href="./refund.html"> <i class="fas fa-arrow-right"></i> Refund & Returns </a>
+                <a href="./shipping-policy.html"> <i class="fas fa-arrow-right"></i> Shipping Policy </a>
+                <a href="./Terms.html"> <i class="fas fa-arrow-right"></i> Terms & Conditions </a>
+                <a href="trackorder.html"> <i class="fas fa-arrow-right"></i> Track Order </a>
+                <!-- <a href="#"> <i class="fas fa-arrow-right"></i> Faqs </a> -->
+               
+            </div>
+            <div class="box">
+                <!-- <h3>Contact Info</h3> -->
+                <h3>contact info</h3>
+                <a href="#"> <i class="fas fa-phone"></i> +91 9821586944 </a>
+                <a href="#"> <i class="fas fa-clock"></i> Everyday: 10:00 AM -7:30 PM</a>
+                <a href="#"> <i class="fas fa-envelope"></i> janatabookspoint@gmail.com </a>
+                <img src="https://i.ibb.co/mFXb5R4G/Blue-Grey-Minimalist-Modern-Business-Card.png" class="map" alt="">
+            </div>
+        </div>
+        <div class="share">
+            <a href="#" class="fab fa-facebook-f" aria-label="Facebook"></a>
+            <a href="#" class="fab fa-whatsapp" aria-label="x"></a>
+            <a href="#" class="fab fa-instagram" aria-label="Instagram"></a>
+            <a href="#" class="fab fa-linkedin" aria-label="LinkedIn"></a>
+            <!-- <a href="#" class="fab fa-pinterest" aria-label="Pinterest"></a> -->
+        </div>
+        <div class="credit"> created by <span>Janata books Point</span> | all rights reserved! </div>
+    </section>
+
+    <!-- loader -->
+    <div class="loader-container">
+        <img src="image/loader-img.gif" alt="Loading">
+    </div>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script>
+        // Prevent right-click and developer tools
+        document.addEventListener('contextmenu', (e) => {
+            // alert("Right-click is disabled on this page.");
+            e.preventDefault();
+        });
+
+        document.onkeydown = (e) => {
+            if (e.keyCode === 123) {
+                alert("F12 is disabled.");
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 73) {
+                alert("Inspect shortcut is disabled.");
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode === 74) {
+                alert("Console shortcut is disabled.");
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode === 85) {
+                alert("View Source is disabled.");
+                return false;
+            }
+        };
+
+        // Loader
+        window.addEventListener('load', () => {
+            document.querySelector('.loader-container').classList.add('fade-out');
+        });
+
+        // Search Functionality
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = document.getElementById('search-box').value.trim();
+            if (query) {
+                window.location.href = `index.html?search=${encodeURIComponent(query)}`;
+            }
+        });
+
+        // Search Toggle
+        document.getElementById('search-btn').addEventListener('click', () => {
+            document.querySelector('.search-form').classList.toggle('active');
+        });
+
+        // Login Redirect
+        document.getElementById('login-btn').addEventListener('click', () => {
+            window.location.href = 'index.html#account-info';
+        });
+    </script>
+</body>
+</html>

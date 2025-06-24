@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Success - Janata Books Point</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1a1a1a;
+            --accent-color: #ff6b6b;
+            --text-color: #2d2d2d;
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --border-color: #e5e7eb;
+            --success-color: #22c55e;
+            --muted-color: #6b7280;
+            --dark-bg: #121212;
+            --dark-card: #1e1e1e;
+            --dark-text: #e5e5e5;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: var(--dark-bg);
+            color: var(--dark-text);
+        }
+
+        body.dark-mode .card {
+            background-color: var(--dark-card);
+            border-color: #333;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        body.dark-mode .theme-toggle {
+            color: var(--dark-text);
+        }
+
+        .success-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--success-color);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        body.dark-mode .success-title {
+            color: #4ade80;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .card h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        body.dark-mode .card h4 {
+            color: var(--dark-text);
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            margin-bottom: 0.6rem;
+            color: var(--muted-color);
+        }
+
+        body.dark-mode .order-item {
+            color: #b0b0b0;
+        }
+
+        .order-item span:last-child {
+            color: var(--text-color);
+        }
+
+        body.dark-mode .order-item span:last-child {
+            color: var(--dark-text);
+        }
+
+        .btn-custom {
+            background: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            box-shadow: 0 3px 8px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-custom:hover {
+            background: #ff8787;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .success-title {
+                font-size: 1.5rem;
+            }
+
+            .card h4 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span></span>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+        <h2 class="success-title">Order Placed Successfully!</h2>
+        <div class="card" id="orderDetails"></div>
+        <div class="text-center">
+            <a href="index.html" class="btn-custom">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                themeToggleBtn.innerHTML = `<i class="fas fa-${document.body.classList.contains('dark-mode') ? 'sun' : 'moon'}"></i>`;
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+        }
+
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+            if (themeToggleBtn) themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+
+        const orderData = JSON.parse(localStorage.getItem('orderData'));
+        const orderDetailsContainer = document.getElementById('orderDetails');
+
+        if (orderData && orderDetailsContainer) {
+            const { orderId, cart, formData, totalAmount, shippingCost, shippingDiscount, coupon, couponDiscount, deliveryDays, paymentId } = orderData;
+            orderDetailsContainer.innerHTML = `
+                <h4>Order Summary</h4>
+                <div class="order-item"><span>Order ID</span><span>${orderId}</span></div>
+                <div class="order-item"><span>Payment ID</span><span>${paymentId}</span></div>
+                <h4 class="mt-3">Items</h4>
+                ${cart.map(item => `
+                    <div class="order-item">
+                        <span>${item.name} x ${item.quantity}</span>
+                        <span>₹${(item.price * item.quantity).toFixed(2)}</span>
+                    </div>
+                `).join('')}
+                <h4 class="mt-3">Shipping Address</h4>
+                <div class="order-item"><span>Name</span><span>${formData.name}</span></div>
+                <div class="order-item"><span>Email</span><span>${formData.email}</span></div>
+                <div class="order-item"><span>Phone</span><span>${formData.phone}</span></div>
+                <div class="order-item"><span>Address</span><span>${formData.address}, ${formData.state}, ${formData.pincode}</span></div>
+                <h4 class="mt-3">Billing Details</h4>
+                <div class="order-item"><span>Subtotal</span><span>₹${cart.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}</span></div>
+                <div class="order-item"><span>Shipping Cost</span><span>₹${shippingCost.toFixed(2)}</span></div>
+                <div class="order-item"><span>Shipping Discount</span><span>₹${shippingDiscount.toFixed(2)}</span></div>
+                <div class="order-item"><span>Coupon</span><span>${coupon || 'None'}</span></div>
+                <div class="order-item"><span>Coupon Discount</span><span>₹${couponDiscount.toFixed(2)}</span></div>
+                <div class="order-item"><span>Estimated Delivery</span><span>${deliveryDays || 'To be confirmed'}</span></div>
+                <div class="order-item"><span>Total Amount</span><span>₹${totalAmount.toFixed(2)}</span></div>
+            `;
+            localStorage.removeItem('orderData'); // Clear order data after rendering
+        } else {
+            orderDetailsContainer.innerHTML = '<p>No order details found. Please place a new order.</p>';
+        }
+    </script>
+</body>
+</html>

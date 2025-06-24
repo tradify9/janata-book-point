@@ -1,0 +1,3181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Janata Book Point</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            transition: all .2s ease-in-out;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: #f7f7f7;
+        }
+        section {
+            padding: 3rem 9%;
+        }
+        .heading {
+            text-align: center;
+            font-size: 4rem;
+            color: #130f40;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            background: linear-gradient(45deg, rgba(232, 67, 147, 0.1), rgba(19, 15, 64, 0.1));
+            border-radius: 1rem;
+        }
+        .heading span {
+            color: #f97316;
+        }
+        .btn {
+            display: inline-block;
+            margin: 0.5rem;
+            padding: 1.2rem 3rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #fff;
+            background: #f97316;
+            border-radius: .5rem;
+            cursor: pointer;
+            text-align: center;
+        }
+        .btn:hover {
+            background: #130f40;
+            transform: translateY(-2px);
+        }
+        .btn.secondary {
+            background: #130f40;
+            color: #fff;
+        }
+        .btn.secondary:hover {
+            background: #f97316;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, .1);
+        }
+        .header-1 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 2rem 9%;
+        }
+        .header .logo {
+            height: 7rem;
+        }
+        .header .search-form {
+            width: 50rem;
+            height: 4.5rem;
+            border: .1rem solid rgba(0, 0, 0, .1);
+            background: #f9f9f9;
+            display: flex;
+            align-items: center;
+            border-radius: 2rem;
+        }
+        .header .search-form input {
+            width: 100%;
+            padding: 0 1.5rem;
+            font-size: 1.6rem;
+            color: #333;
+            background: transparent;
+        }
+        .header .search-form label {
+            font-size: 2rem;
+            padding-right: 1.5rem;
+            color: #666;
+            cursor: pointer;
+        }
+        .header .search-form label:hover {
+            color: #f97316;
+        }
+        .header .icons div,
+        .header .icons a {
+            font-size: 2.2rem;
+            margin-left: 2rem;
+            color: #130f40;
+            cursor: pointer;
+            position: relative;
+        }
+        .header .icons div:hover,
+        .header .icons a:hover {
+            color: #f97316;
+        }
+        .header .icons .count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #f97316;
+            color: #fff;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            line-height: 20px;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+        .header-2 {
+            background: #f97316;
+        }
+        .header .navbar {
+            text-align: center;
+            padding: 1rem 0;
+        }
+        .header .navbar a {
+            color: #fff;
+            display: inline-block;
+            padding: 1rem 2rem;
+            font-size: 1.7rem;
+            font-weight: 500;
+        }
+        .header .navbar a:hover {
+            background: #fff;
+            color: #f97316;
+            border-radius: .5rem;
+        }
+        .bottom-navbar {
+            display: none;
+            text-align: center;
+            background: #130f40;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+        .bottom-navbar a {
+            font-size: 2.5rem;
+            padding: 1.5rem;
+            color: #fff;
+        }
+        .bottom-navbar a:hover {
+            background: #f97316;
+        }
+        .modal-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index:10000;
+            background: rgba(0, 0, 0, .7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .modal-container.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .modal-container form {
+            background: #fff;
+            border: .1rem solid rgba(0, 0, 0, .1);
+            width: 50rem;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+        }
+        .modal-container form h3 {
+            font-size: 2.8rem;
+            color: #130f40;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .modal-container form span {
+            display: block;
+            font-size: 1.6rem;
+            color: .5rem;
+            padding: .5rem;
+        }
+        .modal-container form .box {
+            width: 100%;
+            border: .1rem solid rgba(0,0,0, .1);
+            border-radius: .5rem;
+            padding: 1.2rem;
+            font-size: 1.5rem;
+            color: #333;
+            margin: .8rem 0;
+        }
+        .modal-container form textarea.box {
+            height: 12rem;
+            resize: vertical;
+        }
+        .modal-container .close-modal-btn {
+            position: absolute;
+            top: 1.5rem;
+            right: 2.5rem;
+            font-size: 4rem;
+            color: #fff;
+            cursor: pointer;
+        }
+        .categories .book-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+            gap: 2.5rem;
+        }
+        .categories .book-grid .box {
+            background: #fff;
+            border: .1rem solid rgba(0,0,0, .1);
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 .5rem 1rem rgba(0,0,0, .1);
+            display: flex;
+            flex-direction: column;
+            height: 45rem;
+            cursor: pointer;
+        }
+        .categories .book-grid .box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(0, 0, 0, .2);
+        }
+        .categories .book-grid .box .image {
+            height: 25rem;
+            overflow: hidden;
+            background: #f9f9f9;
+        }
+        .categories .book-grid .box .image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 1.5rem;
+        }
+        .categories .book-grid .box .content {
+            padding: 2rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .categories .book-grid .box .content h3 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: .8rem;
+            height: 5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        .categories .book-grid .box .content .price {
+            font-size: 2.2rem;
+            color: #f97316;
+            margin: .8rem 0;
+        }
+        .categories .book-grid .box .content .price span {
+            font-size: 1.6rem;
+            color: #666;
+            text-decoration: line-through;
+            margin-left: .8rem;
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 3rem 0;
+        }
+        .pagination .page-btn {
+            padding: 1rem 2rem;
+            font-size: 1.6rem;
+            color: #130f40;
+            background: #fff;
+            border: .1rem solid #130f40;
+            border-radius: .5rem;
+            cursor: pointer;
+        }
+        .pagination .page-btn.active,
+        .pagination .page-btn:hover {
+            background: #f97316;
+            color: #fff;
+            border-color: #f97316;
+        }
+        .pagination .page-btn:disabled {
+            background: #ccc;
+            color: #666;
+            cursor: not-allowed;
+        }
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100%;
+            background: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            overflow-y: auto;
+            padding: 2.5rem;
+        }
+        .sidebar.active {
+            right: 0;
+        }
+        .sidebar h3 {
+            font-size: 2.8rem;
+            color: #130f40;
+            margin-bottom: 2rem;
+        }
+        .sidebar .cart-item,
+        .sidebar .wishlist-item {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            padding: 1.5rem 0;
+            border-bottom: .1rem solid #ddd;
+        }
+        .sidebar .cart-item img,
+        .sidebar .wishlist-item img {
+            width: 7rem;
+            height: 9rem;
+            object-fit: contain;
+            background: #f9f9f9;
+            padding: .8rem;
+            border-radius: .5rem;
+        }
+        .sidebar .cart-item p,
+        .sidebar .wishlist-item p {
+            font-size: 1.6rem;
+            color: #333;
+            flex: 1;
+        }
+        .sidebar .cart-item button,
+        .sidebar .wishlist-item button {
+            padding: 1rem 1.8rem;
+            font-size: 1.5rem;
+        }
+        .sidebar .close-sidebar {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 2.8rem;
+            color: #130f40;
+            cursor: pointer;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #f97316;
+            color: #fff;
+            padding: 1.5rem 2.5rem;
+            border-radius: .5rem;
+            font-size: 1.6rem;
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+        .notification.active {
+            opacity: 1;
+            visibility: visible;
+        }
+         .footer {
+            background: #fff;
+            padding: 4rem 9%;
+        }
+        .footer .box-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
+            gap: 2rem;
+        }
+        .footer .box h3 {
+            font-size: 2.5rem;
+            color: #130f40;
+            padding: 1rem 0;
+        }
+        .footer .box a {
+            display: block;
+            font-size: 1.5rem;
+            color: #666;
+            padding: 1rem 0;
+        }
+        .footer .box a i {
+            color: #f97316;
+            padding-right: .5rem;
+        }
+        .footer .box a:hover i {
+            padding-right: 2rem;
+        }
+        .footer .share {
+            text-align: center;
+            padding: 2rem 0;
+        }
+        .footer .share a {
+            height: 5rem;
+            width: 5rem;
+            line-height: 5rem;
+            font-size: 2rem;
+            color: #fff;
+            background: #f97316;
+            margin: 0 .3rem;
+            border-radius: .5rem;
+        }
+        .footer .share a:hover {
+            background: #130f40;
+            transform: rotate(360deg);
+        }
+        .footer .credit {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #666;
+            padding: 2rem 0;
+            border-top: .1rem solid rgba(0, 0, 0, .1);
+        }
+        .footer .credit span {
+            color: #f97316;
+        }
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10000;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+        .loader-container.fade-out {
+            top: -120%;
+        }
+        @media (max-width: 991px) {
+            html { font-size: 55%; }
+            section { padding: 2rem; }
+            .header-1 { padding: 2rem; }
+            .header .search-form { width: 35rem; }
+            .sidebar { width: 350px; }
+        }
+        @media (max-width: 768px) {
+            .header .search-form {
+                position: absolute;
+                top: 110%;
+                right: 2rem;
+                width: 90%;
+                box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+            }
+            .header .search-form.active { top: 100%; }
+            .bottom-navbar { display: flex; justify-content: space-around; }
+            .categories .book-grid { grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr)); }
+            .sidebar { width: 100%; }
+        }
+        @media (max-width: 450px) {
+            html { font-size: 50%; }
+            .heading { font-size: 3.5rem; }
+            .modal-container form { width: 90%; }
+            .btn { padding: 1rem 2rem; font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-1">
+            <a href="./index.html"><img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Book Point Logo" class="logo"></a>
+            <form class="search-form" id="searchForm">
+                <input type="search" name="search" placeholder="Search books..." id="search-box" aria-label="Search books">
+                <label for="search-box" class="fas fa-search" aria-label="Submit search"></label>
+            </form>
+            <div class="icons">
+                <div id="search-btn" class="fas fa-search" aria-label="Toggle search"></div>
+                <a href="#" class="fas fa-heart" id="wishlist-btn" aria-label="Wishlist"><span class="count" id="wishlistCount">0</span></a>
+                <a href="#" class="fas fa-shopping-cart" id="cart-btn" aria-label="Cart"><span class="count" id="cartCount">0</span></a>
+            </div>
+        </div>
+        <div class="header-2">
+            <nav class="navbar">
+                <a href="./index.html">Home</a>
+                <a href=".#">Categories</a>
+                <a href="#">Shop Now</a>
+                <a href="#" id="bulk-order-btn">Bulk Order</a>
+                <a href="./contact.html">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+  
+    <div class="modal-container" id="bulkOrderModal">
+        <div class="close-modal-btn fas fa-times" aria-label="Close"></div>
+        <form id="bulkOrderForm">
+            <h3>Bulk Order Request</h3>
+            <span>Name</span>
+            <input type="text" class="box" placeholder="Enter your name" id="bulkName" required aria-label="Name">
+            <span>Email</span>
+            <input type="email" class="box" placeholder="Enter your email" id="bulkEmail" required aria-label="Email">
+            <span>Phone</span>
+            <input type="tel" class="box" placeholder="Enter your phone number" id="bulkPhone" required aria-label="Phone">
+            <span>Organization (Optional)</span>
+            <input type="text" class="box" placeholder="Enter organization name" id="organization" aria-label="Organization">
+            <span>Book Titles & Quantities</span>
+            <textarea class="box" placeholder="e.g., NCERT Mathematics Class 5: 50 copies" id="bulkBooks" required aria-label="Book Titles"></textarea>
+            <span>Delivery Address</span>
+            <textarea class="box" placeholder="Enter delivery address" id="bulkAddress" required aria-label="Address"></textarea>
+            <span>Additional Notes (Optional)</span>
+            <textarea class="box" placeholder="Any special requests?" id="bulkNotes" aria-label="Notes"></textarea>
+            <input type="submit" value="Submit Request" class="btn" aria-label="Submit">
+        </form>
+    </div>
+
+    <div class="modal-container" id="checkoutModal">
+        <div class="close-modal-btn fas fa-times" aria-label="Close"></div>
+        <form id="checkoutForm">
+            <h3>Checkout</h3>
+            <div id="checkoutItems"></div>
+            <div id="checkoutTotal"></div>
+            <span>Name</span>
+            <input type="text" class="box" placeholder="Enter your name" id="checkoutName" required aria-label="Name">
+            <span>Email</span>
+            <input type="email" class="box" placeholder="Enter your email" id="checkoutEmail" required aria-label="Email">
+            <span>Mobile</span>
+            <input type="tel" class="box" placeholder="Enter your mobile" id="checkoutMobile" required aria-label="Mobile">
+            <span>Address</span>
+            <textarea class="box" placeholder="Enter your address" id="checkoutAddress" required aria-label="Address"></textarea>
+            <span>Pincode</span>
+            <input type="text" class="box" placeholder="Enter your pincode" id="checkoutPincode" required aria-label="Pincode">
+            <span>Payment Method</span>
+            <select class="box" id="paymentMethod" aria-label="Payment Method">
+                <option value="cod">Cash on Delivery</option>
+                <option value="razorpay">Razorpay</option>
+            </select>
+            <input type="submit" value="Place Order" class="btn" aria-label="Place Order">
+        </form>
+    </div>
+
+    <div class="sidebar" id="cartSidebar">
+        <div class="close-sidebar fas fa-times" aria-label="Close Sidebar"></div>
+        <h3>Your Cart</h3>
+        <div id="cartItems"></div>
+        <div id="cartTotal"></div>
+        <button class="btn" id="checkoutBtn">Proceed to Checkout</button>
+    </div>
+
+    <div class="sidebar" id="wishlistSidebar">
+        <div class="close-sidebar fas fa-times" aria perpetual1
+            aria-label="Close Sidebar"></div>
+        <h3>Your Wishlist</h3>
+        <div id="wishlistItems"></div>
+    </div>
+
+    <div class="notification" id="notification"></div>
+
+    <section class="categories" id="categories">
+        <h1 class="heading">NCERT & CBSE <span>Books</span></h1>
+        <div id="bookGrid" class="book-grid"></div>
+        <div class="pagination" id="pagination"></div>
+    </section>
+
+    <section class="footer">
+        <div class="box-container">
+            <div class="box">
+                <h3>Our Locations</h3>
+                <a href="index.html">
+                    <img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" alt="Company Logo" style="width: 100px;">
+                </a>
+                <a href="#"><i class="fas fa-map-marker-alt"></i> India </a>
+            </div>
+            <div class="box">
+                <h3>Quick Links</h3>
+                <a href="index.html"><i class="fas fa-arrow-right"></i> Home </a>
+                <a href="#"><i class="fas fa-arrow-right"></i> Categories </a>
+                <a href="#"><i class="fas fa-arrow-right"></i> Shop Now </a>
+                <a href="#reviews"><i class="fas fa-arrow-right"></i> Reviews </a>
+                <a href="#" id="bulk-order-footer-btn"><i class="fas fa-arrow-right"></i> Bulk Order </a>
+                <a href="contact.html"><i class="fas fa-arrow-right"></i> Contact </a>
+            </div>
+            <div class="box">
+                <h3>Extra Links</h3>
+                <a href="privacy-policy.html"><i class="fas fa-arrow-right"></i> Privacy Policy </a>
+                <a href="refund.html"><i class="fas fa-arrow-right"></i> Refund & Returns </a>
+                <a href="shipping-policy.html"><i class="fas fa-arrow-right"></i> Shipping Policy </a>
+                <a href="Terms.html"><i class="fas fa-arrow-right"></i> Terms & Conditions </a>
+                <a href="https://www.shiprocket.in/shipment-tracking/"><i class="fas fa-arrow-right"></i> Track Order </a>
+            </div>
+            <div class="box">
+                <h3>Contact Info</h3>
+                <a href="tel:+919650011210"><i class="fas fa-phone"></i> +91 9650011210 </a>
+                <a href="#"><i class="fas fa-clock"></i> Everyday: 10:00 AM - 7:30 PM </a>
+                <a href="mailto:janatabookspoint@gmail.com"><i class="fas fa-envelope"></i> janatabookspoint@gmail.com </a>
+                <img src="https://i.ibb.co/mFXb5R4G/Blue-Grey-Minimalist-Modern-Business-Card.png" class="map" alt="Contact Card" height="100">
+            </div>
+        </div>
+        <div class="share">
+            <a href="#" class="fab fa-facebook-f" aria-label="Facebook"></a>
+            <a href="#" class="fab fa-whatsapp" aria-label="WhatsApp"></a>
+            <a href="#" class="fab fa-instagram" aria-label="Instagram"></a>
+            <a href="#" class="fab fa-linkedin" aria-label="LinkedIn"></a>
+        </div>
+        <div class="credit"> created by <span>Janata Books Point</span> | all rights reserved! </div>
+    </section>
+
+    <div class="loader-container">
+        <img src="image/loader-img.gif" alt="Loading">
+    </div>
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script>
+        window.addEventListener('load', () => {
+            document.querySelector('.loader-container').classList.add('fade-out');
+        });
+
+        const books = [
+             {
+       
+    "id": 1,
+    "name": "NCERT Mathematics Class 7",
+    "image": "https://i.ibb.co/zw0Br51/ganit-7-1.jpg",
+    "price": 100,
+    "class": 7,
+    "description": "A comprehensive mathematics textbook for Class 7, covering algebra, geometry, and data handling with practice exercises and real-world applications.",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 320", "ISBN: 978-81-7450-669-6", "Edition: 2023"]
+  },
+  {
+    "id": 2,
+    "name": "NCERT Anandamay Ganit Class-1 (Maths Book) (Hindi Medium) 2025 Edition",
+    "image": "image/Anand-Ganit-2.jpg",
+    "price": 90,
+    "class": 1,
+    "description": "NCERT Sarangi (Hindi Book) – Class 1 – latest edition as per NCERT/CBSE Chapters: All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 150", "ISBN: 978-81-7450-671-9", "Edition: 2025", "अध्याय 1: आकृतियाँ और स्थान", "अध्याय 2: एक से नौ तक की संख्याएँ अध्याय 3: जोड़ अध्याय 4: घटाव अध्याय 5: दस से बीस तक की संख्याएँ अध्याय 6: समय अध्याय 7: माप अध्याय 8: 21 से 50 तक की संख्याएँ अध्याय 9: आंकड़ों का उपयोग अध्याय 10: पैटर्न अध्याय 11: संख्याएँ अध्याय 12: मुद्रा अध्याय 13: बताओ कितन"]
+  },
+  {
+    "id": 3,
+    "name": "NCERT Poorvi (English book) Class-6 2025 Edition",
+    "image": "image/Poorvi-6.png",
+    "price": 90.00,
+    "class": 1,
+    "description": "NCERT Class 6 Poorvi (English Book) – latest edition as per NCERT/CBSE , ",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: English", "Pages: 180", "ISBN: 978-81-7450-672-6", "Edition: 2023", "Categories: English, Ncert,Tags: English, english 6, english class 6, poorvi, poorvi 6, poorvi class 6,Facebook,Twitter"]
+  },
+  {
+    "id": 4,
+    "name": "NCERT Malhaar – (Hindi Book) Class 6 2025 Edition",
+    "image": "image/Malhar-6.png",
+    "price": 130,
+    "class": 2,
+    "description": "NCERT Malhar (Hindi Book) – Class 6 – latest edition as per NCERT/CBSE",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 200", "ISBN: 978-81-7450-673-3", "Edition: 2024", "Categories: Hindi, Ncert,Tags: Hindi, hindi 6, hindi class 6, hindi6, malhaar, malhaar 6, malhaar class 6, malhaar class6, malhaar6", "Malhar Chapters,1. मातभृमि (कविता),पष्पु की अभिलाषा (पढ़ने के लिए),2. गोल (संस्‍मरण)एक दौड़ ऐसी भी (पढ़ने के लिए),3. पहली बँद (कविता). हार की जीत (कहानी),5. र‍हीम के दोहे (दोहे),6. मेरी माँ (आत्‍मकथा),7. जलाते चलो (कविता),8. सत्रिया और बिहू नतृ्य (निबंध),9. मैया मैं नहि मं ाखन खायो (पद),10. परीक्षा (कहानी),11. चेतक की वीरता (कविता),12. हिद म ं हासागर में छोटा-सा हिदं स्तान,13. पेड़ की बात (निबंध),आओ बच्चो तम्हु दिखाएँ झाँकी हिदं स्तान की (पढ़ने के लिए),(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 5,
+    "name": "Science",
+    "image": "image/science-8.jpg",
+    "price": 115,
+    "class": 2,
+    "description": "NCERT Science for Class 8 – latest edition as per NCERT/CBSE",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: Hindi", "Pages: 160", "ISBN: 978-81-7450-674-0", "Edition: 2025", "Chapter 1: Crop Production and Management,Chapter 2: Microorganisms: Friend and Foe,Chapter 3: Coal and Petroleum,Chapter 4: Combustion and Flame,Chapter 5: Conservation of Plants and Animals,Chapter 6: Reproduction in Animals,Chapter 7: Reaching the Age of Adolescence,Chapter 8: Force and Pressure,Chapter 9: Friction,Chapter 10: Sound,Chapter 11: Chemical Effects of Electric Current,hapter 12: Some Natural Phenomena,Chapter 13: Light,(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 40 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 6,
+    "name": "NCERT Malhaar – (Hindi Book) Class 6 2025 Edition",
+    "image": "image/Malhar-6.png",
+    "price": 90,
+    "class": 2,
+    "description": "NCERT Malhar (Hindi Book) – Class 6 – latest edition as per NCERT/CBSE",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: English", "Pages: 190", "ISBN: 978-81-7450-675-7", "Edition: 2025"]
+  },
+  {
+    "id": 7,
+    "name": "NCERT Mathematics for Class 10",
+    "image": "image/math-10.jpg",
+    "price": 155,
+    "class": 10,
+    "description": "Mathematics for Class 3, covering multiplication, division, and fractions with practical examples.",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 220", "ISBN: 978-81-7450-676-4", "Edition: 2025", "Chapter 1: Real Numbers,Chapter 2: Polynomials,Chapter 3: Pair of Linear Equations in Two Variables,Chapter 4: Quadratic Equations,Chapter 5: Arithmetic Progression, 6: Triangles,Chapter 7: Coordinate Geometry,Chapter 8: Introduction to Trigonometr,Chapter 9: Some Applications of Trigonometry,Chapter 10: Circles,Chapter 11: Area Related to Circles,Chapter 12: Surface Areas and Volumes,Chapter 13: Statistics,Chapter 14: Probability(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 8,
+    "name": "Ncert Bansuri (Arts Book) (Hindi Medium ) Class- 3 Author: NCERT,SKU: 338",
+    "image": "image/Bansuri-hindi-3.png",
+    "price": 90,
+    "class": 3,
+    "description": "NCERT Bansuri (Arts Book) (Hindi Book) – Class 3 – latest edition as per NCERT/CBSE",
+    "category": "Arts",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 200", "ISBN: 978-81-7450-677-1", "Edition: 2024", "NCERT Bansuri (Arts Book) (Hindi Book) – Class 3 – latest edition as per NCERT/CBSE,Published by NCERT, the enriched content of Bansuri Class-3 Arts Textbook will let the young minds venture into the abundant world of Arts. Ideal for the students of class 3, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 9,
+    "name": "NCERT Khel Yoga Class-3 (Physical Education Textbook) 2025 Edition:Author: NCERTSKU: 339",
+    "image": "image/Khel-yoga-3.png",
+    "price": 90,
+    "class": 3,
+    "description": "NCERT Khel Yoga Class-3 (Physical Education Textbook) (Eng. Medium) – latest edition as per NCERT/CBSE",
+    "category": "Physical Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: English", "Pages: 210", "ISBN: 978-81-7450-678-8", "Edition: 2023", "NCERT Khel Yoga Class-3 (Physical Education Textbook) – latest edition as per NCERT/CBSE,Chapters:Unit 1— Basic Motor Movements,Chapter 1: Throwing and Catching 2,Chapter 2: Kicking and Receiving 12,Chapter 3: Strike the Ball 21,Chapter 4: Little Steps 30,Unit 2— Our Games,Chapter 5: Local and Traditional Games 46,Unit 3— Yoga,Chapter 6: Yoga for Daily Life 70,Chapter 7: Yogic Practices (Yoga Sadhana) 85,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 10,
+    "name": "NCERT Science for Class 10",
+    "image": "image/science-10.jpg",
+    "price": 150,
+    "class": 4,
+    "description": "Math textbook for Class 4 with advanced arithmetic and geometry concepts.",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 240", "ISBN: 978-81-7450-679-5", "Edition: 2025", "Chapter 1: Chemical Reactions and Equations,Chapter 2: Acids, Bases and Salts,Chapter 3: Metals and Non-Metals,Chapter 4: Carbon and its Compound5,Chapter 5: Life Processes,Chapter 6: Control and Coordination,Chapter 7: How do Organisms Reproduce?,Chapter 8: Heredity,Chapter 9: Light – Reflection and Refraction,Chapter 10: Human Eye and Colourful World,Chapter 11: Electricity,Chapter 12: Magnetic Effects of Electric Current13: Our Environment,(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 11,
+    "name": "NCERT Science for Class 9",
+    "image": "image/science-9.jpg",
+    "price": 155,
+    "class": 4,
+    "description": "English textbook for Class 4 with enhanced reading comprehension and grammar.",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 200", "ISBN: 978-81-7450-680-1", "Edition: 2025", "Chapter 1 MATTER IN OUR SURROUNDINGS,Chapter 2 IS MATTER AROUND US PURE?,Chapter 3 ATOMS AND MOLECULES,Chapter 4 STRUCTURE OF THE ATOM,Chapter 5 THE FUNDAMENTAL UNIT OF LIFE,Chapter 6 TISSUES,Chapter 7 MOTION,Chapter 8 FORCE AND LAWS OF MOTION,Chapter 9 GRAVITATION,Chapter 10 WORK AND ENERGY,Chapter 11 SOUND,Chapter 12 IMPROVEMENT IN FOOD RESOURCES(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 12,
+    "name": "Ncert Hamara Adhbhut Sansar (EVS Textbook) (Hindi Medium) Class- 3",
+    "image": "image/Hamara-Adhbhut-Sansar-3.png",
+    "price": 90,
+    "class": 4,
+    "description": "Hindi textbook for Class 4 with poetry and prose to improve language skills.",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: Hindi", "Pages: 220", "ISBN: 978-81-7450-681-8", "Edition: 2025", "NCERT Hamara Adhbhut Sansar (EVS Book) (Hindi Medium) – Class 3 – latest edition as per NCERT/CBSEPublished by NCERT, the enriched content of Hamara Adhbhut Sansar Class-3 EVS Textbook will let the young minds venture into the abundant world of EVS. Ideal for the students of class 3, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 13,
+    "name": "NCERT Science-Class 7",
+    "image": "image/science-7.jpg",
+    "price": 135,
+    "class": 7,
+    "description": "NCERT Science for Class 7 – latest edition as per NCERT/CBSE",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 260", "ISBN: 978-81-7450-682-5", "Edition: 2025", "Chapters:• Nutrition in Plants:• Nutrition in Animals• Heat• Acids, Bases and Salts• Physical and Chemical Changes• Respiration in Organisms• Transportation in Animals and Plants• Reproduction in Plants• Motion and Time• Electric Current and its Effects• Light• Forests: Our Lifeline• Wastewater Story:(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 40 per book mandatory binding char"]
+  },
+  {
+    "id": 14,
+    "name": "NCERT Mathematics-Class 8",
+    "image": "image/math-8.jpg",
+    "price": 150,
+    "class": 8,
+    "description": "NCERT Mathematics for Class 8 – latest edition as per NCERT/CBSE",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 230", "ISBN: 978-81-7450-683-2", "Edition: 2025", "Chapter 1: Rational Numbers:Chapter 2: Linear Equations in one Variable,Chapter 3: Understanding Quadrilaterals,Chapter 4: Data Handling,Chapter 5: Square and Square Roots,Chapter 6: Cube and Cube Roots,Chapter 7: Comparing Quantities,Chapter 8: Algebraic Expressions and Identities,Chapter 9: Mensuration,Chapter 10: Exponents and Powers,Chapter 11: Direct and Inverse Proportions,Chapter 12: Factorization,Chapter 13: Introduction to Graphs:(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 50 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 15,
+    "name": "NCERT Ganita Prakash Class-7 ( Mathematics Book ) 2025 Edition",
+    "image": "image/ganita-7.jpg",
+    "price": 165,
+    "class": 7,
+    "description": "NCERT Ganita Prakash – Mathematics Book for – Class 7 – latest edition as per NCERT/CBSE",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: English", "Pages: 240", "ISBN: 978-81-7450-684-9", "Edition: 2025", "Categories: Maths, Mathematics, Ncert,Tags: ath7, ganita, ganita 7, ganita class 7, ganita class7, ganita prakash, ganita prakash 7, ganita prakash class7, ganita7, math, math 7, math class 7, math class7, math7, mathematic, Mathematics, mathematics 7, mathematics class 7, mathematics class7, mathematics7, Maths, maths 7, maths class 7, maths class7, maths7, naths, NCERT Exploring Soceity - Social Science Book for – Class 7 – latest edition as per NCERT/CBSE,NCERT Ganita Prakash Class-7 ( Mathematics Book ) – latest edition as per NCERT/CBSE,Published by NCERT, the enriched content of Ganita Prakash Class-7 Mathematics Textbook will let the young minds venture into the abundant world of Maths. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers .(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)"]
+  },
+  {
+    "id": 16,
+    "name": "NCERT Santoor Class-3 (English Book) 2025 Edition",
+    "image": "image/Santoor-3.png",
+    "price": 90,
+    "class": 3,
+    "description": "NCERT Santoor (English Book) – Class 3 – latest edition as per NCERT/CBSE",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 280", "ISBN: 978-81-7450-685-6", "Edition: 2024", "NCERT Santoor (English Book) – Class 3 – Chapters:Unit 1: Fun with Friends,1. Colours,2. Badal and Moti,3. Best Friends,Unit 2: Toys and Games,4. Out in the Garden,5. Talking Toys,6. Paper Boats,Unit 3: Good Food,7. The Big Laddoo,8. Thank God,9. Madhu’s Wish,Unit 4: The Sky,10. Night,11. Chanda Mama Counts the Stars,12. Chandrayaan,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 17,
+    "name": "NCERT Veena Class-3 ( Hindi Book ) 2025 Edition",
+    "image": "image/veena-3.png",
+    "price": 90,
+    "class": 3,
+    "description": "NCERT Veena (Hindi Book) – Class 3 – latest edition as per NCERT/CBSE",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 250", "ISBN: 978-81-7450-686-3", "Edition: 2025", "NCERT Veena (Hindi Book) – Class 3 – Chapters:इकाई एक– हमारा पर्यावरण,सीखो,चींटी,चींटी और हाथी की छुपन-छुपाई*कितने पैर?दोस्‍त के ज ू ते*बया हमारी चिड़िया रानी!आम का पेड़ इकाई दो– हमारे मित्र,बीरबलकी ि‍खचड़ी,मि�ा को प�ाचत ुर गीदड प्रकृतिपर्व — फ ू लदे इकाई तीन – आओ खेलें सनो भई गप् ु ‍प*रस्‍साकशी टै�ि‍फक जाम*एक जाद ुई पिटार इकाई चार– अपना-अपना काम अपना-अपना काम पेड़ोंकी अम्‍मा ‘थिमक्‍काʼकिसान की होशियारी इकाई पा ँ च – हमारा देश भारत चं द्रयान (सवं ाद)बोलने वाली माँद हमअनेक किंत ु एक हिं द देश के निवासी*All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOT THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 18,
+    "name": "NCERT Maths Mela Class-3 ( Maths Book ) 2025 Edition",
+    "image": "image/Maths-Mela-3.png",
+    "price": 90,
+    "class": 3,
+    "description": "English textbook for Class 6 with advanced grammar and literature.",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: English", "Pages: 260", "ISBN: 978-81-7450-687-0", "Edition: 2025", "NCERT Maths Mela (Maths Book) – Class 3 – latest edition as per NCERT/CBSE,Chapters,Chapter 1: What’s in a Name,Chapter 2: Toy Joy,Chapter 3: Double Century,Chapter 4: Vacation with My Nani Maa,Chapter 5: Fun with Shapes,Chapter 6: House of Hundreds – I,Chapter 7: Raksha Bandhan,Chapter 8: Fair Share Chapter 9: House of Hundreds – II,Chapter 10: Fun at Class Party,Chapter 11: Filling and Lifting,Chapter 12: Give and Take,Chapter 13: Time Goes On,Chapter 14: The Surajkund Fair,Learning Material Sheets,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers"]
+  },
+  {
+    "id": 19,
+    "name": "NCERT Joyful Mathematics Class-2 (Maths Book) 2025 Edition",
+    "image": "image/Maths-2.jpg",
+    "price": 90,
+    "class": 7,
+    "description": "Advanced mathematics for Class 7 with practical exercises and problem-solving.",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 300", "ISBN: 978-81-7450-688-7", "Edition: 2025"]
+  },
+  {
+    "id": 20,
+    "name": "NCERT Sarangi Class-2 (Hindi Book) 2025 Edition",
+    "image": "image/Sarangi-2.png",
+    "price": 90,
+    "class": 7,
+    "description": "Science textbook for Class 7, covering chemistry, biology, and physics.",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 270", "ISBN: 978-81-7450-689-4", "Edition: 2024"]
+  },
+  {
+    "id": 21,
+    "name": "CBSE Social Science Class 7",
+    "image": "image/veena-3.png",
+    "price": 90,
+    "class": 2,
+    "description": "Social Science for Class 7 with civics, history, and geography.",
+    "category": "Social Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: CBSE", "Language: English", "Pages: 280", "ISBN: 978-81-7450-690-0", "Edition: 2025", "NCERT Sarangi (Hindi Book) – Class 2 – latest edition as per NCERT/CBSE,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers"]
+  },
+  {
+    "id": 22,
+    "name": "NCERT Mridang Class-2 (English Book) 2025 Edition",
+    "image": "image/Mridang-2.jpg",
+    "price": 90,
+    "class": 2,
+    "description": "Mathematics for Class 8, focusing on algebra, geometry, and data handling.NCERT Mridang (English Book) – Class 2 – latest edition as per NCERT/CBSE,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 310", "ISBN: 978-81-7450-691-7", "Edition: 2025", "NCERT Mridang (English Book) – Class 2 contains:Fun with Friends,My Bicycle,Picture Reading,Welcome to My World,It is Fun,Seeing without Seeing, Places,Come Back Soon,Between Home and School,This is My Town,Life Around Us,A Show of Clouds,My Name,The Crow,The Smart Monkey,Harmony,Little Drops of Water,We are all Indians,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING:65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 23,
+    "name": "NCERT Our Wondrous World ( EVS Book ) Class-3 2025 Edition",
+    "image": "image/our-wondrous-world-3.png",
+    "price": 90,
+    "class": 8,
+    "description": "NCERT Our Wondrous World – The World Around US (EVS Book) – Class 3 – latest edition as per NCERT/CBSE",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Publisher: NCERT", "Language: English", "Pages: 290", "ISBN: 978-81-7450-692-4", "Edition: 2025", "NCERT Our Wondrous World – The World Around US (EVS Book) – Class 3 – latest edition as per NCERT/CBSE:Chapters,Unit 1: Our Families and Communities,Chapter 1: Family and Friends,Chapter 2: Going to the Mela,Chapter 3: Celebrating Festivals,Unit 2: Life Around Us,Chapter 4: Getting to Know Plants,Chapter 5: Plants and Animals Live Together,Chapter 6: Living in Harmony,Unit 3: Gifts of Nature,Chapter 7: Water A Precious Gift,Chapter 8: Food We Eat,Chapter 9: Staying Healthy and Happy,Unit 4: Things Around Us,Chapter 10: This World of Things,Chapter 11: Making Things,Chapter 12: Taking Charge of Waste,All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE:THIS BOOK IS WITH BINDING,65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers ."]
+  },
+  {
+    "id": 24,
+    "name": "NCERT Mathematics-Class 7",
+    "image": "https://i.ibb.co/LzC4DP3J/maths-7-1.jpg",
+    "price": 155,
+    "class": 7,
+    "description": "Chapters • Integers • Fractions and Decimals • Data Handling • Simple Equations • Lines and Angles • The Triangle and its Properties • Comparing Quantities • Rational Numbers • Perimeter and Area • Algebraic Expressions • Exponents and Powers • Symmetry • Visualising Solid Shapes (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 40 per book mandatory binding charges., packing-50 ) You may also like…",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.440 kg Dimensions	28 × 22 × 3 cm class	 Class 7 book-author	NCERT"]
+  },
+  {
+    "id": 25,
+    "name": "NCERT गणित Ganit for – Hindi Medium Class 8 – latest edition as per NCERT/CBSE",
+    "image": "https://i.ibb.co/d0rKBSsZ/ganit-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "अध्याय 1: परिमेय संख्याएँअध्याय 2: एक चर वाले रैखिक समीकरणअध्याय 3: चतुर्भुजों को समझनाअध्याय 4: प्रायोगिक ज्यामितीअध्याय 5: आँकड़ो का प्रबंधनअध्याय 6: वर्ग और वर्गमूलअध्याय 7: घन और घनमूलअध्याय 8: राशियों की तुलनाअध्याय 9: बीजीय व्यंजक एवं सर्वसमि(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	1.01 kg , Dimensions	28 × 22 × 3 cm, class	Class 8, math cl 8 hindi medium, book-author CERT"]
+  },
+  {
+    "id": 26,
+    "name": "NCERT Ganit for – Class 9",
+    "image": "https://i.ibb.co/gFLjYbRR/ganit-9-1.jpg",
+    "price": 185.00,
+    "class": 9,
+    "description": "पाठ 1: संख्या पद्धतिपाठ 2: बहुपदपाठ 3: निर्देशांक ज्यामितिपाठ 4: दो चरों वाले रैखिक समीकरणपाठ 5: यूक्लिड की ज्यामिति का परिचयपाठ 6: रेखाएँ और कोणपाठ 7: त्रिभुजपाठ 8: चतुर्भुजपाठ 9: समांतर चतुर्भुजों और त्रिभुजों के क्षेत्रफलपाठ 10: वृतपाठ 11: रच(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.420 kg, Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 27,
+    "name": "NCERT Ganit for Class 10",
+    "image": "https://i.ibb.co/sJm2fqcK/ganit-10.jpg",
+    "price": 199.00,
+    "class": 10,
+    "description": "पाठ 1: वास्तविक संख्याएँपाठ 2: बहुपदपाठ 3: दो चर वाले रैखिक समीकरण युग्मपाठ 4: द्विघात समीकरणपाठ 5: समांतर श्रेढियाँपाठ 6: त्रिभुजपाठ 7: निर्देशांक ज्यामितिपाठ 8: त्रिकोणमिति का परिचयपाठ 9: त्रिकोणमिति के कुछ अनुप्रयोगपाठ 10: वृतपाठ 11: रचनाएँ(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.490 kg, Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 28,
+    "name": "NCERT Ganit for Class 11",
+    "image": "https://i.ibb.co/vp6BYcD/ganit-11.jpg",
+    "price": 260.00,
+    "class": 11,
+    "description": "अध्यायअध्याय 1: समुच्चयअध्याय 2: संबंध एवं फलनअध्याय 3: त्रिकोणमितीय फलनअध्याय 4: गणितीय आगमन का सिद्धांतअध्याय 5: सम्मिश्र संख्याएँ और द्विघातीय समीकरणअध्याय 6: रैखिक असामिकाएँअध्याय 7: क्रमचय और संचयअध्याय 8: द्विपद प्रमेयअध्याय 9: अनुक्रम तथा श्रेणी(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.680 kg, Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 29,
+    "name": "NCERT Anandamay Ganit Class-1 (Maths Book) (Hindi Medium) 2025 Edition",
+    "image": "https://i.ibb.co/gF31hw1m/Anandmay-Ganit-1.jpg",
+    "price": 90.00,
+    "class": 1,
+    "description": "अध्याय 1: आकृतियाँ और स्थानअध्याय 2: एक से नौ तक की संख्याएँअध्याय 3: जोड़अध्याय 4: घटावअध्याय 5: दस से बीस तक की संख्याएँअध्याय 6: समयअध्याय 7: मापअध्याय 8: 21 से 50 तक की संख्याएँअध्याय 9: आंकड़ों का उपयोगअध्याय 10: पैटर्नअध्याय 11: संख्याएँअध्याय 12: मुद्राअध्याय 13: बताओ कितनेAll books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTETHIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING )",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.400 kg, Dimensions	25 × 30 × 3 cm, class	Class 1, book-author	CERT"]
+  },
+  {
+    "id": 30,
+    "name": "NCERT Mridang Class-2 (English Book) 2025 Edition",
+    "image": "https://i.ibb.co/CkMSfKQ/Marigold-1.jpg",
+    "price": 90.00,
+    "class": 2,
+    "description": " Fun with FriendsMy BicyclePicture ReadingWelcome to My WorldIt is FunSeeing without SeeingGoing PlacesCome Back SoonBetween Home and SchoolThis is My TownLife Around UsA Show of CloudsMy NameThe CrowThe Smart MonkeyHarmonyLittle Drops of WaterWe are all IndiansAll books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTETHIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers .You may also like…",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.300 kg, Dimensions	28 × 30 × 3 cm, class	Class 2, book-author	CERT"]
+  },
+  {
+    "id": 31,
+    "name": "NCERT Curiosity Class-7 ( Science Book ) 2025 Edition",
+    "image": "https://i.ibb.co/kgXtdYBr/curiosity-7.jpg",
+    "price": 90.00,
+    "class": 7,
+    "description": "NCERT Curiosity Class-7 ( Science Book ) – latest edition as per NCERT/CBSEPublished by NCERT, the enriched content of Curriosity Class-7 Science Textbook will let the young minds venture into the abundant world of Science. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTETHIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers .(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.800 kg, Dimensions	28 × 30 × 3 cm, book-author	CERT,Class 7"]
+  },
+  {
+    "id": 32,
+    "name": "NCERT Class 7 Science Exemplar ( English Medium )",
+    "image": "https://i.ibb.co/C5Dk9MR3/sc-ex-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "ChaptersUnit 1(Nutrition in Plants)Unit 2(Nutrition in Animals)Unit 3(Fibre to Fabric)Unit 4(Heat)Unit 5(Acids, Bases and Salts)Unit 6(Physical and Chemical Changes)Unit 7(Weather, Climate and Adaptation of Animals to Climate)Unit 8(Wind, Storm and Cyclone)Unit 9(Soil)Unit 10(Respiration in Organisms)Unit 11(Transportation in Animals and Plants)Unit 12(Reproduction in Plants)Unit 13(Motion and Time)Unit 14(Electric Current and Its Effects)Unit 15(Light)Unit 16(Water : A Precious Resource)Unit 17(Forests : Our Lifeline)Unit 18(Wastewater Story)Answers(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.440 kg, Dimensions	28 × 22 × 3 cm, book-author	CERT, "]
+  },
+  {
+    "id": 33,
+     "name": "NCERT Class 7 Science Exemplar ( English Medium )",
+    "image": "https://i.ibb.co/CkMSfKQ/Marigold-1.jpg",
+    "price": 90.00,
+    "class": 1,
+    "description": "NCERT Mridang Class-1 ( English Book ) contains:Unit 1: My Family and Me Two Little HandsGreetingsUnit 2: Life Around UsPicture TimeThe Cap-seller  and the MonkeysA FarmUnit 3: FoodFun with PicturesThe Food we EatUnit 4: SeasonsThe Four SeasonsAnandi’s RainbowAll books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTETHIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING )",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.400 kg, Dimensions	28 × 30 × 3 cm, class	Class 1, book-author	NCERT"]
+  },
+  {
+    "id": 34,
+    "name": "NCERT Class 6 Science Exemplar ( English Medium )",
+    "image": "https://i.ibb.co/Qj1nLCrY/science-ex-6.jpg",
+    "price": 95.00,
+    "class": 6,
+    "description": "Chapters1.Food: Where Does It Come From?2.Components of Food3.Fibre to Fabric4.Sorting Materials and Groups5.Separation of Substances6.Changes Around Us7.Getting to Know Plants8.Body Movement9.The Living Organisms and their Surroundings10.Motion and Measurement of Distances11.Light12.Electricity and Circuits13.Fun with Magnets14.Water15.Air Around Us16.Garbage in, Garbage outAnswers(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.450 kg, Dimensions	28 × 22 × 3 cm, class	Class 6, book-author	NCERT"]
+  },
+  {
+    "id": 35,
+    "name": "NCERT Class 7 Science Exemplar ( English Medium )",
+    "image": "https://i.ibb.co/Gvzrd2F1/math-ex-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "ChaptersUnit 1(Nutrition in Plants)Unit 2(Nutrition in Animals)Unit 3(Fibre to Fabric)Unit 4(Heat)Unit 5(Acids, Bases and Salts)Unit 6(Physical and Chemical Changes)Unit 7(Weather, Climate and Adaptation of Animals to Climate)Unit 8(Wind, Storm and Cyclone)Unit 9(Soil)Unit 10(Respiration in Organisms)Unit 11(Transportation in Animals and Plants)Unit 12(Reproduction in Plants)Unit 13(Motion and Time)Unit 14(Electric Current and Its Effects)Unit 15(Light)Unit 16(Water : A Precious Resource)Unit 17(Forests : Our Lifeline)Unit 18(Wastewater Story)Answers(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.440 kg, Dimensions	28 × 22 × 3 cm, book-author	NCERT"]
+  },
+  {
+    "id": 36,
+    "name": "Ncert गणित का जादू Ganit Ka Jadu -Hindi Medium -Class 5",
+    "image": "https://i.ibb.co/FkdrL7dH/Ganit-ka-Jadu-5.jpg",
+    "price": 95.00,
+    "class": 5,
+    "description": "Content :1.मछली उछली2.कोण और आवृफतियाँ3.कितने वर्ग?4.हिस्से और पूरे5.क्या यह एक जैसा दिखता है?6.मैं तेरा गुणनखंड, गुणज तू मेरा7.क्या तुम पैटर्न देख सकते हो?8.नक्शा9.डिब्बे और स्वैफच10.दसवाँ और सौवाँ भाग11.क्षेत्रफल और घेरा12.स्मार्ट चार्ट13.गुणा और भाग करने वेफ तरीवेफ14.कितना बड़ा? कितना भारी?(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)Related products-22%NCERT गणित प्रकाश Ganit Textbook Part 1 (Hindi medium ) VI",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 37,
+    "name": "NCERT गणित प्रकाश Ganit Textbook Part 1 (Hindi medium ) VI",
+    "image": "https://i.ibb.co/bgf4LnpC/Ganita-Prakash-Hindi-6.png",
+    "price": 97.00,
+    "class": 6,
+    "description": "book is for Class 6 for the subject Mathematics in Hindi medium. It is a textbook, published by NCERT as per the CBSE specifications.(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 38,
+    "name": "NCERT Sarangi Class-1 (Hindi Book) 2025 Edition",
+    "image": "https://i.ibb.co/1JwVPh9z/Sarangi-1.jpg",
+    "price": 90.00,
+    "class": 1,
+    "description": "NCERT Sarangi (Hindi Book) – Class 1 – latest edition as per NCERT/CBSEPublished by NCERT, the enriched content of Sarangi Class-1 Hindi Textbook will let the young minds venture into the abundant world of Hindi. Ideal for the students of class 1, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOT THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.350 kgDimensions	25 × 30 × 3 cmclass	Class 1book-author	NCERT"]
+  },
+  {
+    "id": 39,
+    "name": "NCERT Anandamay Ganit Class-2 (Maths Book) (Hindi Medium) 2025 Edition5",
+    "image": "https://i.ibb.co/hTksPB9/Anand-Ganit-2-2.jpg",
+    "price": 90.00,
+    "class": 2,
+    "description": "NCERT Anandamay Ganit Class-2 (Maths Book) (Hindi Medium) – latest edition as per NCERT/CBSEPublished by NCERT, the enriched content of AnandMay Ganit Class-2 Maths  Textbook will let the young minds venture into the abundant world of Maths. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTETHIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.440 kgDimensions	28 × 30 × 3 cmclass	Class 2book-author	NCERT"]
+  },
+  {
+    "id": 40,
+    "name": "NCERT Joyful Mathematics Class-1 (Maths Book) 2025 Edition",
+    "image": "https://i.ibb.co/hTksPB9/Anand-Ganit-2-2.jpg",
+    "price": 90.00,
+    "class": 1,
+    "description": "NCERT Sarangi (Hindi Book) – Class 1 – latest edition as per NCERT/CBSE contains::Finding the Furry Cat! (Pre-number Concepts)What is Long? What is Round? (Shapes)Mango Treat (Numbers 1 to 9)Making 10 (Numbers 10 to 20)How Many? (Addition and Subtraction of Single Digit Numbers)Vegetable Farm (Addition and Subtraction up to 20)Lina’s Family (Measurement)Fun with Numbers (Numbers 21 to 99)Utsav (Patterns)How do I Spend my Day? (Time)How Many Times? (Multiplication)How Much Can We Spend? (Money)So Many Toys (Data Handling)All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTETHIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING )Janata Boo",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.400 kg Dimensions	28 × 30 × 3 cmclass	Class 1book-author	NCERT"]
+  },
+  {
+    "id": 41,
+    "name": "NCERT Curiosity (Science Book) Class-6",
+    "image": "https://i.ibb.co/GfJ8PfkV/Curiosity-6.png",
+    "price": 90.00,
+    "class": 6,
+    "description": "ChaptersChapter 1 The Wonderful World of ScienceChapter 2 Diversity in the Living WorldChapter 3 Mindful Eating: A Path to a Healthy BodyChapter 4 Exploring MagnetsChapter 5 Measurement of Length and MotionChapter 6 Materials Around UsChapter 7 Temperature and its MeasurementChapter 8 A Journey through States of WaterChapter 9 Methods of Separation in Everyday LifeChapter 10 Living Creatures: Exploring their CharacteristicsChapter 11 Nature’s TreasuresChapter 12 Beyond Earth(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.780 kgDimensions	28 × 30 × 3 cmclass	Class 6book-author	NCERT"]
+  },
+  {
+    "id": 42,
+    "name": "Bharat Ki Khoj – Suppl. Hindi",
+    "image": "https://i.ibb.co/SwWjTK8T/bharat-ki-khoj-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "पाठ 1: अहमदनगर का किला पाठ 2: तलाश पाठ 3: सिंधु घाटी सभ्यता पाठ 4: युगों का दौर पाठ 5: नयी समस्याएँ पाठ 6: अंतिम दौर – एक पाठ 7: अंतिम दौर – दो पाठ 8: तनाव पाठ 9: दो पृष्ठभूमियाँ – भारतीय और अंग्रेजी(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 43,
+    "name": "NCERTदुर्वा Durva – Second Lng. Hindi-Class-8",
+    "image": "https://i.ibb.co/FrYqgNP/durva-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "पाठ 1: गुड़िया (कविता) पाठ 2: दो गौरैया (कहानी) पाठ 3: चिठ्ठियों में यूरोप (पत्र) पाठ 4: ओस (कविता) पाठ 5: नाटक में नाटक (कहानी) पाठ 6: सागर यात्रा (यात्रा वृत्तांत) पाठ 7: उठ किसान ओ (कविता) पाठ 8: सस्ते का चक्कर (एकांकी) पाठ 9: एक खिलाड़ी की कुछ यादें (संस्मरण) पाठ 10: बस की सैर (कहानी) पाठ 11: हिंदी ने जिनकी जिंदगी बदल दी – मारिया नेज्यैशी (भेंटवार्ता) पाठ 12: आषाढ़ का पहला दिन (कविता) पाठ 13: अन्याय के खिलाफ (कहानी)(आदिवासी स्वतंत्रता संघर्ष कथा) पाठ 14: बच्चों के प्रिय श्री केशव शंकर पिल्लै (व्यक्तित्व) पाठ 15: फ़र्श पर (कविता) पाठ 16: बूढी अम्मा की बात (लोककथा) पाठ 17: वह सुबह कभी तो आएगी (निबंध) पाठ 18: आओ पत्रिका निकालें (अतिरिक्त पठन के लिए) पाठ 19: आहवान (अतिरिक्त पठन के लिए) (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 44,
+    "name": "NCERT Kritika – Hindi Supplementary for Class 9",
+    "image": "https://i.ibb.co/Mxd7PB9F/kritika-9.jpg",
+    "price": 65.00,
+    "class": 8,
+    "description": "पाठ 1: इस जल प्रलय मेंपाठ 2: मेरे संग की औरतेंपाठ 3: रीढ़ की हड्डीपाठ 4: माटी वालीपाठ 5: किस तरह आख़िरकार मैं हिंदी में आया(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.100 kgDimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 45,
+    "name": "NCERT Sparsh -2nd Language Hindi for Class 10",
+    "image": "https://i.ibb.co/QjfpdKPX/sparsh-10.jpg",
+    "price": 99.00,
+    "class": 10,
+    "description": "स्पर्श (पद्य) पाठ 1: Kabeer – Saakhi पाठ 2: Meera – Padd पाठ 3: Mathilisharan Gupt – Manushyata पाठ 4: Sumitranandan Pant – Parvat Pradesh Ke Pawas पाठ 5: Viren Dandwal – Top पाठ 6: Kafee Azmi – Kar Chale Ham Fida पाठ 7: Ravindra Nath Thakur – Aatmrinस्पर्श(गद्य ) पाठ 1: Premchand – Bade Bhi Sahab पाठ 2: Sitaram Seksariya – Dairy Ka Eak Panna पाठ 3: Leeladhar Mandloi – Tantara Vamiro Katha पाठ 4: Prahlad Aggarwal – Tisari Kasam Ke Shilpkar Shalendra पाठ 5: Nida Phazali – Ab Kahan Doosron Ke Dukh Se Dukhi Hone Wale पाठ 6: Ravindra Kelekar – Patjhar Ki Tooti Pattiyan पाठ 7: Habeeb Tanveer – Kartoos (Akanki) (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.250 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 46,
+    "name": "NCERT Sanchayan – Supplementary Hindi ( 2nd Lang.) for Class 10",
+    "image": "https://i.ibb.co/QjfpdKPX/sparsh-10.jpg",
+    "price": 65.00,
+    "class": 10,
+    "description": "Sanchayan पाठ 1: Mithileshwar – Harihar Kaka पाठ 2: Gurdyal Singh – Sapno Ke Se Din पाठ 3: Rahi Masoom Raza – Topi Shukla Lekhak Parichaya (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.130 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 47,
+    "name": "NCERT Aroh – Hindi Core for Class 11",
+    "image": "https://i.ibb.co/d4GQtCmb/aroh-11.jpg",
+    "price": 120.00,
+    "class": 11,
+    "description": "Chapters Chapter 1 – प्रेमचंद • कबीर [कविता] Chapter 2 – कृष्णा सोबती • मीरा [कविता] Chapter 3 – सत्यजित राय • रामनरेश त्रिपाठी [कविता] Chapter 4 – बालमुकुन्द • सुमित्रानंदन पंत [कविता] Chapter 5 – शेखर जोशी • भवानीप्रसाद मिश्र [कविता] Chapter 6 – कृष्णना (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.250 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 48,
+    "name": "NCERT Antra – Hindi Lit. for Class 11",
+    "image": "https://i.ibb.co/3YF5PWwh/antra-11.jpg",
+    "price": 120.00,
+    "class": 11,
+    "description": "Antra Part 1 is meant for the students of class XI who have opted for Hindi Elective subject in school. It has been published by NCERT under the guidelines of CBSE Board and is in correspondence with school’s syllabus. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.290 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 49,
+    "name": "NCERT Veena Class-4 ( Hindi Book ) 2025 Edition",
+    "image": "https://i.ibb.co/SDcDXwxJ/veena-4.jpg",
+    "price": 90.00,
+    "class": 4,
+    "description": "NCERT Veena (Hindi Book) – Class 4 – latest edition as per NCERT/CBSEPublished by NCERT, the enriched content of Veena Class-4 Hindi Textbook will let the young minds venture into the abundant world of Hindi. Ideal for the students of class 4, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly.Salient Features of the Textbook:It acts as a building block for students, who are interested in learning new things.Easy language which makes learning fast.Simple and easy to understand format let the students learn the content by heart and memorize it quickly.All books are 100℅ original on Janatabookspoint.com ( Online Book Store ).NOTE THIS BOOK IS WITH BINDING65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.440 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class	Class 4"]
+  },
+  {
+    "id": 50,
+    "name": "NCERT Santoor Class-4 ( English Book ) 2025 Edition",
+    "image": "https://i.ibb.co/XkV3CxYh/santoor-4.jpg",
+    "price": 90.00,
+    "class": 4,
+    "description": "NCERT Santoor (English Book) – Class 4 – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Santoor Class-4 English Textbook will let the young minds venture into the abundant world of English. Ideal for the students of class 4, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.440 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class	Class 4"]
+  },
+  {
+    "id": 51,
+    "name": "NCERT Our Wondrous World ( EVS Book ) Class-4 2025 Edition",
+    "image": "https://i.ibb.co/v48ZNxzL/wondrous-4.jpg",
+    "price": 90.00,
+    "class": 4,
+    "description": "NCERT Our Wondrous World – The World Around US (EVS Book) – Class 4 – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Our Wondrous World Class-4 EVS Textbook will let the young minds venture into the abundant world of Environmental Studies. Ideal for the students of class 4, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOT THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.440 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class	 Class 4"]
+  },
+  {
+    "id": 52,
+    "name": "NCERT Maths Mela Class-4 ( Maths Book ) 2025 Edition",
+    "image": "https://i.ibb.co/yn8t11Yb/maths-mela-4.jpg ",
+    "price": 90.00,
+    "class": 4,
+    "description": "NCERT Maths Mela (Maths Book) – Class 4 – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Maths Class-4 Maths Textbook will let the young minds venture into the abundant world of Maths. Ideal for the students of class 4, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING  65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.440 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class	 Class 4"]
+  },
+  {
+    "id": 53,
+    "name": "NCERT Kaushal Bodh Class-7 (Vocational Education Book ) 2025 Edition",
+    "image": "https://i.ibb.co/RTnyv1RJ/kaushal-bodh-7.jpg",
+    "price": 90.00,
+    "class": 7,
+    "description": "Published by NCERT, the enriched content of Kaushal Bodh Class-7 Vocational Education Activity Textbook will let the young minds venture into the abundant world of Sanskrit, the language. Ideal for the students of class 8, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students dive deep into the world of this standardized dialect of Old Indo-Aryan civilizations. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning Sanskrit. Contains precise rules and definitions of different grammatical aspects of Sanskrit. Simple and easy to understand format let the students learn the content by heart and memorise it quickly. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Vocational Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.450 kg Dimensions	13 × 8 × 3 cm book-author NCERT class	Class 7"]
+  },
+  {
+    "id": 54,
+    "name": "NCERT Bansuri Class 4 ( Arts Book ) 2025 Edition",
+    "image": "https://i.ibb.co/B54H3NmH/bansuri-4.jpg",
+    "price": 90.00,
+    "class": 4,
+    "description": "NCERT Bansuri (Arts Book) – Class 4 – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Bansuri Class-4 Arts Textbook will let the young minds venture into the abundant world of Hindi. Ideal for the students of class 4, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOT THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Arts",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.440 kg Dimensions	28 × 30 × 3 cm book-author	 NCERT class	 Class 4"]
+  },
+  {
+    "id": 55,
+    "name": "NCERT Deepakam Class-7 ( Sanskrit Book ) 2025 Edition",
+    "image": "https://i.ibb.co/qL358ft6/deepakam-7.jpg ",
+    "price": 90.00,
+    "class": 7,
+    "description": "Published by NCERT, the enriched content of Deepakam Class-7 Sanskrit Textbook will let the young minds venture into the abundant world of Sanskrit, the language. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students dive deep into the world of this standardized dialect of Sanskrit. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning Sanskrit. Contains precise rules and definitions of different drawing aspects in Sanskrit. Simple and easy to understand format let the students learn the content by heart and memorise it quickly. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.440 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class Class 7"]
+  },
+  {
+    "id": 56,
+    "name": "NCERT Khel Yatra Class-7 ( Physical Education Book ) 2025 Edition",
+    "image": "https://i.ibb.co/GQ5Dtg1q/khel-yatra-7.jpg ",
+    "price": 90.00,
+    "class": 7,
+    "description": "Published by NCERT, the enriched content of Khel Yatra Class-7 Physical Education Textbook will let the young minds venture into the abundant world of Physical Education, the language. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students dive deep into the world of this standardized dialect of Physical Education. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning Physical Education. Contains precise rules and definitions of different drawing aspects in Physical Education. Simple and easy to understand format let the students learn the content by heart and memorise it quickly. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Physical Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.440 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class	Class 7"]
+  },
+  {
+    "id": 57,
+    "name": "NCERT Khel Yoga Class-4 (Physical Education Textbook) 2025 Edition",
+    "image": "https://i.ibb.co/fzWngyQt/khel-yoga-4.jpg",
+    "price": 90.00,
+    "class": 4,
+    "description": "NCERT Khel Yoga Class-4 (Physical Education Textbook) – latest edition as per NCERT/CBSE All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Physical Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.420 kg Dimensions	28 × 30 × 3 cm book-author	 NCERT class	Class 4"]
+  },
+  {
+    "id": 58,
+    "name": "NCERT Malhar Class-7 ( Hindi Book ) 2025 Edition",
+    "image": "https://i.ibb.co/hznPh3c/malhaar-7.jpg ",
+    "price": 90.00,
+    "class": 7,
+    "description": "NCERT Malhar Class-7 ( Hindi Book ) – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Malhar Class-7 Hindi Textbook will let the young minds venture into the abundant world of Hindi. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers . (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.400 kg Dimensions	28 × 28 × 3 cm book-author	NCERT class 7 Class 7"]
+  },
+  {
+    "id": 59,
+    "name": "Ncert Poorvi (English Book) Class-7 2025 Edition",
+    "image": "https://i.ibb.co/PsxmF3Qm/Whats-App-Image-2025-04-06-at-17-58-02-b23a191f-scaled.jpg",
+    "price": 90.00,
+    "class": 7,
+    "description": "Published by NCERT, the enriched content of Poorvi Class-7 English  Textbook will let the young minds venture into the abundant world of English, the language. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students dive deep into the world of this standardized dialect of Old Indo-Aryan civilizations. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning English. Contains precise rules and definitions of different grammatical aspects of English. Simple and easy to understand format let the students learn the content by heart and memorise it quickly. Weight	.570 kg Dimensions	28 × 30 × 3 cm class	Class 7 book-author	NCERT(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.570 kg Dimensions	28 × 30 × 3 cm class	 Class 7 book-author	NCERT"]
+  },
+  {
+    "id": 60,
+    "name": "Honey Dew – English",
+    "image": "https://i.ibb.co/cK472V9t/honeydew-8.jpg ",
+    "price": 97.00,
+    "class": 8,
+    "description": "Chapter 1: The Best Christmas Present in the World & The Ant and the Cricket Chapter 2: The Tsunami & Geography Lesson Chapter 3: Glimpses of the Past Chapter 4: Bepin Choudhury’s Lapse of Memory Chapter 5: The Summit Within & The School Boy Chapter 6: This is Jody’s Fawn Chapter 7: A Visit to Cambridge Chapter 8: A Short Monsoon Diary & On the Grasshopper and Cricket (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 61,
+    "name": "NCERT Moments – English Supplementary Reader for Class 9",
+    "image": "https://i.ibb.co/nMS4hyyF/moments-9.jpg ",
+    "price": 70.00,
+    "class": 9,
+    "description": "Chapter 1: The Lost Child Chapter 2: The Adventures of Toto Chapter 3: Iswaran the Storyteller Chapter 4: In the Kingdom of Fools Chapter 5: The Happy Prince Chapter 6: Weathering the Storm in Ersama Chapter 7: The Last Leaf Chapter 8: A House is not a Home Chapter 9: The Beggar (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.160 kgDimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 62,
+    "name": "NCERT Words and Expressions Workbook in English for Class 9",
+    "image": "https://i.ibb.co/TqTqGCMn/words-and-exp-9.jpg",
+    "price": 145.00,
+    "class": 9,
+    "description": "The enduring popularity of this series of English workbooks from Pre-primary to Classes 6-10 stems from the inventiveness of its imaginative and lively exercises. These encompass spelling, punctuation, vocabulary,simple grammar, sentence and paragraph composition and comprehension. Throughout the earlier books every possible devicehas been used to give the child the power to write complete sentences in answer to questions, not simply by copying sentences but by completing, altering, joining, re-arranging and building them. The series makes the ideal companion to better English , but can be used with any good reading or language course. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.410 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 63,
+    "name": "NCERT Footprints without Feet – English Supplementary Reader for Class 10 – latest edition as per NCERT/CBSE",
+    "image": "https://i.ibb.co/TBGMbnFg/footprint-10.jpg ",
+    "price": 85.00,
+    "class": 10,
+    "description": "Footprints without Feet Chapters • A Triumph of Surgery • The Thief’s Story • The Midnight Visitor • A Question of Trust • Footprints without Feet • The Making of a Scientist • The Necklace • Bholi • The Book That Saved the Earth (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.170 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 64,
+    "name": "NCERT Words & Expressions 2 for Class 10",
+    "image": "https://i.ibb.co/C3QbZCSb/words-and-exp-10.jpg ",
+    "price": 160.00,
+    "class": 10,
+    "description": "Unit 1 A Letter to God Unit 2 Nelson Mandela: Long Walk to Freedom Unit 3 Two Stories about Flying Unit 4 From the Diary of Anne Frank Unit 5 Glimpses of India Unit 6 Mijbil the Otter Unit 7 Madam Rides the Bus Unit 8 The Sermon at Benaras Unit 9 The Proposal",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.400 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 65,
+    "name": "NCERT Hornbill – English Core for Class 11",
+    "image": "https://i.ibb.co/8nzRrSZj/hornbill-11.jpg",
+    "price": 99.00,
+    "class": 11,
+    "description": "Hornbill (Core Course) Reading Skills Lesson 1: The Portrait of a Lady Lesson 2: We’re Not Afraid to Die… if We Can All Be Together Lesson 3: Discovering Tut: The Saga Continues Lesson 4: Landscape of the Soul Lesson 5: The Ailing Planet: The Green Movement’s Role Lesson 6: The Browning Version,Lesson 7: he AdventureLesson 8: Silk RoadWriting SkillsChapter 1: Note – makingChapter 2: SummarisingChapter 3: Sub – titlingChapter 4: Essay – writingChapter 5: Letter – writinghapter 6: Creative Writing(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.210 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 67,
+    "name": "It So Happened – Suppl. English",
+    "image": "https://i.ibb.co/rRR40Ht1/it-so-happ-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "Chapter 1: How the Camel got his hump Chapter 2: Children at work Chapter 3: The Selfish Giant Chapter 4: The treasure within Chapter 5: Princess September Chapter 6: The fight Chapter 7: Jalebis Chapter 8: Ancient Education System of India (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 68,
+    "name": "NCERT Abhyaswaan Bhav for Class 10",
+    "image": "https://i.ibb.co/Kzpm8VNw/abhyaswan-10.jpg ",
+    "price": 130.00,
+    "class": 10,
+    "description": "1. अप‍ठितावबोधनम् 2. पत्रलेखनम् (क) अनौपचारिकम प् त्रम् (ख) अौपचारिकम प् त्रम् 3. अनचु्‍छेदलेखनम् 4. चित्रवर्णनम् 5. रचनानवाद: (वा ु क्‍यरचनाकौशलम) 6. सन्धि: 7. समासा: 8. प्रत्‍यया: 9. अव्‍ययानि 10. समय: 11. वाच्‍यम् 12. अशद्ुधिसंशोधनम्13. मिश्रिताभ्‍यास: 14. आदर्शप्रश्‍नपत्रम् (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.400 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 69,
+    "name": "NCERT Sanskrit – Bhaswati – Class 11",
+    "image": "https://i.ibb.co/4RX1jFPh/bhaswati-sanskrit.jpg",
+    "price": 90.00,
+    "class": 11,
+    "description": "‘Bhaswati Bhag 1’ is a textbook of Sanskrit for students of class 11 who have opted for humanities/arts stream. This textbook has been constructed according to CBSE Board (NCERT) syllabus norms. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.500 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 70,
+    "name": "NCERT Sanskrit – Shaswati – Class 11",
+    "image": "https://i.ibb.co/Zp4H5m99/shashwati-sanskrit-11-1.jpg",
+    "price": 99.00,
+    "class": 11,
+    "description": "Shashwati Part 1 is a textbook of Sanskrit published by NCERT, that strictly follows the guidelines of CBSE Boards. This textbook is cohesively made for the students so that they can learn the aesthetics of the language. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.180 kg Dimensions	13 × 22 × 3 cm book-author	NCERT class	class 11"]
+  },
+  {
+    "id": 71,
+    "name": "NCERT Abhyaswaan Bhav for Class 9",
+    "image": "https://i.ibb.co/VWZFh57H/abhyaswan-9.png",
+    "price": 140.00,
+    "class": 9,
+    "description": "This Abhyasvan Bhav textbook in sanskrit is the perfect tool for the class 9 students to learn about the ancient and most old language of the India. has been published by NCERT and follows the syllabus prescribed by the CBSE. It comes in a paperback form. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.410 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 72,
+    "name": "NCERT Shemusi II – Sanskrit for Class 10",
+    "image": "https://i.ibb.co/TqmqMrrY/shemushi-10.jpg",
+    "price": 105.00,
+    "class": 10,
+    "description": "This book is for Class 10 for the subject Sanskrit. It is a textbook, published by NCERT as per the CBSE specifications. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.230 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 73,
+    "name": "NCERT Accounts Part I – Class 11 (English Medium)",
+    "image": "https://i.ibb.co/Z3xmwKG/accts-part-1-11-1.jpg",
+    "price": 165.00,
+    "class": 11,
+    "description": "This textbook is called ‘ Financial Accounting Part 1’ and is meant for students of class 11. This is an accountancy textbook that has been published by NCERT. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Accountancy",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.500 kg Dimensions	13 × 22 × 3 cm class	 class 11 book-author	NCERT "]
+  },
+  {
+    "id": 74,
+    "name": "NCERT Lekhashatra Bhag II – Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/nsm80XXq/accts-hindi-part-2-11-1.jpg",
+    "price": 95.00,
+    "class": 11,
+    "description": "This is an Accountancy textbook called ‘Financial Accounting Part 1’ for students of class 11. This has been constructed according to CBSE Board course of study and is published by NCERT. This is a perfect textbook to understand the concepts of Accountancy. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Accountancy",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.300 kg Dimensions	13 × 22 × 3 cm class	class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 75,
+    "name": "NCERT Accounts Part II – Class 11 (English Medium) (Copy)",
+    "image": "https://i.ibb.co/xtG9cNFh/accts-part-2-11-1.jpg",
+    "price": 95.00,
+    "class": 11,
+    "description": "This book has been designed as per the NCERT syllabus and comprehensively prepared for students according to the CBSE pattern. It helps students to prepare for the examinations by covering all important concepts and also makes learning more interesting. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Accountancy",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.300 kg Dimensions	13 × 22 × 3 cm class	 class 11 book-author	NCERT"]
+  },
+  {
+    "id": 76,
+    "name": "NCERT Lekhashatra Part I – Class 11(English Medium)",
+    "image": "https://i.ibb.co/qYkSy87W/accts-hindi-part-1-11-1.jpg",
+    "price": 165.00,
+    "class": 11,
+    "description": "‘Lekhashastra part 1’ is a textbook of Accountancy of Class 11, for the students of Commerce who are studying in Hindi medium schools. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Accountancy",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.500 kg Dimensions	13 × 22 × 3 cm class	class 11 book-author	NCERT"]
+  },
+  {
+    "id": 78,
+    "name": "NCERT An Alien Hand – Suppl.Eng-Class 7",
+    "image": "https://i.ibb.co/KcgNKq19/an-alien-hand7.jpg",
+    "price": 85.00,
+    "class": 7,
+    "description": "The Alien Hand Chapters • The Tiny Teacher • Bringing up Kari • Golu Grows a Nose • Chandni • The Bear Story • A Tiger in the House • An Alien Hand (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 79,
+    "name": "NCERT An Introduction to Indian Art for Class 11(English Medium)",
+    "image": "https://i.ibb.co/Mx6D61Bs/intro-to-indian-art-11-1.jpg",
+    "price": 160.00,
+    "class": 11,
+    "description": "Introduction to Indian Art Chapters • Prehistoric Rock Paintings • Arts of the Indus Valley • Arts of the Mauryan Period • Post-Mauryan Trends in Indian Art and Architecture • Later Mural Traditions • Temple Architecture and Sculpture • Indian Bronze Sculpture • Some Aspects of Indo-Islamic Architecture (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Arts",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.390 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	class 11"]
+  },
+  {
+    "id": 80,
+    "name": "NCERT Antaral – Suppl. Hindi Lit. I for Class 11",
+    "image": "https://i.ibb.co/Pv6WYHJW/antral-11.jpg",
+    "price": 80.00,
+    "class": 11,
+    "description": "Antral is a complementary textbook of Hindi meant for students of class 11. It is prescribed to students who have opted for Hindi (Elective) as a subject. Since, this book has been formulated according to CBSE Board (NCERT), it is perfect for school exam (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.150 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 81,
+    "name": "NCERT Arthashastra Mein Sankhiki – Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/hxqYczRP/stats-hindi-11-1.jpg",
+    "price": 108.00,
+    "class": 11,
+    "description": "Arthshastra Me Sankhyiki is a Hindi medium textbook of statistics which is a part of economics subject. NCERT has published this textbook of economics in Hindi for the students of class XI of humanities/commerce/science following the guidelines of CBSE (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Economics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.240 kg Dimensions	28 × 22 × 3 cm class	class 11 book-author	NCERT"]
+  },
+  {
+    "id": 82,
+    "name": "NCERT Indian Economic Development – Class 11 (English Medium)",
+    "image": "https://i.ibb.co/SXs3dXGB/ind-eco-dev-11-1.jpg",
+    "price": 140.00,
+    "class": 11,
+    "description": "Indian Economic Development Chapters • Indian Economy On The Eve Of Independence • Indian Economy 1950-1990 • Liberalization, Privatization And Globalization• Poverty • Human Capital Formation In India • Rural Development • Employment: Growth, Informalization And Other Issues • Infrastructure • Environment And Sustainable Development • Comparative Development Experiences Of India And Its Neighbors (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Economics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.320 kg Dimensions	28 × 22 × 3 cm class	class 11 book-author	NCERT"]
+  },
+  {
+    "id": 83,
+    "name": "NCERT Bharatiya Arthvyavasta Ka Vikas – Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/P3ZHdyJ/ind-eco-dev-hindi-11-1.jpg",
+    "price": 140.00,
+    "class": 11,
+    "description": "Bhartiya Arthvyavastha Ka Vikas Chapters • Indian Economy On The Eve Of Independence • Indian Economy 1950-1990 • Liberalization, Privatization And Globalization • Poverty • Human Capital Formation In India • Rural Development • Employment: Growth, Informalization And Other Issues • Infrastructure • Environment And Sustainable Development • Comparative Development Experiences Of India And Its Neighbors NCERT’s Bhartiya Arthvyavastha Ka Vikas is a Textbook of Economics, meant for the students of class XI of humanities/commerce/science stream who have opted for Economics as a subject. This textbook is published in Hindi medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Economics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.320 kg Dimensions	28 × 22 × 3 cm class	class 11 book-author	NCERT"]
+  },
+  {
+    "id": 84,
+    "name": "NCERT Arthshastra for – Class 9",
+    "image": "https://i.ibb.co/hbHj7Sq/arthshastra-9.jpg",
+    "price": 95.00,
+    "class": 9,
+    "description": "अध्याय 1: पालमपुर गाँव की कहानी अध्याय 2: संसाधन के रूप में लोग अध्याय 3: निर्धनता: एक चुनौती अध्याय 4: भारत में खाद्य सुरक्षा (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Economics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.190 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 85,
+    "name": "NCERT Arthik Vikas Ki Samajh – Arthashastra for Class 10",
+    "image": "https://i.ibb.co/fYjHHMPf/eco-hindi-10.jpg",
+    "price": 130.00,
+    "class": 10,
+    "description": "अर्थशास्त्र (आर्थिक विकास की समझ) Chapter 1: विकास Chapter 2: भारतीय अर्थव्यवस्था के क्षेत्रक Chapter 3: मुद्रा और साख Chapter 4: वैश्वीकरण और भारतीय अर्थव्यवस्था Chapter 5: उपभोक्ता अधिकार (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Economics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.280 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 86,
+    "name": "NCERT Statistics for Economics – Class 11 (English Medium)",
+    "image": "https://i.ibb.co/SD71bz2k/stats-11-1.jpg",
+    "price": 115.00,
+    "class": 11,
+    "description": "Statistics for Economics Chapters • Introduction • Collection of Data • Organisation of Data • Presentation of Data • Measures of Central Tendency • Measures of Dispersion • Correlation • Index Numbers • Use of Statistical Tools (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Economics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.240 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 87,
+    "name": "NCERT Beehive – English Textbook for Class 9",
+    "image": "https://i.ibb.co/jkY9BjbM/beehive-9.jpg",
+    "price": 95.00,
+    "class": 9,
+    "description": "Chapter 1: The Fun They Had Chapter 2: The Sound of Music Chapter 3: The Little Girl Chapter 4: A Truly Beautiful Mind Chapter 5: The Snake and the Mirror Chapter 6: My Childhood Chapter 7: Reach for the Top Chapter 8: Kathmandu Chapter 9: If I were you (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.370 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 88,
+    "name": "NCERT Bharat Aur Samakalin Vishwa II – Itihas for Class 10",
+    "image": "https://i.ibb.co/39z4tcmX/hist-hindi-10.jpg",
+    "price": 155.00,
+    "class": 10,
+    "description": "इतिहास (भारत और समकालीन विश्व – II) Chapter 1: यूरोप में राष्ट्रवाद का उदय Chapter 2: इंडो-चाइना में राष्ट्रवादी आंदोलन Chapter 3: भारत में राष्ट्रवाद Chapter 4: भूमंडलीकृत विश्व का बनना Chapter 5: औद्योगिकीकरण की युग Chapter 6: काम, आराम और जीवन Chapter (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "History",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.510 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 89,
+    "name": "NCERT Themes in World History -Class 11(English Medium)",
+    "image": "https://i.ibb.co/tMtXCPXc/history-11-1.jpg",
+    "price": 210.00,
+    "class": 11,
+    "description": "Themes in World History Chapters Section I: EARLY SOCIETIES Theme I: From the Beginning of Time Theme 2: Writing and City Life Section II: EMPIRES Theme 3: An Empire Across Three Continents Theme 4: The Central Islamic Lands Theme 5: Nomadic Empires Section III: CHANGING TRADITIONS Theme 6: The Three Orders Theme 7: Changing Cultural Traditions Theme 8: Confrontation of Cultures Section IV TOWARDS MODERNISATION Theme 9: The Industrial Revolution Theme 10: Displacing Indigenous Peoples Theme 11: Paths to Modernisation (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.) Related products-2% NCERT Our Past II - History-Class 7 ",
+    "category": "History",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.510 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	NCERT"]
+  },
+  {
+    "id": 90,
+    "name": "NCERT Exploring Society Class-7 ( Social Science Book ) 2025 Edition",
+    "image": "https://i.ibb.co/0pbg8Rjd/exploring-7.jpg",
+    "price": 90.00,
+    "class": 7,
+    "description": "NCERT Exploring Society: India And Beyond Class-7 ( Social Science Book ) – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Exploring soceity Class-7 Social Science Textbook will let the young minds venture into the abundant world of Social Studies. Ideal for the students of class 7, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers . (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges.)",
+    "category": "Social Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.800 kg Dimensions	28 × 30 × 3 cm book-author	NCERT class	 Class 7"]
+  },
+  {
+    "id": 91,
+    "name": "NCERT समाज का अध्ययन Samaaj Ka Adhyayan: Bharat Aur Uske Aage – Social Science Textbook (Hindi medium) Class VI",
+    "image": "https://i.ibb.co/v60cR5Hb/Samajh-Ka-Adhyan-6.png",
+    "price": 110.00,
+    "class": 6,
+    "description": "NCERT समाज का अध्ययन Samaj ka Aadhyan: Bharat or uske aage Class 6 – latest edition as per NCERT/CBSE -Hindi Medium (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Social Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 92,
+    "name": "NCERT Bharat Aur Samakalin Vishwa Itihas for – Class 9",
+    "image": "https://i.ibb.co/5WqjSzFC/hist-hindi-9.jpg",
+    "price": 145.00,
+    "class": 9,
+    "description": "खण्ड I: घटनाएँ और प्रक्रियाएँ पाठ 1. फ़्रांसिसी क्रांति पाठ 2. यूरोप में समाजवाद एवं रूसी क्रांति पाठ 3. नात्सीवाद और हिटलर का उदय खण्ड II: जीविका, अर्थव्यवस्था एवं समाज पाठ 4. वन्य समाज एवं उपनिवेशवाद पाठ 5. आधुनिक विश्व में चरवाहे पाठ 6. किसान और काश्तका (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "History",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.330 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 93,
+    "name": "NCERT Bharat Bhautik Paryavaran – Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/Kjyg9jyw/physical-geo-hindi-11-1.jpg",
+    "price": 105.00,
+    "class": 11,
+    "description": "Bharat – Bhautik Parayavaran is a textbook of Geograpgy (Bhugol) in Hindi Medium, that is published by NCERT under the guidelines of CBSE for the students of class XI of humanities/arts stream. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.290 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 94,
+    "name": "NCERT Bhugol Mein Prayogatmak Karya – Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/PZBddrHr/practical-geo-hindi-11-1.jpg",
+    "price": 130.00,
+    "class": 11,
+    "description": "Bhugol Me Prayogatmak Karya part 1 is published by NCERT under the guidance of CBSE for the students of humanities/arts stream for a better learning experience. This textbook is published in Hindi medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.280 kg Dimensions	28 × 22 × 3 cm class	class 11 book-author	NCERT"]
+  },
+  {
+    "id": 95,
+    "name": "NCERT Bharat ka Samvidhan Siddhanth Aur Vyavahar for Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/qMV2bQ9W/indian-const-hindi-11-1.jpg",
+    "price": 192.00,
+    "class": 11,
+    "description": "Bharat ka Samvidhan Sidhant Aur Vyavahar Chapters • Constitution: Why And How? • Rights In The Indian Constitution • Election And Representation • Executive • Legislature • Judiciary • Federalism • Local Governments • Constitution As A Living Document • The Philosophy Of The Constitution NCERT’s Bharat ka Samvidhan Sidhant Aur Vyavahar is a political science (Social Science) textbook for the students of class XI who are pursuing humanities/arts stream. This textbook is in Hindi Medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.450 kg Dimensions	13 × 22 × 3 cm class	 class 11 book-author	NCERT"]
+  },
+  {
+    "id": 96,
+    "name": "NCERT Political Theory part II – Class 11(English Medium)",
+    "image": "https://i.ibb.co/DcVY3q5/pol-theory-11-1.jpg",
+    "price": 130.00,
+    "class": 11,
+    "description": "Political Theory Chapters • Political Theory: An Introduction • Freedom • Equality • Social Justice • Rights • Citizenship • Nationalism • Secularism • Peace • Development (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.260 kg Dimensions	13 × 22 × 3 cm book-author	NCERT class	class 11"]
+  },
+  {
+    "id": 97,
+    "name": "NCERT Rajniti Siddhant Bhag II – Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/5hMxkW75/pol-theory-hindi-11-1.jpg",
+    "price": 130.00,
+    "class": 11,
+    "description": "Rajniti Siddhant Bhag II Chapters: • Political Theory: An Introduction • Freedom • Equality • Social Justice • Rights • Citizenship • Nationalism • Secularism • Peace • Development This is a textbook of Political science for the students of class XI who are pursuing Humanities/Arts stream. It is in Hindi Medium and has been devised under the guidelines of CBSE. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.260 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	class 11"]
+  },
+  {
+    "id": 98,
+    "name": "NCERT Indian Constitution at Work- Class XI (English Medium)",
+    "image": "https://i.ibb.co/RpqxPms8/indian-const-11-1.jpg",
+    "price": 192.00,
+    "class": 11,
+    "description": "Indian Constitution at Work Chapters • Constitution: Why And How? • Rights In The Indian Constitution • Election And Representation • Executive • Legislature • Judiciary • Federalism • Local Governments • Constitution As A Living Document • The Philosophy Of The Constitution (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.450 kg Dimensions	13 × 22 × 3 cm class	class 11 book-author	NCERT"]
+  },
+  {
+    "id": 99,
+    "name": "NCERT Bhautik Bhugol Ke Mool Sidhant – Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/SwN3m1Nn/fundamental-geo-hindi-11-1.jpg",
+    "price": 140.00,
+    "class": 11,
+    "description": "NCERT Bhautik Bhugol Ke Mool Sidhant is a textbook of Geography (Bhugol) for the students of class XI of humanities/arts stream. This book has been published in Hindi Medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.390 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 100,
+    "name": "NCERT Physics Part II – Class 11(English Medium)",
+    "image": "https://i.ibb.co/7xL2XQtR/physics-2-11-1.jpg",
+    "price": 175.00,
+    "class": 11,
+    "description": "Physics II(English Medium) Chapter 8: Mechanical Properties of Solids Chapter 9: Mechanical Properties of Fluids Chapter 10: Thermal Properties of Matter Chapter 11: Thermodynamics Chapter 12: Kinetic Theory Chapter 13: Oscillations Chapter 14: Waves (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Physics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.410 kg Dimensions	28 × 22 × 3 cm"]
+  },
+   {
+    "id": 101,
+    "name": "NCERT Physics Part I for Class 11(English Medium)",
+    "image": "https://i.ibb.co/ZqShYM5/physics-1-11-1.jpg",
+    "price": 150.00,
+    "class": 11,
+    "description": "Physics I (English Medium) Chapter 1: Units and Measurements Chapter 2: Motion in a Straight Line Chapter 3: Motion in a Plane Chapter 4: Laws of Motion Chapter 5: Work, Energy and Power Chapter 6: System of Particles and Rotational Motion Chapter 7: Gravitation (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Physics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.470 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 102,
+    "name": "NCERT Bhautiki Bhag I -Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/r2RHNLn0/bhautiki-1-11-1.jpg",
+    "price": 189.00,
+    "class": 11,
+    "description": "भौतिकी (भाग 1 तथा भाग 2) अध्याय 1: भौतिक जगत अध्याय 2: मात्रक और मापन अध्याय 3: सरल रेखा में गति अध्याय 4: समतल में गति अध्याय 5: गति के नियम अध्याय 6: कार्य, ऊर्जा और शक्ति अध्याय 7: कणों के निकाय तथा घूर्णी गति",
+    "category": "Physics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.470 kg Dimensions	28 × 22 × 3 cm class	 class 11"]
+  },
+  {
+    "id": 103,
+    "name": "NCERT Biology for Class 11 (English medium)",
+    "image": "https://i.ibb.co/DPfTt9yh/biology-11-1.jpg",
+    "price": 215.00,
+    "class": 11,
+    "description": "Biology Chapter 1: The Living World Chapter 2: Biological Classification Chapter 3: Plant Kingdom Chapter 4: Animal Kingdom Chapter 5: Morphology of Flowering Plants Chapter 6: Anatomy of Flowering Plants Chapter 7: Structural Organisation in Animals Chapter 8: Cell: The Unit of Life Chapter 9: Biomolecules Chapter 10: Cell Cycle and Cell Division Chapter 11: Photosynthesis in Higher Plants Chapter 12: Respiration in Plants Chapter 13: Plant Growth and Development Chapter 14: Breathing and Exchange of Gases Chapter 15: Body Fluids and Circulation Chapter 16: Excretory Products and their Elimination Chapter 17: Locomotion and Movement Chapter 18: Neural Control and Coordination Chapter 19: Chemical Coordination and Integration (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Biology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.700 kg Dimensions	28 × 22 × 3 cm class	 class 11"]
+  },
+  {
+    "id": 104,
+    "name": "NCERT Biotechnology for Class 11(English Medium)",
+    "image": "https://i.ibb.co/Vky8sb2/biotechnology-11-1.jpg",
+    "price": 359.00,
+    "class": 11,
+    "description": "This textbook is called ‘ Biotechnology ’ and is meant for students of class 11. This is an Biotechnology textbook that has been published by NCERT. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Biotechnology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.840 kg Dimensions	13 × 22 × 4 cm book-author	 NCERT class	 class 11"]
+  },
+  {
+    "id": 105,
+    "name": "NCERT Chemistry Part I – Class 11 (English Medium)",
+    "image": "https://i.ibb.co/gM6Gt2vP/chem-1-11.jpg",
+    "price": 260.00,
+    "class": 11,
+    "description": "Chapters Chemistry I (English Medium) Chapter 1: Some Basic Concepts of Chemistry Chapter 2: Structure of Atom Chapter 3: Classification of Elements and Periodicity in Properties Chapter 4: Chemical Bonding and Molecular Structure Chapter 5: Thermodynamics Chapter 6: Equilibrium (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Chemistry",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.650 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 106,
+    "name": "NCERT Rasayan Bhag II – Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/C5vFbrmH/chem-hindi-2-11-1.jpg",
+    "price": 150.00,
+    "class": 11,
+    "description": "रसायन (भाग 1 तथा भाग 2) अध्याय 1: रसायन विज्ञान की कुछ मूल अवधारणाएँ अध्याय 2: परमाणु की संरचना अध्याय 3: तत्वों का वर्गीकरण एवं गुणधर्मों में आवर्तिता अध्याय 4: रासायनिक आबंधन तथा आण्विक संरचना अध्याय 5: द्रव्य के अवस्थाएँ अध्याय 6: उष्मागतिकी अध्याय 7: साम्यावस्था अध्याय 8: अपचयोपचय अभिक्रियाएँ अध्याय 9: हाइड्रोजन अध्याय 10: s – बलॉक तत्व अध्याय 11: p – बलॉक तत्व अध्याय 12: कार्बनिक रसायन: कुछ आधारभूत सिद्धांत तथा तकनीकें अध्याय 13: हाइड्रोकार्बनअध्याय 14: पर्यावरणीय रसायन (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Chemistry",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.430 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	NCERT"]
+  },
+  {
+    "id": 107,
+    "name": "NCERT Informatics Practices for Class 11(English Medium)",
+    "image": "https://i.ibb.co/DHpcX8Zj/informatics-practice-11-1.jpg",
+    "price": 235.00,
+    "class": 11,
+    "description": "NCERT text book for school. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Informatics Practices",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.450 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	class 11"]
+  },
+  {
+    "id": 108,
+    "name": "NCERT Information and Communication Technology for Class 9",
+    "image": "https://i.ibb.co/GQ6zL8NY/computer-9.jpg",
+    "price": 170.00,
+    "class": 9,
+    "description": "Chapter 1: Introduction to ICT Chapter 2: Creating Textual Communication Chapter 3: Creating Visual Communication Chapter 4: Creating Audio-Video Communication Chapter 5: Presenting Ideas Chapter 6: Getting Connected: Internet Chapter 7: Safety and Security in the Cyber World Chapter 8: Fun with Logic (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Information and Communication Technology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.330 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 109,
+    "name": "NCERT Contemporary India – Geography for Class 10",
+    "image": "https://i.ibb.co/FLqVBqRb/geo-10.jpg ",
+    "price": 105.00,
+    "class": 10,
+    "description": "Chapters: Chapter 1: Resources and Development Chapter 2: Forest and Wildlife Resources Chapter 3: Water Resources  Chapter 4: Agriculture Chapter 5: Minerals and Energy Resources Chapter 6: Manufacturing Industries Chapter 7: Lifelines of National Economy (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.260 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 110,
+    "name": "NCERT Samakalin Bharat – Bhugol for Class 10",
+    "image": "https://i.ibb.co/JwQH0SDj/geo-hindi-10.jpg",
+    "price": 120.00,
+    "class": 10,
+    "description": "भूगोल (समकालीन भारत – II) Chapter 1: संसाधन और विकास Chapter 2: वन और वन्यजीव संसाधन Chapter 3: जल संसाधन Chapter 4: कृषि Chapter 5: खनिज और ऊर्जा संसाधन Chapter 6: विनिर्माण उद्योग Chapter 7: राष्ट्रीय अर्थव्यवस्था की जीवन रेखाएँ (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.260 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 111,
+    "name": "NCERT Democratic Politics for Class 9",
+    "image": "https://i.ibb.co/nqyRsCBz/demo-9.jpg",
+    "price": 110.00,
+    "class": 9,
+    "description": "Book Contains Chapter 1: What is Democracy? Why Democracy? Chapter 2: Constitutional Design Chapter 3: Electoral Politics Chapter 4: Working of Institutions Chapter 5: Democratic Rights (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.280 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 112,
+    "name": "NCERT Democratic Politics II for Class 10",
+    "image": "https://i.ibb.co/XrB2x40v/demo-10.jpg",
+    "price": 95.00,
+    "class": 10,
+    "description": "Chapters: Chapter 1: Power Sharing Chapter 2: Federalism Chapter 3: Gender, Religion and Caste in Politics Chapter 4: Political Parties Chapter 5: Outcomes of Democracy (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.240 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 113,
+    "name": "NCERT First Flight – English for Class 10",
+    "image": "https://i.ibb.co/BHS1KBc0/firstfligh10.jpg",
+    "price": 105.00,
+    "class": 10,
+    "description": "• A Letter to God; Dust of Snow; Fire and Ice • Nelson Mandela: Long Walk to Freedom; A Tiger in the Zoo • Two Stories about Flying – I. His First Flight, II. Black Aeroplane; How to Tell Wild Animals; The Ball Poem • From the Diary of Anne Frank; Amanda! • Glimpses of India – I. A Baker from Goa, II. Coorg, III. Tea from Assam; The Trees • Mijbil the Otter; Fog • Madam Rides the Bus; The Tale of Custard the Dragon • The Sermon at Benares; For Anne Gregory • The Proposal (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.280 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 114,
+    "name": "NCERT Maths Mela Class-4 ( Maths Book ) 2025 Edition",
+    "image": "https://i.ibb.co/nqxWsWgP/health-9.jpg",
+    "price": 220.00,
+    "class": 9,
+    "description": "Chapter 1 Health and Diseases Chapter 2 Growing up with Confidence Chapter 3 Physical Education Chapter 4 Physical Fitness Chapter 5 Sports Training Chapter 6 Individual Sports Chapter 7 Team Games Chapter 8 Ethics in Sports Chapter 9 Personality Development through Yoga Chapter 10 Waste Management Chapter 11 Diet for Healthy Living Chapter 12 First Aid and Safety Chapter 13 Social Health Chapter 14 Adolescent Friendly Health Services (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Health and Physical Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.530 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 115,
+    "name": "NCERT Honey Comb – English-Class 7",
+    "image": "https://i.ibb.co/SwNkWz5N/honeycomb-7-1.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "Honeycomb Chapters • Three Questions; The Squirrel • A Gift of Chappals; The Rebel • Gopal and the Hilsa Fish; The Shed • The Ashes That Made Trees Bloom; Chivvy • Quality; Trees • Expert Detectives; Mystery of the Talking Fan • The Invention of Vita-Wonk; Dad and the Cat and the Tree , Garden Snake • A Homage to our Brave Soldiers; Meadow Surprises (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 116,
+    "name": "NCERT Human Ecology & Family Science Part I for Class 11(English Medium)",
+    "image": "https://i.ibb.co/x8Mt9Ps9/human-ecology-part-1-11-1.jpg",
+    "price": 195.00,
+    "class": 11,
+    "description": "Human Ecology and Family Sciences Part 1 is a textbook of Home Science for Class XI students from humanities/arts stream studying through English medium. This textbook is ideally conceptualized to give students knowledge about Ecology. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Home Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.570 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	 class 11"]
+  },
+  {
+    "id": 117,
+    "name": "NCERT Human Ecology & Family Science Part II for Class 11(English Medium)",
+    "image": "https://i.ibb.co/6Ry3CGx4/human-ecology-part-2-11-1.jpg",
+    "price": 145.00,
+    "class": 11,
+    "description": "Human Ecology and Family Sciences Part 2 is a Home Science textbook for Class XI students from humanities/arts stream studying through English medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Home Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.410 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	 class 11"]
+  },
+  {
+    "id": 118,
+    "name": "NCERT Manav Parishthik Aur Parivar Vigyan Part-1 for Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/nqMjtVFf/human-ecology-hindi-part-1-11-1.jpg",
+    "price": 195.00,
+    "class": 11,
+    "description": "Manav Parishthik Aur Parivar Vigyan Part-1 is a textbook of Home Science for Class XI in Hindi medium students from humanities/arts stream studying through Hindi medium. This textbook is ideally conceptualized to give students knowledge about Ecology. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Home Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.570 kg Dimensions	13 × 22 × 3 cm book-author	NCERT class	class 11"]
+  },
+  {
+    "id": 119,
+    "name": "NCERT Manav Paristhitiki Or Parivar Vigyan Bhag II for Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/m5w7vY5X/human-ecology-hindi-part-2-11-1.jpg",
+    "price": 145.00,
+    "class": 11,
+    "description": "NCERT Manav Paristhitiki Or Parivar Vigyan Bhag II is a Home Science textbook for Class XI students from humanities/arts stream studying through Hindi medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Home Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.410 kg Dimensions	13 × 22 × 3 cm book-author	NCERT class	class 11"]
+  },
+  {
+    "id": 120,
+    "name": "NCERT India Physical Environment – Class 11(English Medium)",
+    "image": "https://i.ibb.co/ks05QWQ5/physical-geo-11-1.jpg",
+    "price": 99.00,
+    "class": 11,
+    "description": "India Physical Environment Chapters • India – Location • Structure and Physiography • Drainage System • Climate • Natural Vegetation • Soils • Natural Hazards and Disasters",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	.290 kg Dimensions	28 × 22 × 3 cm class	class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 121,
+    "name": "NCERT Jeev Vigyan for Class 11",
+    "image": "https://i.ibb.co/rKvCtVKn/jeev-vigyan-11-1.jpg",
+    "price": 269.00,
+    "class": 11,
+    "description": "जीव विज्ञान इकाई एक: जीव जगत में विविधता जीव जगत का वर्गीकरण वनस्पति जगत प्राणि जगत अध्याय 1: जीव जगत अध्याय 2: जीव जगत का वर्गीकरण अध्याय 3: वनस्पति जगत अध्याय 4: प्राणि जगत इकाई दो: पादप एवं प्राणियों में संरचनात्मक संगठन अध्याय 5: पुष्पी पादपों की आकार (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Biology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.700 kg Dimensions	28 × 22 × 3 cm class	 class 11"]
+  },
+  {
+    "id": 122,
+    "name": "NCERT Khel Yatra: Sharirik Shiksha Aur Arogya – Textbook (Hindi medium ) VI",
+    "image": "https://i.ibb.co/yns3rTcD/khel-yatra-Hindi-6.png",
+    "price": 97.00,
+    "class": 6,
+    "description": "NCERT खेल यात्रा Khel Yatra (Hindi medium )- Class 6 – latest edition as per NCERT/CBSE. It is a textbook published by NCERT as per the CBSE specifications. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Physical Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 123,
+    "name": "NCERT Kritika – Hindi Supplementary for Class 10",
+    "image": "https://i.ibb.co/qPfBGf1/kritika-10.jpg",
+    "price": 65.00,
+    "class": 10,
+    "description": "कृतिका Chapter 1: माता का अँचल Chapter 2: साना – साना हाथ जोड़ि… Chapter 3: मैं क्यों लिखता हूँ? (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.90 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 124,
+    "name": "NCERT Sanchayan – Supplementary Hindi ( 2nd Lang.) for Class 10",
+    "image": "https://i.ibb.co/8n6TD5KP/sanchayan-10.jpg",
+    "price": 65.00,
+    "class": 10,
+    "description": "Sanchayan पाठ 1: Mithileshwar – Harihar Kaka पाठ 2: Gurdyal Singh – Sapno Ke Se Din पाठ 3: Rahi Masoom Raza – Topi Shukla Lekhak Parichaya (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.130 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 125,
+    "name": "NCERT Kshitij – Hindi for Class 10",
+    "image": "https://i.ibb.co/6Jn89SQd/kshitij-10.jpg",
+    "price": 99.00,
+    "class": 10,
+    "description": "क्षितिज Chapter 1: सूरदास Chapter 2: तुलसीदास Chapter 3: जयशंकर प्रसाद Chapter 4: सूर्यकांत त्रिपाठी ‘निराला’ Chapter 5: नागार्जुन Chapter 6: मंगलेश डबराल Chapter 7: स्वयं प्रकाश Chapter 8: रामवृक्ष बेनीपुरी Chapter 9: यशपाल Chapter 10: मन्नू भंडारीChapter 11: यतीन्द्र मिश्रा Chapter 12: भदंत आनंद कौसल्यायन (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.210 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 126,
+    "name": "NCERT Kshitij for Class 9",
+    "image": "https://i.ibb.co/zTLrthxj/kshitij.jpg",
+    "price": 85.00,
+    "class": 9,
+    "description": "क्षितिज भाग 1 (‘अ’ पाठयक्रम) गद्य-खंड पाठ 1: दो बैलों की कथा पाठ 2: ल्हासा की ओर पाठ 3: उपभोक्तावाद की संस्कृति पाठ 4: साँवले सपनों की याद पाठ 5: नाना साहब की पुत्री देवी मैना को भस्म कर दिया गया पाठ 6: प्रेमचंद के फटे जूते पाठ 7: मेरे बचपन के दिन पाठ 8: एक कुत्ता और एक मैना काव्य-खंड पाठ 9: साखियाँ एवं सबद पाठ 10: वाख पाठ 11: सवैये पाठ 12: कैदी और कोकिला पाठ 13: ग्राम श्री पाठ 14: चंद्र गहना से लौटती बेर पाठ 15: मेघ आए पाठ 16: यमराज की दिशा पाठ 17: बच्चे काम पर जा रहे हैं (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.190 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 127,
+    "name": "NCERT Manovigyan- Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/m5zp71Cj/manovigyan-11-1.jpg",
+    "price": 170.00,
+    "class": 11,
+    "description": "Manovigyan  Chapters • What is Psychology? • Methods of Enquiry in Psychology • The Bases of Human Behavior • Human Development • Sensory, Attentional and Perceptual Processes • Learning • Human Memory • Thinking • Motivation and Emotion NCERT has published this textbook of Psychology for the students of class XI of Humanities/Arts/Science stream. This Manovigyan (Psychology) textbook is made to give an enhanced knowledge of the subject and to aid students in exam preparation. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Psychology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.420 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	class 11"]
+  },
+  {
+    "id": 128,
+    "name": "NCERT Psychology – Class 12 (English Medium)",
+    "image": "https://i.ibb.co/mVcK93JY/psychology-cl-12.jpg",
+    "price": 170.00,
+    "class": 12,
+    "description": "Chapter 1: Variations in Psychological Attributes Chapter 2: Self and Personality Chapter 3: Meeting Life Challenges Chapter 4: Psychological Disorders Chapter 5: Therapeutic Approaches Chapter 6: Attitude and Social Cognition Chapter 7: Social Influence and Group Processes Chapter 8: Psychology and Life Chapter 9: Developing Psychological Skills (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Psychology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.420 kg Dimensions	13 × 22 × 3 cm book-author	NCERT class	Class 12"]
+  },
+  {
+    "id": 129,
+    "name": "NCERT Psychology – Class 11 (English Medium)",
+    "image": "https://i.ibb.co/SXFFkkD3/psychology-11-1.jpg",
+    "price": 170.00,
+    "class": 11,
+    "description": "Chapters • What is Psychology? • Methods of Enquiry in Psychology • The Bases of Human Behaviour • Human Development • Sensory, Attentional and Perceptual Processes • Learning • Human Memory • Thinking • Motivation and Emotion (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Psychology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.420 kg Dimensions	13 × 22 × 3 cm book-author	 NCERT class	class 11 "]
+  },
+  {
+    "id": 130,
+    "name": "NCERT Our Environment – Geography-Class 7",
+    "image": "https://i.ibb.co/zWfrL7Gw/geo-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "Our Environment Chapters • Environmen • Inside Our Earth • Our Changing Earth • Air • Water • Human Environment Interactions – The Tropical and the Subtropical Region • Life in the Deserts (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 131,
+    "name": "Ncert हमारा पर्यावरण Hamara Paryavaran -Hindi Medium -भूगोलClass 7",
+    "image": "https://i.ibb.co/vC6bcWRB/geo-hindi-7.jpg",
+    "price": 95.00,
+    "class": 7,
+    "description": "अध्याय 1: पर्यावरण अध्याय 2: हमारी पृथ्वी के अंदर अध्याय 3: हमारी बदलती पृथ्वी अध्याय 4: वायु अध्याय 5: जल अध्याय 6: प्राकृतिक वनस्पति एवं वन्य जीवन अध्याय 7: मानवीय पर्यावरण: बस्तियाँ, परिवहन एवं संचार अध्याय 8: मानव – पर्यावरण अन्योन्यक्रिया: उष्णकटिबंध(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 132,
+    "name": "NCERT Sansadhan Avam Vikas (Bhugol) for – Class 8 – latest edition as per NCERT/CBSE",
+    "image": "https://i.ibb.co/MxqK9bQv/res-hindi-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "अध्याय 1: संसाधन अध्याय 2: भूमि, मृदा, जल, प्राकृतिक वनस्पति और वन्य जीवन संसाधन अध्याय 3: खनिज और शक्ति संसाधन अध्याय 4: कृषि अध्याय 5: उद्योग अध्याय 6: मानव संसाधन (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 133,
+    "name": "NCERT Samakalin Bharat Bhugol for – Class 9",
+    "image": "https://i.ibb.co/3mMDdgKz/geo-hindi-9.jpg",
+    "price": 100.00,
+    "class": 9,
+    "description": "अध्याय 1: भारत – आकार और स्थिति अध्याय 2: भारत का भौतिक स्वरुप अध्याय 3: अपवाह अध्याय 4: जलवायु अध्याय 5: प्राकृतिक वनस्पति तथा वन्य प्राणी अध्याय 6: जनसंख्या (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Geography",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.200 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 134,
+    "name": "NCERT Our Past II – History-Class 7",
+    "image": "https://i.ibb.co/Vc00yS9z/hist-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "Our Pasts-II Chapters • Tracing Changes Through A Thousand Years • Kings And Kingdoms • The Delhi 12th to 15th Century • The Mughals (16th to 17th century) • Tribes, Nomads And Settled Communities • Devotional Paths To The Divine • The Making Of Regional Cultures • Eighteenth-Century Political Formations (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "History",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 135,
+    "name": "NCERT हमारे अतीत HAMARE ATIT -Bhaag-III-Class-8",
+    "image": "https://i.ibb.co/F4NJ1DY6/hist-hindi-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "इतिहास (हमारे अतीत – III) पाठ 1: कैसे, कब और कहाँ पाठ 2: व्यापार से साम्राज्य तक पाठ 3: ग्रामीण क्षेत्र पर शासन चलाना पाठ 4: आदिवासी, दिकू और एक स्वर्ण युग के कल्पना पाठ 5: जब जनता बग़ावत करती है पाठ 6: उपनिवेशवाद और शहर पाठ 7: बुनकर, लोहा बनाने वाले और फै (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "History",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 136,
+    "name": "NCERT Samaj Ka Bodh Bhag II – Class 11 (Hindi Medium)",
+    "image": "https://i.ibb.co/v4b4Cymb/samaj-ka-bodh-11-1.jpg",
+    "price": 119.00,
+    "class": 11,
+    "description": "Samaj Ka Bodh Chapters • Social Structure, Stratification And Social Processes In Society • Social Change and Social Order In Rural And Urban Society • Environment And Society • Introducing Western Sociologists • Indian Sociologists This is a textbook called ‘Samaj Ka Bodh’ that has been published by NCERT that has been constructed according to CBSE Board syllabus norms. It is a textbook of Sociology for class XI students who are pursuing Humanities/Arts stream through Hindi medium. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sociology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.210 kg Dimensions	28 × 22 × 4 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 137,
+    "name": "NCERT Samajshastra Bhag I for Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/NdPFnnbg/intro-sociology-hindi-11-1.jpg",
+    "price": 99.00,
+    "class": "11",
+    "description": "Samajshastra Parichey Chapter • Sociology And Society • Terms, Concepts And Their Use in Sociology • Understanding Social Institutions • Culture And Socialisation • Doing Sociology: Research Methods Samajshastra is a textbook of Sociology meant for students of class XI, studying through Hindi medium. It is published by NCERT which strictly follows the CBSE guidelines. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sociology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.210 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author"]
+  },
+  {
+    "id": 138,
+    "name": "NCERT Understanding Society Part II – Class 11 (English Medium)",
+    "image": "https://i.ibb.co/PsbyrScz/understanding-sociology-11-1.jpg",
+    "price": 119.00,
+    "class": "11",
+    "description": "Understanding Society Chapters • Social Structure, Stratification And Social Processes In Society • Social Change and Social Order In Rural And Urban Society • Environment And Society • Introducing Western Sociologists • Indian Sociologists (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sociology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.210 kg Dimensions	28 × 22 × 4 cm class	 class 11 book-author	NCERT"]
+  },
+  {
+    "id": 139,
+    "name": "NCERT Sociology Part I for Class 11",
+    "image": "https://i.ibb.co/whzKSdbF/intro-sociology-11-1.jpg",
+    "price": 99.00,
+    "class": 11,
+    "description": "Introducing Sociology Chapters • Sociology And Society • Terms, Concepts And Their Use In Sociology • Understanding Social Institutions • Culture And Socialisation • Doing Sociology: Research Methods (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sociology",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.210 kg Dimensions	28 × 22 × 3 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 140,
+    "name": "NCERT Sanchayan Supplementary Hindi ( 2nd Lang.) for Class 9",
+    "image": "https://i.ibb.co/G3TvrSwL/sachayan-9.jpg",
+    "price": 55.00,
+    "class": 9,
+    "description": "",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.100 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 141,
+    "name": "NCERT Shemusi Sanskrit for – Class 9",
+    "image": "https://i.ibb.co/twwQZ6Vg/shemushi-9.jpg",
+    "price": 95.00,
+    "class": 9,
+    "description": "रचनात्मक-मूल्यांकनम् • संकलनात्मक – मूल्यांकनम् • अपठित-अवबोधनम् • रचनात्मक-कार्यम् • अनुप्रयुक्त-व्याकरणम् • ओपचारिकम् अथवा अनौपचारिकम् पत्रम् • मणिका – अभ्यासपुस्तक – आधारितम् (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.180 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 142,
+    "name": "NCERT Snapshot – Supplementary English Core for Class 11",
+    "image": "https://i.ibb.co/d09X43Pp/snapshot-11.jpg",
+    "price": 75.00,
+    "class": 11,
+    "description": "Snapshots (Core Course) Supplementary Reader Chapter 1: The Summer of the Beautiful White Horse Chapter 2: The Address Chapter 3: Ranga’s Marriage Chapter 4: Albert Einstein at School Chapter 5: Mother’s Day Chapter 6: The Ghat of the Only World Chapter 7: Birth Chapter 8: The Tale of Melon City (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.) Related products",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.130 kg Dimensions	13 × 22 × 3 cm Related products"]
+  },
+  {
+    "id": 143,
+    "name": "NCERT Social and Political Life II-Class 7",
+    "image": "https://i.ibb.co/Jw1WLJGn/pol-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "Social & Political Life-II Chapters • On Equality • Role of the Government in Health • How the State Government Works • Growing up as Boys and Girls  • Women Change the World • Understanding Media • Markets Around Us • A Shirt in the Market (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Social Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 144,
+    "name": "NCERT सामाजिक एवं राजनीतिक जीवन Samajik Aur Rajniti Jeevan II-Hindi Medium -Class 7",
+    "image": "https://i.ibb.co/ynwpWMmV/pol-hindo-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "इकाई एक: भारतीय लोकतंत्र में समानता अध्याय 1: समानता इकाई दो: राज्य सरकार अध्याय 2: स्वास्थ्य में सरकार की भूमिका अध्याय 3: राज्य शासन कैसे काम करता है इकाई तीन: लिंग बोध – जेंडर अध्याय 4: लड़के और लड़कियों के रूप में बड़ा होना अध्याय 5: औरतों ने बदली दुनिया (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Social Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 145,
+    "name": "NCERT सामाजिक एवं राजनीतिक जीवन-Samajik Aur Rajniti Jeevan-Bhaag-III-Class-8",
+    "image": "https://i.ibb.co/cc63ft5W/social-hindi-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "इकाई एक: भारतीय संविधान और धर्मनिरपेक्षता अध्याय 1: भारतीय संविधान अध्याय 2: धर्मनिरपेक्षता की समझ इकाई दो: संसद तथा कानूनों का निर्माण अध्याय 3: हमें संसद क्यों चाहिए? अध्याय 4: कानूनों के समझ इकाई तीन: न्यायपालिका अध्याय 5: न्यायपालिका अध्याय 6: हमारी आ (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Social Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 146,
+    "name": "NCERT Loktantrik Rajniti for – Class 9",
+    "image": "https://i.ibb.co/XfmLCMfN/demo-hindi-9.jpg",
+    "price": 120.00,
+    "class": 9,
+    "description": "अध्याय 1: समकालिक विश्व में लोकतंत्र अध्याय 2: लोकतंत्र क्या? लोकतंत्र क्यों? अध्याय 3: संविधान निर्माण अध्याय 4: चुनावी राजनीति अध्याय 5: संस्थाओं का कामकाज  6: लोकतांत्रिक अधिकार (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Political Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.280 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 147,
+    "name": "NCERT Sparsh – 2nd Lang. Hindi for Class 9",
+    "image": "https://i.ibb.co/MybmkG1N/sparsh-9.jpg",
+    "price": 75.00,
+    "class": 9,
+    "description": "‘गद्य खंड गद्य का पठन-पाठन 1. यशपाल – दुःख का अधिकार 2. बचेंद्री पाल – एवरेस्ट : मेरी शिखर यात्रा व.. 3. शरद जोशी – तुम कब जाओगे, अतिथि 4 घीरंजन मालवे – वैज्ञानिक चेतना के वाहक चंद्रशेखर वेंकट रामन्‌ 5. गणेशशंकर विद्यार्थी – धर्म कौ आड़ 6. स्वामी आनंद – – शुक्रतारे के समान काव्य खंड कविता का पठन-पाठन 7. रैदास – अब कैसे छूटै राम, नाम… ऐसी लाल तुझ बितु… 8. रहीम < दोहे 9. नजीर अकबराबादी _- आदमी नामा 10. सियारामशरण गुप्त _ – एक फूल की चाह ड्ड 11. रामधारी सिंह दिनकर – गीत-अगीत 98 12. हरिवंशराय बच्चन… – अग्नि पथ 80313. अरुण कमल – «नए इलाके में… खुशबू रचते हैं हाथ (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.170 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 148,
+    "name": "NCERT Vigyan for – Class 9",
+    "image": "https://i.ibb.co/DgHCdzvV/history-hindi-11-1.jpg",
+    "price": 185.00,
+    "class": 9,
+    "description": "अध्याय 1: हमारे आस – पास के पदार्थ अध्याय 2: क्या हमारे आस – पास के पदार्थ शुद्ध हैं अध्याय 3: परमाणु एवं अणु अध्याय 4: परमाणु की संरचना अध्याय 5: जीवन की मौलिक इकाई अध्याय 6: ऊतक अध्याय 7: जीवों में विविधता अध्याय 8: गति अध्याय 9: बल तथा गति के नियम (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.420 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 149,
+    "name": "NCERT Vitan – Hindi Core for Class 11",
+    "image": "https://i.ibb.co/mCnKB8Wy/vitan-11.jpg",
+    "price": 75.00,
+    "class": 11,
+    "description": "Vitan (Bhag 1) is a Hindi textbook for the students of class XI who have opted for Hindi language in class XI. It is made to give thorough knowledge of Hindi literature and is prescribed in schools as a coursebook for Hindi core subject. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.140 kg Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 150,
+    "name": "NCERT Vyakran Vithi for Class 9",
+    "image": "https://i.ibb.co/tTbLG5qx/vyakran-vithi-9.jpg",
+    "price": 140.00,
+    "class": 9,
+    "description": "This Vyakran Vithi textbook in Sanskrit is the perfect tool for the class 9 students to learn about the ancient and most old language of the India. has been published by NCERT and follows the syllabus prescribed by the CBSE. It comes in a paperback form. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.280 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 151,
+    "name": "NCERT Vyavasaik Adhyayan for – Class 11(Hindi Medium)",
+    "image": "https://i.ibb.co/4n5RTzv7/B-ST-hindi-11-1.jpg",
+    "price": 105.00,
+    "class": 11,
+    "description": "Vyavsay Adhyayan Chapters- • Nature and Purpose of Business • Forms of Business Organisation • Private, Public and Global Enterprises • Business Services • Emerging Modes of Business • Social Responsibilities of Business and Business Ethics • Formation of a Company • Sources of Business Finance • Small Business • Internal Trade • International Business – I • International Business – II NCERT has published this textbook titled as Vyavsay Adhyayan for class XI students who are pursuing Commerce Stream. It is published in Hindi medium and is a good source to know all about Business Studies (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Business Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.520 kg Dimensions	28 × 22 × 4 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 152,
+    "name": "NCERT Business Studies – Class 11 (English  Medium)",
+    "image": "https://i.ibb.co/RkSYcw5Y/B-ST-11-1.jpg",
+    "price": 105.00,
+    "class": 11,
+    "description": "Business Studies Chapters- • Nature and Purpose of Business • Forms of Business Organisation • Private, Public and Global Enterprises • Business Services • Emerging Modes of Business • Social Responsibilities of Business and Business Ethics • Formation of a Company • Sources of Business Finance • Small Business • Internal Trade • International Business – I • International Business – II (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Business Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.520 kg Dimensions	28 × 22 × 4 cm class	 class 11 book-author	 NCERT"]
+  },
+  {
+    "id": 153,
+    "name": "NCERT कौशल बोध Kaushal Bodh – Vocational Education Activity Book (Hindi medium ) VI",
+    "image": "https://i.ibb.co/mV79vksJ/Kaushal-bodh-Hindi-",
+    "price": 95.00,
+    "class": 6,
+    "description": "his book is for Class 6 for the subject Kaushal Bodh in Hindi medium. It is a textbook published by NCERT as per the CBSE specifications. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Vocational Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 154,
+    "name": "NCERT दुर्वा Durva – Second Lng. II-Class 7",
+    "image": "https://i.ibb.co/yBWVDQLG/durva-7.jpg",
+    "price": 88.00,
+    "class": 7,
+    "description": "पाठ्य पुस्तक दूर्वा II • चिड़िया और चुरुंगुन (कविता) • सबसे सुंदर लड़की (कहानी) • मैं हूँ रोबोट (निबंध) • गुब्बारे पर चिता (कहानी) • थोड़ी धरती पाऊँ (कविता) • गारो (लोककथा) • पुस्तकें जो अमर हैं (निबंध) • काबुलीवाला (कहानी) • विश्वेश्वरैया (व्यक्तित्व) • हम धरती के लाल (कविता) • पोंगल (निबंध) • शहीद झलकारीबाई (एकांकी) • नृत्यांगना सुधा चंद्रन (जीवनी)• पानी और धूप (कविता) • गीत (कविता) • मिटटी की मूर्तियाँ (निबंध-अतिरिक्त पठन हेतु) • मौत का पहाड़ (चित्रकथा) • हम होंगे कामयाब एक दिन (गीत-अतिरिक्त पठन हेतु) (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 155,
+    "name": "NCERT बाल महाभारत कथा Bal Mahabharat Katha-Class 7",
+    "image": "https://i.ibb.co/V0YXtmqd/mahabharat-7.jpg",
+    "price": 88.00,
+    "class": 7,
+    "description": "This is a supplement textbook of Hindi called बाल महाभारत कथा ‘Bal Mahabharat Katha’, publshed by CBSE. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 156,
+    "name": "NCERT रुचिरा Ruchira II – संस्कृत-Class 7",
+    "image": "https://i.ibb.co/GQPpsx0Z/ruchira-7.jpg",
+    "price": 107.00,
+    "class": 7,
+    "description": "रुचिरा Ruchira part 2 is a textbook of संस्कृत for the students of class VII. This Sanskrit textbook is published by NCERT. It has been constructed according to the guidelines laid by CBSE board (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 42 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 157,
+    "name": "Sanskhipta Budhacharitra-cl-VIII",
+    "image": "https://i.ibb.co/sxX7Xsz/sanshipt-budhcharita.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 158,
+    "name": "NCERT रुचिरा Ruchira III – संस्कृत-Class 8",
+    "image": "https://i.ibb.co/0Rg3VkjZ/ruchira-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "Published by NCERT, the enriched content of रुचिरा Ruchira Bhag – 3 संस्कृत  Textbook will let the young minds venture into the abundant world of Sanskrit, the language. Ideal for the students of class 8, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students dive deep into the world of this standardized dialect of Old Indo-Aryan civilizations. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning Sanskrit. Contains precise rules and definitions of different grammatical aspects of Sanskrit. Simple and easy to understand format let the students learn the content by heart and memorise it quickly. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 159,
+    "name": "NCERT वसंत Vasant II-Class 7",
+    "image": "https://i.ibb.co/HT5thJc8/vasant-7.jpg",
+    "price": 97.00,
+    "class": 7,
+    "description": "वसंत भाग 2 • हम पंछी उन्मुक्त गगन के (कविता) • हिमालय की बेटियां (निबंध) • कठपुतली (कविता) • मिठाईवाला (कहानी)• पापा खो गए (नाटक-मराठी) • शाम – एक किसान (कविता) • अपूर्व अनुभव (संस्मरण-जापानी) • रहीम के दोहे (कविता) • एक तिनका (कविता) • खानपान की बदलती तस्वीर (निबंध) • नीलकंठ (रेखाचित्र) • भोर और बरखा (कविता) • वीर कुंवर सिंह (जीवनी) • संघर्ष के कारण मैं तुनुकमिज़ाज हो गया: धनराज (साक्षात्कार)• आश्रम का अनुमानित व्यय (लेखा-जोखा) (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 160,
+    "name": "NCERT वसंत Vasant-Bhaag -III – Class-8",
+    "image": "https://i.ibb.co/PvDnxQH5/vasant-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "पाठ 1: लाख की चूड़ियाँ (कहानी) पाठ 2: बस की यात्रा (व्यंग) पाठ 3: दीवानों की हस्ती (कविता) पाठ 4: भगवान के डाकिए (कविता) पाठ 5: क्या निराश हुआ जाए (निबंध) पाठ 6: यह सबसे कठिन समय। नहीं (कविता) पाठ 7: कबीर की साखियॉं पाठ 8: सूरदास चरित (कविता) पाठ 9: जहाँ पहिया है (रिपोर्ताज) पाठ 10: अकबरी लोटा (कहानी) पाठ 11: सूरदास के पद (कविता) पाठ 12: पानी की कहानी (निबंध) पाठ 13: बाज और साँप (कहानी) (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	13 × 22 × 3 cm"]
+  },
+  {
+    "id": 161,
+    "name": "OUR PAST -III",
+    "image": "https://i.ibb.co/zVDbcMF0/hist-8.jpg",
+    "price": 97.00,
+    "class": 8,
+    "description": "History (Our Pasts – III) (Part 1 & 2) Chapter 1: How, When and Where Chapter 2: From Trade to Territory Chapter 3: Ruling the Countryside Chapter 4: Tribals, Dikus and the Vision of a Golden Age Chapter 5: When People Rebel Chapter 6: Civilising the “Native”, Educating the Nation Chapter 7: Women, Caste and Reform Chapter 8: The Making of the National Movement: 1870s – 1947 (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "History",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 162,
+    "name": "Science",
+    "image": "https://i.ibb.co/1GLVPbRk/science-8.jpg",
+    "price": 115.00,
+    "class": 8,
+    "description": "Chapter 1: Crop Production and Management Chapter 2: Microorganisms: Friend and Foe Chapter 3: Coal and Petroleum Chapter 4: Combustion and Flame Chapter 5: Conservation of Plants and Animals Chapter 6: Reproduction in Animals Chapter 7: Reaching the Age of Adolescence Chapter 8: Force and Pressure Chapter 9: Friction Chapter 10: Sound Chapter 11: Chemical Effects of Electric Current Chapter 12: Some Natural Phenomena Chapter 13: Light (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 40 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 163,
+    "name": "NCERT Science for Class 9 – latest edition as per NCERT/CBSE",
+    "image": "https://i.ibb.co/dJ1p7gJm/science-9.jpg",
+    "price": 155.00,
+    "class": 9,
+    "description": "Book Contains Chapter 1 MATTER IN OUR SURROUNDINGS Chapter 2 IS MATTER AROUND US PURE? Chapter 3 ATOMS AND MOLECULES 4 STRUCTURE OF THE ATOM Chapter 5 THE FUNDAMENTAL UNIT OF LIFE Chapter 6 TISSUES Chapter 7 MOTION Chapter 8 FORCE AND LAWS OF MOTION  9 GRAVITATION Chapter 10 WORK AND ENERGY Chapter 11 SOUND Chapter 12 IMPROVEMENT IN FOOD RESOURCES (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 35 per book mandatory binding charges.)",
+    "category": "Science",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	0.420 kg Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 164,
+    "name": "NCERT Ganita Prakash (Maths Book) Class-6 2025 Edition",
+    "image": "https://i.ibb.co/BV63R2LL/Ganita-Prakash-6.png",
+    "price": 90.00,
+    "class": 6,
+    "description": "NCERT Mathematics – Class 6 – latest edition as per NCERT/CBSE Chapters : Chapter 1 Patterns in Mathematics Chapter 2 Lines and Angles Chapter 3 Number Play Chapter 4 Data Handling and Presentation Chapter 5 Prime Time Chapter 6 Perimeter and Area Chapter 7 Fractions Chapter 8 Playing with Constructions Chapter 9 Symmetry Chapter 10 The Other Side of Zero Learning Material Sheets (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 25 per book mandatory binding charges, .)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.73 kg Dimensions	28 × 30 × 3 cm class	 Class 6 book-author	 NCERT"]
+  },
+  {
+    "id": 165,
+    "name": "NCERT कृति Kriti 1 – Kala Pathyapustak (Hindi) VI",
+    "image": "https://i.ibb.co/9H77MVJr/Kriti-Hindi-6.png",
+    "price": 97.00,
+    "class": 6,
+    "description": "NCERT कृति  Kriti-I (Hindi)- Class 6 – latest edition as per NCERT/CBSE.It is a textbook published by NCERT as per the CBSE specifications. (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Art Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 166,
+    "name": "NCERT Khel Yoga Class-3 (Physical Education Textbook) 2025 Edition",
+    "image": "https://i.ibb.co/VcjN3DCL/Khel-yoga-3.png",
+    "price": 90.00,
+    "class": 3,
+    "description": "NCERT Khel Yoga Class-3 (Physical Education Textbook) – latest edition as per NCERT/CBSE Chapters Unit 1— Basic Motor Movements Chapter 1: Throwing and Catching 2 Chapter 2: Kicking and Receiving 12 Chapter 3: Strike the Ball 21 Chapter 4: Little Steps 30 Unit 2— Our Games Chapter 5: Local and Traditional Games 46 Unit 3— Yoga Chapter 6: Yoga for Daily Life 70 Chapter 7: Yogic Practices (Yoga Sadhana) 85 All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Physical Education",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Weight	370 kg Dimensions	28 × 30 × 3 cm class	 Class 3 book-author	 NCERT"]
+  },
+  {
+    "id": 167,
+    "name": "Ncert Ganit Mela (Maths Textbook) (Hindi Medium ) Class-3",
+    "image": "https://i.ibb.co/1Gv2mctF/Ganit-Mela-3.png",
+    "price": 90.00,
+    "class": 3,
+    "description": "NCERT Ganit Mela (Maths Book) (Hindi Medium) – Class 3 – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Ganit Mela Class-3 Maths Textbook will let the young minds venture into the abundant world of Maths. Ideal for the students of class 3, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.550 kg Dimensions	28 × 30 × 3 cm class	 Class 3 book-author	 NCERT"]
+  },
+  {
+    "id": 168,
+    "name": "Ncert Hamara Adhbhut Sansar (EVS Textbook) (Hindi Medium) Class- 3",
+    "image": "https://i.ibb.co/VpcrN6TB/Hamara-Adhbhut-Sansar-3.png",
+    "price": 90.00,
+    "class": 3,
+    "description": "NCERT Hamara Adhbhut Sansar (EVS Book) (Hindi Medium) – Class 3 – latest edition as per NCERT/CBSE Published by NCERT, the enriched content of Hamara Adhbhut Sansar Class-3 EVS Textbook will let the young minds venture into the abundant world of EVS. Ideal for the students of class 3, this textbook has been outlined as per the guidelines and syllabus that have been set by the Central Board of Secondary Education (CBSE). Easy to understand, clear instructions will let the students to learn quickly. Salient Features of the Textbook: It acts as a building block for students, who are interested in learning new things. Easy language which makes learning fast. Simple and easy to understand format let the students learn the content by heart and memorize it quickly. All books are 100℅ original on Janatabookspoint.com ( Online Book Store ). NOTE THIS BOOK IS WITH BINDING 65 Rs ( MRP ) + 25 Rs ( BINDING ) Janata Books Point provides products with quick delivery, Original Books from trusted sellers .",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Weight	0.460 kg Dimensions	28 × 30 × 3 cm class	 Class 3 book-author	 NCERT "]
+  },
+  {
+    "id": 169,
+    "name": "Ncert Looking Around-Class 4",
+    "image": "https://i.ibb.co/Z69sDSGT/looking-Around-4-450x582.jpg",
+    "price": 95.00,
+    "class": 4,
+    "description": "Chapters • Going to School • Ear to Ear • A Day with Nandu • The Story of Amrita • Anita and the Honeybees • Omana’s Journey • From the Window • Reaching Grandmother’s House • Changing Families • Hu Tu Tu, Hu Tu Tu • The Valley of Flowers • Changing Times • A River’s Tale • Basva’s Farm • From Market to Home • A Busy Month • Nandita in Mumbai • Too Much Water, Too Little Water • Abdul in the Garden • Eating Together • Food and Fun • The World in my Home • Pochampalli • Home and Abroad • Spicy Riddles • Defence Officer: Wahida • Chuskit Goes to School (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 170,
+    "name": "NCERT Looking Around-Class 5",
+    "image": "https://i.ibb.co/fdFVxztr/Looking-Around-5.jpg",
+    "price": 120.00,
+    "class": 5,
+    "description": "Chapters • Super Senses • A Snake Charmer’s Story • From Tasting to Digesting • Mangoes Round the Year • Seeds and Seeds • Every Drop Counts • Experiments with Water • A Treat for Mosquitoes • Up You Go! • Walls Tell Stories • Sunita in Space • What if it Finishes …? • A Shelter so High! • When the Earth Shook! • Blow Hot, Blow Cold • Who will do this Work? • Across the Wall • No Place for Us? • A Seed tells a Farmer’s Story • Whose Forests? • Like Father, Like Daughter • On the Move Again (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 55 per book mandatory binding charges.)",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm "]
+  },
+  {
+    "id": 171,
+    "name": "Ncert Math- Magic IV- Class 4",
+    "image": "https://i.ibb.co/60cg1SBQ/Math-Magic-4.jpg",
+    "price": 95.00,
+    "class": 4,
+    "description": "• Building with Bricks • Long and Short  A Trip to Bhopal • Tick-Tick-Tick • The Way The World Looks • The Junk Seller • Jugs and Mugs • Carts and Wheels • Halves and Quarters • Play with Patterns • Tables and Shares • How Heavy? How Light? • Fields and Fences • Smart Charts (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 172,
+    "name": "NCERT Math Magic – Class 5 – latest edition as per NCERT/CBSE",
+    "image": "https://i.ibb.co/ksBb034d/Math-MAgic-5.jpg",
+    "price": 95.00,
+    "class": 5,
+    "description": "Chapters • The Fish Tale • Shapes and Angles • How Many Squares? • Parts and Wholes • Does it Look the Same? • Be My Multiple, I’ll be Your Factor • Can You See the Pattern? • Mapping Your Way • Boxes and Sketches • Tenths and Hundredths • Area and its Boundary • Smart Charts • Ways to Multiply and Divide • How Big? How Heavy? (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Mathematics",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 173,
+    "name": "NCERT आस पास Aaspass- Hindi Medium-Class 5",
+    "image": "https://i.ibb.co/rR48bbF0/Aas-Paas-5.jpg",
+    "price": 95.00,
+    "class": 5,
+    "description": "Table of Content (विषय सूची) 1.वैफसे पहचाना चींटी ने दोस्त को? 2.कहानी सँपेरों की 3.चखने से पचने तक 4. खाएँ आम बारहों महीने! 5. बीज, बीज, बीज 6. बूँद-बूँद, दरिया-दरिया… 7. पानी वेफ प्रयोग 8. मच्छरों की दावत? 9. डायरी : कमर सीध्ी, उफपर चढ़ो! 10. बोलती इमारतें 11. सुनीता अंतरिक्ष में 12. खत्म हो जाए तो…? 13. बसेरा उँफचाई पर 14. जब ध्रती काँपी 15. उसी से ठंडा उसी से गर्म 16. कौन करेगा यह काम? 17. पफाँद ली दीवार 18. जाएँ तो जाएँ कहाँ 19. किसानों की कहानी-बीज की शुबानी 20. किसवेफ जंगल? 21. किसकी झलक? किसकी छाप? 22. पिफर चला काप़्िाफला (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm class	 Class 5"]
+  },
+  {
+    "id": 174,
+    "name": "Ncert आस पास Aaspass – EVS (Hindi Medium)-Class 4",
+    "image": "https://i.ibb.co/n8s0pM6z/AAS-PAAS-4.jpg",
+    "price": 95.00,
+    "class": 4,
+    "description": "Table of Content (विषय सूची) 1. चलो, चलें स्वूफल! 2. कान-कान में 3. नन्दू हाथी 4. अमृता की कहानी 5. अनीता की मध्ुमक्खियाँ 6. ओमना का सप़्ाफर 7. खिड़की से 8. नानी वेफ घर तक 9. बदलते परिवार 10. हु तू तू, हु तू तू 11. पुफलवारी 12. वैफसे-वैफसे बदले घर 13. पहाड़ों से समुंदर तक 14. बसवा का खेत 15. मंडी से घर तक 16. चूँ-चूँ करती आई चिड़िया 17. नंदिता मुंबई में 18. पानी कहीं श्यादा, कहीं कम 19. जड़ों का जाल 20. मिलकर खाएँ 21. खाना-खिलाना 22. दुनिया मेरे घर में 23. पोचमपल्ली 24. दूर देश की बात 25. चटपटी पहेलियाँ! 26. प़्ाफौजी वहीदा 27. कोशिश हुई कामयाब(All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Environmental Studies",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm "]
+  },
+  {
+    "id": 175,
+    "name": "Ncert रिमझिम Rimjhim V-Class 5",
+    "image": "https://i.ibb.co/W8BLWmg/Rimjhim-5.jpg",
+    "price": 140.00,
+    "class": 5,
+    "description": "Chapters • राख की रस्सी • फ़सलों का त्योहार • खिलौनेवाला • नन्हा फ़नकार • जहाँ चाह वहाँ राह • चिट्टी का सफ़र • डाकिए की कहानी, कँवरसिंह की जुबानी • वे दिन भी क्या दिन थे • एक माँ की बेबसी • एक दिन की बादशाहत • चावल की रोटियाँ • गुरु और चेला • स्वामी की दादी • बाघ आया उस रात • बिशन की दिलेरी • पानी रे पानी • छोटी-सी हमारी नदी • चुनौती हिमालय की (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 75 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 176,
+    "name": "Ncert रिमझिम Rimjhim IV-Class 4",
+    "image": "https://i.ibb.co/bMBZCxDv/Rimjhim-4.jpg",
+    "price": 95.00,
+    "class": 4,
+    "description": "Chapters • मन के भोले-भाले बादल • जैसा सवाल वैसा जवाब • किरमिच की गेंद • पापा जब बच्चे थे • दोस्त की पोशाक • नाव बनाओ नाव बनाओ • दान का हिसाब • कौन • स्वंत्रता की ओर • थप्प रोटी थप्प दाल • पढ़क्कू की सूझ • सुनीता की पहिया कुर्सी • हुदहुद • मुफ़्त ही मुफ़्त (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "Hindi",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 177,
+    "name": "NCERT दीपकम Deepakam: Prathamo Bhaag Sanskrit Textbook VI-Class 6",
+    "image": "https://i.ibb.co/d05tsH2f/Deepakam-6.jpg",
+    "price": 97.00,
+    "class": 6,
+    "description": "CERT Deepakam – Class 6 – latest edition as per NCERT/CBSE १.     प्रथम: पाठ:    वयं वर्णमालां पठामः २.     द्वितीय: पाठ:  एषः कः ? एषा का ? एतत् किम्? ३.     तृतीय: पाठ:  अहं च त्वं च ४.     चतुर्थ: पाठ:   अहं प्रातः उत्तिष्‍ ठामि ५.     पञ्चम: पाठ:   शूराः वयं धीराः वयम् ६.     षष्‍ठ: पाठ:     सः एव महान् चित्रकारः ७.     सप्‍तम: पाठ:   अतिथिदेवो भव ८.     अष्‍टम: पाठ:   बुद्धिः सर्वार्थसाधिका ९.     नवम: पाठ:     यो जानाति सः पण्डितः १०.    दशम: पाठ:    त्वम्आपणं गच्छ ११.    एकादश: पाठ:  पृथिव्यां त्रीणि रत्‍नानि १२.    द्वादश: पाठ:    आलस्यं हि मनुष्याणां शरीरस्थो महान्रिपुः १३.    त्रयोदश: पाठ:  सङ्ख्यागणना ननुसरला १४.    चतुर्दश: पाठ:   माधवस्य प्रियम्अङ् गम् १५.    पञ्चदश: पाठ:   वृक्षाः सत्पुरुषा: इव (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 32 per book mandatory binding charges.)",
+    "category": "Sanskrit",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": [" Dimensions	28 × 22 × 3 cm"]
+  },
+  {
+    "id": 178,
+    "name": "Ncert Marigold V-Eng -Class 5",
+    "image": "https://i.ibb.co/67nc00Sq/Marigold-5.jpg",
+    "price": 95.00,
+    "class": 5,
+    "description": "Chapters • Ice-cream Man; Wonderful Waste! • Teamwork; Flying Together • My Shadow; Robinson Crusoe • Crying; My Elder Brother • The Lazy Frog; Rip Van Winkle • The Talkative Barber • Topsy-turvy Land; Gulliver’s Travels • Nobody’s Friend; The Little Bully • Sing a Song of People; Around the World • Malu Bhalu; Who Will be Ningthou? (All books are 100℅ original and as per the latest NCERT syllabus. Prices includes Rs. 30 per book mandatory binding charges.)",
+    "category": "English",
+    "author": "NCERT",
+    "rating": 4.5,
+    "additionalInfo": ["Dimensions	28 × 22 × 3 cm"]
+  }
+
+   ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+        const cartSidebar = document.getElementById('cartSidebar');
+        const wishlistSidebar = document.getElementById('wishlistSidebar');
+        const checkoutModal = document.getElementById('checkoutModal');
+        const notification = document.getElementById('notification');
+
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('active');
+            setTimeout(() => notification.classList.remove('active'), 3000);
+        }
+
+        function updateCounts() {
+            document.getElementById('cartCount').textContent = cart.length;
+            document.getElementById('wishlistCount').textContent = wishlist.length;
+        }
+
+        function displayBooks(bookList = books, page = 1) {
+            const bookGrid = document.getElementById('bookGrid');
+            const pagination = document.getElementById('pagination');
+            const itemsPerPage = 20;
+            const totalPages = Math.ceil(bookList.length / itemsPerPage);
+            const start = (page - 1) * itemsPerPage;
+            const end = start + itemsPerPage;
+            const paginatedBooks = bookList.slice(start, end);
+            bookGrid.innerHTML = '';
+            paginatedBooks.forEach(book => {
+                const bookDiv = document.createElement('div');
+                bookDiv.className = 'box';
+                bookDiv.onclick = () => window.location.href = `details.html?id=${book.id}`;
+                bookDiv.innerHTML = `
+                    <div class="image">
+                        <img src="${book.image}" alt="${book.name}">
+                    </div>
+                    <div class="content">
+                        <h3>${book.name}</h3>
+                        <div class="price">₹${book.price.toFixed(2)} <span>₹${(book.price + 50).toFixed(2)}</span></div>
+                        <button class="btn" onclick="addToCart(${book.id}); event.stopPropagation();">Add to Cart</button>
+                        <button class="btn secondary" onclick="toggleWishlist(${book.id}); event.stopPropagation();">
+                            ${wishlist.includes(book.id) ? 'Remove from Wishlist' : 'Add to Wishlist'}
+                        </button>
+                    </div>
+                `;
+                bookGrid.appendChild(bookDiv);
+            });
+            pagination.innerHTML = '';
+            const prevBtn = document.createElement('button');
+            prevBtn.className = 'page-btn';
+            prevBtn.textContent = 'Previous';
+            prevBtn.disabled = page === 1;
+            prevBtn.onclick = () => displayBooks(bookList, page - 1);
+            pagination.appendChild(prevBtn);
+            for (let i = 1; i <= totalPages; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `page-btn ${i === page ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.onclick = () => displayBooks(bookList, i);
+                pagination.appendChild(pageBtn);
+            }
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'page-btn';
+            nextBtn.textContent = 'Next';
+            nextBtn.disabled = page === totalPages;
+            nextBtn.onclick = () => displayBooks(bookList, page + 1);
+            pagination.appendChild(nextBtn);
+        }
+
+        function addToCart(id) {
+            const book = books.find(b => b.id === id);
+            if (book) {
+                cart.push(book);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCounts();
+                updateCart();
+                showNotification(`${book.name} added to cart!`);
+                displayBooks(); // Refresh book display to update wishlist button state
+            }
+        }
+
+        function toggleWishlist(id) {
+            const index = wishlist.indexOf(id);
+            if (index === -1) {
+                wishlist.push(id);
+                showNotification('Added to wishlist!');
+            } else {
+                wishlist.splice(index, 1);
+                showNotification('Removed from wishlist!');
+            }
+            localStorage.setItem('wishlist', JSON.stringify(wishlist));
+            updateCounts();
+            updateWishlist();
+            displayBooks(); // Refresh book display to update wishlist button state
+        }
+
+        function updateCart() {
+            const cartItemsDiv = document.getElementById('cartItems');
+            const cartTotalDiv = document.getElementById('cartTotal');
+            cartItemsDiv.innerHTML = '';
+            let total = 0;
+            cart.forEach(item => {
+                total += item.price;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'cart-item';
+                itemDiv.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}">
+                    <p>${item.name} - ₹${item.price.toFixed(2)}</p>
+                    <button class="btn secondary" onclick="removeFromCart(${item.id})">Remove</button>
+                `;
+                cartItemsDiv.appendChild(itemDiv);
+            });
+            cartTotalDiv.innerHTML = `<h3>Total: ₹${total.toFixed(2)}</h3>`;
+            updateCounts();
+        }
+
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+            showNotification('Item removed from cart!');
+            displayBooks(); // Refresh book display to update wishlist button state
+        }
+
+        function updateWishlist() {
+            const wishlistItemsDiv = document.getElementById('wishlistItems');
+            wishlistItemsDiv.innerHTML = '';
+            const wishlistBooks = books.filter(book => wishlist.includes(book.id));
+            wishlistBooks.forEach(book => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'wishlist-item';
+                itemDiv.innerHTML = `
+                    <img src="${book.image}" alt="${book.name}">
+                    <p>${book.name} - ₹${book.price.toFixed(2)}</p>
+                    <button class="btn" onclick="addToCart(${book.id})">Add to Cart</button>
+                    <button class="btn secondary" onclick="toggleWishlist(${book.id})">Remove</button>
+                `;
+                wishlistItemsDiv.appendChild(itemDiv);
+            });
+        }
+
+        function displayCheckoutItems(items) {
+            const checkoutItemsDiv = document.getElementById('checkoutItems');
+            const checkoutTotalDiv = document.getElementById('checkoutTotal');
+            checkoutItemsDiv.innerHTML = '<h4>Order Summary</h4>';
+            let total = 0;
+            items.forEach(item => {
+                total += item.price;
+                const itemDiv = document.createElement('div');
+                itemDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem; padding: 0.5rem 0;">
+                        <img src="${item.image}" style="width: 5rem; height: 7rem; object-fit: contain;" alt="${item.name}">
+                        <p>${item.name} - ₹${item.price.toFixed(2)}</p>
+                    </div>
+                `;
+                checkoutItemsDiv.appendChild(itemDiv);
+            });
+            checkoutTotalDiv.innerHTML = `<h3>Total: ₹${total.toFixed(2)}</h3>`;
+        }
+
+        document.getElementById('search-btn').addEventListener('click', () => {
+            document.querySelector('.search-form').classList.toggle('active');
+        });
+
+        document.getElementById('searchForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const query = document.getElementById('search-box').value.toLowerCase();
+            const filteredBooks = books.filter(book => 
+                book.name.toLowerCase().includes(query) || 
+                book.description.toLowerCase().includes(query)
+            );
+            displayBooks(filteredBooks, 1);
+        });
+
+        document.getElementById('cart-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            cartSidebar.classList.add('active');
+            updateCart();
+        });
+
+        document.getElementById('wishlist-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            wishlistSidebar.classList.add('active');
+            updateWishlist();
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty.');
+                return;
+            }
+            displayCheckoutItems(cart);
+            checkoutModal.classList.add('active');
+            cartSidebar.classList.remove('active');
+        });
+
+        document.getElementById('bulk-order-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('bulkOrderModal').classList.add('active');
+        });
+
+        document.getElementById('bulk-order-mobile-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('bulkOrderModal').classList.add('active');
+        });
+
+        document.getElementById('bulk-order-footer-btn').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('bulkOrderModal').classList.add('active');
+        });
+
+        document.querySelectorAll('.close-sidebar').forEach(btn => {
+            btn.addEventListener('click', () => {
+                cartSidebar.classList.remove('active');
+                wishlistSidebar.classList.remove('active');
+            });
+        });
+
+        document.querySelectorAll('.close-modal-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.getElementById('bulkOrderModal').classList.remove('active');
+                checkoutModal.classList.remove('active');
+            });
+        });
+
+        document.getElementById('bulkOrderForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('bulkName').value.trim();
+            const email = document.getElementById('bulkEmail').value.trim();
+            const phone = document.getElementById('bulkPhone').value.trim();
+            const organization = document.getElementById('organization').value.trim() || 'N/A';
+            const booksRequested = document.getElementById('bulkBooks').value.trim();
+            const address = document.getElementById('bulkAddress').value.trim();
+            const notes = document.getElementById('bulkNotes').value.trim() || 'None';
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showNotification('Please enter a valid email address.');
+                return;
+            }
+            if (!/^\d{10}$/.test(phone)) {
+                showNotification('Please enter a valid 10-digit phone number.');
+                return;
+            }
+            const formData = {
+                access_key: '8f814c56-3e30-4f2f-9764-41f6fd39eeaa',
+                subject: 'Bulk Order Request - Book Point',
+                from_name: name,
+                email,
+                name,
+                phone,
+                organization,
+                books: booksRequested,
+                address,
+                notes
+            };
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+                if ((await response.json()).success) {
+                    showNotification('Bulk order request submitted successfully!');
+                    document.getElementById('bulkOrderForm').reset();
+                    document.getElementById('bulkOrderModal').classList.remove('active');
+                } else {
+                    showNotification('Failed to submit request. Please try again.');
+                }
+            } catch (error) {
+                showNotification('An error occurred. Please try again later.');
+            }
+        });
+
+        document.getElementById('checkoutForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('checkoutName').value.trim();
+            const email = document.getElementById('checkoutEmail').value.trim();
+            const mobile = document.getElementById('checkoutMobile').value.trim();
+            const address = document.getElementById('checkoutAddress').value.trim();
+            const pincode = document.getElementById('checkoutPincode').value.trim();
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showNotification('Please enter a valid email address.');
+                return;
+            }
+            if (!/^\d{10}$/.test(mobile)) {
+                showNotification('Please enter a valid 10-digit mobile number.');
+                return;
+            }
+            if (!/^\d{6}$/.test(pincode)) {
+                showNotification('Please enter a valid 6-digit pincode.');
+                return;
+            }
+            const orderId = `BP${Date.now()}`;
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            const orderDetails = {
+                orderId,
+                cart,
+                name,
+                email,
+                mobile,
+                address,
+                pincode,
+                paymentMethod,
+                total,
+                orderDate: new Date().toISOString(),
+                tracking: {
+                    awb: `AWB${Math.floor(Math.random() * 1000000000)}`,
+                    status: 'pending',
+                    history: [{ status: 'order placed', date: new Date().toISOString() }]
+                }
+            };
+            const formData = {
+                access_key: '8f814c56-3e30-4f2f-9764-41f6fd39eeaa',
+                subject: `Order Confirmation - ${orderId}`,
+                from_name: 'Book Point',
+                email,
+                order_id: orderId,
+                name,
+                mobile,
+                address,
+                pincode,
+                payment_method: paymentMethod,
+                total: total.toFixed(2),
+                order_date: new Date().toLocaleString(),
+                items: cart.map(item => `${item.name} - ₹${item.price.toFixed(2)}`).join(', ')
+            };
+            async function sendOrderEmail(paymentId = null) {
+                if (paymentId) formData.payment_id = paymentId;
+                try {
+                    const response = await fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(formData)
+                    });
+                    if (!(await response.json()).success) {
+                        showNotification('Failed to send order confirmation email.');
+                    }
+                } catch (error) {
+                    showNotification('An error occurred while sending the confirmation email.');
+                }
+            }
+            const orders = JSON.parse(localStorage.getItem('orders')) || [];
+            orders.push(orderDetails);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            if (paymentMethod === 'razorpay') {
+                const options = {
+                    key: 'rzp_live_0ZX85z1FASJGfs',
+                    amount: total * 100,
+                    currency: 'INR',
+                    name: 'Book Point',
+                    description: 'Book Purchase',
+                    handler: async function (response) {
+                        await sendOrderEmail(response.razorpay_payment_id);
+                        showNotification(`Order placed! Order ID: ${orderId}`);
+                        cart = [];
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        checkoutModal.classList.remove('active');
+                        document.getElementById('checkoutForm').reset();
+                        updateCart();
+                        displayBooks(); // Refresh book display after order
+                    },
+                    prefill: { name, email, contact: mobile },
+                    theme: { color: '#f97316' }
+                };
+                new Razorpay(options).open();
+            } else {
+                await sendOrderEmail();
+                showNotification(`Order placed! Order ID: ${orderId}`);
+                cart = [];
+                localStorage.setItem('cart', JSON.stringify(cart));
+                checkoutModal.classList.remove('active');
+                document.getElementById('checkoutForm').reset();
+                updateCart();
+                displayBooks(); // Refresh book display after order
+            }
+        });
+
+        const toggleButton = document.createElement('div');
+        const whatsappIcon = document.createElement('img');
+        whatsappIcon.src = 'https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg';
+        whatsappIcon.alt = 'WhatsApp';
+        whatsappIcon.style.width = '35px';
+        whatsappIcon.style.height = '35px';
+        Object.assign(toggleButton.style, {
+            position: 'fixed',
+            left: '20px',
+            bottom: '20px',
+            width: '60px',
+            height: '60px',
+            backgroundColor: '#25D366',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+            transition: 'transform 0.4s ease',
+            zIndex: '9999'
+        });
+        toggleButton.appendChild(whatsappIcon);
+        document.body.appendChild(toggleButton);
+        toggleButton.addEventListener('click', () => {
+            toggleButton.style.transform = 'scale(1.2) rotate(45deg)';
+            setTimeout(() => {
+                toggleButton.style.transform = 'scale(1)';
+                window.open('https://wa.me/+919650011210', '_blank');
+            }, 200);
+        });
+
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('keydown', e => {
+            if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && ['I', 'J'].includes(e.key)) || (e.ctrlKey && e.key === 'U')) {
+                e.preventDefault();
+            }
+        });
+
+        displayBooks();
+        updateCounts();
+        updateWishlist();
+    </script>
+</body>
+</html>

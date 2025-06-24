@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Failed - Janata Book Point</title>
+    <link rel="icon" type="image/png" href="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            border: none;
+            text-decoration: none;
+            transition: all .3s ease;
+        }
+        html {
+            font-size: 62.5%;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        body {
+            background: linear-gradient(135deg, #e0e7ff, #f4f6f8);
+            color: #1a1a1a;
+        }
+        .header {
+            position: sticky;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            padding: 2rem 10%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        .header .logo {
+            height: 8rem;
+            transition: transform 0.3s;
+        }
+        .header .logo:hover {
+            transform: scale(1.05);
+        }
+        section {
+            padding: 5rem 10%;
+            max-width: 1400px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .heading {
+            font-size: 4.2rem;
+            color: #e33;
+            padding: 2rem 0;
+            margin-bottom: 4rem;
+        }
+        .message {
+            background: #fff;
+            padding: 4rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 1rem;
+            font-weight: 700;
+            font-size: 1.9rem;
+            cursor: pointer;
+            color: #fff;
+            background: linear-gradient(135deg, #1e88e5, #1565c0);
+            padding: 1.3rem 3.5rem;
+            text-align: center;
+            margin: 1rem 0;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+        }
+        .btn i {
+            margin-right: 1rem;
+        }
+        @media (max-width: 991px) {
+            html { font-size: 55%; }
+            section { padding: 4rem; }
+            .header { padding: 2rem 4rem; }
+        }
+        @media (max-width: 450px) {
+            html { font-size: 50%; }
+            .heading { font-size: 3.5rem; }
+            .btn { font-size: 1.6rem; padding: 1rem 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="index.html"><img src="https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png" class="logo" alt="Janata Book Point Logo"></a>
+        <div></div>
+    </header>
+
+    <section>
+        <h1 class="heading">Order Failed</h1>
+        <div class="message">
+            <p>Sorry, your payment could not be processed. Please try again or contact support at <a href="mailto:support@jantabookpoint.com">support@jantabookpoint.com</a>.</p>
+        </div>
+        <a href="index.html" class="btn"><i class="fas fa-arrow-left"></i> Back to Shop</a>
+    </section>
+</body>
+</html>
