@@ -4,13 +4,17 @@ RewriteEngine On
 # Set index.html as the default page
 DirectoryIndex index.html
 
+# Force HTTPS for all requests
+RewriteCond %{HTTPS} off
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
 # Remove .html extension from URLs
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ $1.html [L,QSA]
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteCond %{REQUEST_URI} !/$
+RewriteRule ^(.*)$ $1.html [L]
 
 # Redirect requests with .html to the clean URL (e.g., /shop.html to /shop)
-RewriteCond %{THE_REQUEST} \s/([^\s]*)\.html\s [NC]
+RewriteCond %{THE_REQUEST} \s/(.+?)\.html\s [NC]
 RewriteRule ^ %1 [R=301,L]
 
 # Custom 404 error page

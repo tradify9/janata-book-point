@@ -446,10 +446,10 @@
                     <div class="card-header">Shipping Details</div>
                     <div class="card-body">
                         <form id="checkoutForm" action="https://api.web3forms.com/submit" method="POST" class="form-section">
-                            <input type="hidden" name="access_key" value="8f814c56-3e30-4f2f-9764-41f6fd39eeaa"> <!-- Replace with your Web3Forms access key -->
+                            <input type="hidden" name="access_key" value="8f814c56-3e30-4f2f-9764-41f6fd39eeaa">
                             <input type="hidden" name="subject" value="New Order from Janata Books Point">
                             <input type="hidden" name="from_name" value="Janata Books Point">
-                            <input type="hidden" name="email" value="janatabookspoint@gmail.com"> <!-- Replace with your store email -->
+                            <input type="hidden" name="email" value="janatabookspoint@gmail.com">
                             <input type="hidden" name="order_id" id="orderIdInput">
                             <input type="hidden" name="payment_id" id="paymentIdInput">
                             <input type="hidden" name="cart_details" id="cartDetailsInput">
@@ -459,9 +459,10 @@
                             <input type="hidden" name="coupon_discount" id="couponDiscountInput">
                             <input type="hidden" name="total_amount" id="totalAmountInput">
                             <input type="hidden" name="delivery_days" id="deliveryDaysInput">
+                            <input type="hidden" name="shiprocket_order_id" id="shiprocketOrderIdInput">
                             <input type="hidden" name="redirect_success" value="success.html">
                             <input type="hidden" name="redirect_error" value="failure.html">
-                            <input type="hidden" name="customer_confirmation" value="true"> <!-- Custom field to trigger customer email -->
+                            <input type="hidden" name="customer_confirmation" value="true">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
                                     <label for="buyName" class="form-label">Full Name</label>
@@ -586,7 +587,7 @@
         const coupons = {
             'JBP50': 50,
             'JBP100': 100,
-            'JBP150': 150,
+            'JBP169': 169,
             'JBP200': 200
         };
 
@@ -644,7 +645,15 @@
         }
 
         function validateCartItems() {
-            const validCart = window.cart.filter(item => item.id && item.name && item.image && Number.isFinite(item.price) && Number.isFinite(item.quantity));
+            const validCart = window.cart.filter(item => 
+                item.id && 
+                item.name && 
+                item.image && 
+                Number.isFinite(item.price) && 
+                item.price > 0 && 
+                Number.isFinite(item.quantity) && 
+                item.quantity > 0
+            );
             window.cart = validCart;
             localStorage.setItem('cart', JSON.stringify(window.cart));
             return validCart.length > 0;
@@ -883,28 +892,43 @@
 
         const proceedToPayBtn = document.getElementById('proceedToPay');
         if (proceedToPayBtn) {
-            proceedToPayBtn.addEventListener('click', (e) => {
+            proceedToPayBtn.addEventListener('click', async (e) => {
                 e.preventDefault();
                 const pincodeInput = document.getElementById('pincodeInput');
                 const stateSelect = document.getElementById('stateSelect');
                 const pincodeResult = document.getElementById('pincodeResult');
-                if (!pincodeInput || !stateSelect || !pincodeResult) return;
+                if (!pincodeInput || !stateSelect || !pincodeResult) {
+                    console.error('Required elements missing', { pincodeInput, stateSelect, pincodeResult });
+                    alert('Required elements are missing. Please refresh and try again.');
+                    return;
+                }
 
                 const pincode = pincodeInput.value;
                 const state = stateSelect.value;
 
                 if (!validateCartItems()) {
+                    console.error('Cart is empty or invalid', { cart: window.cart });
                     alert('Your cart is empty or invalid. Please add items.');
                     return;
                 }
 
+                // Validate cart prices and quantities
+                const invalidItem = window.cart.find(item => !Number.isFinite(item.price) || item.price <= 0 || !Number.isFinite(item.quantity) || item.quantity <= 0);
+                if (invalidItem) {
+                    console.error('Invalid cart item detected', { invalidItem });
+                    alert('One or more items in your cart have invalid prices or quantities. Please refresh the cart and try again.');
+                    return;
+                }
+
                 if (!validateForm()) {
+                    console.error('Form validation failed');
                     alert('Please fill all required fields correctly.');
                     return;
                 }
 
                 const { cost } = calculateShipping(state, pincode);
                 if (cost === 0 || !pincode || !/^\d{6}$/.test(pincode)) {
+                    console.error('Invalid shipping details', { state, pincode, cost });
                     alert('Delivery not available for this area. Please select a serviceable state and valid pincode.');
                     pincodeResult.textContent = 'Delivery not available for this area.';
                     pincodeResult.classList.add('error');
@@ -923,8 +947,13 @@
 
                 const subtotal = window.cart.reduce((sum, item) => sum + (item.price || 0) * item.quantity, 0);
                 const totalAmount = Math.max(0, subtotal + window.shippingCost - window.discount - window.shippingDiscount);
-                const orderId = generateOrderId();
+                if (totalAmount === 0) {
+                    console.warn('Total amount is zero', { subtotal, shippingCost: window.shippingCost, discount: window.discount, shippingDiscount: window.shippingDiscount });
+                    alert('Order total is zero. Please verify your cart items or contact support@jantabookspoint.com.');
+                    return;
+                }
 
+                const orderId = generateOrderId();
                 const cartDetails = window.cart.map(item => `
                     Item: ${item.name}
                     Quantity: ${item.quantity}
@@ -945,6 +974,9 @@
                     paymentId: null
                 };
 
+                // Log order data for debugging
+                console.log('Sending order data to server', orderData);
+
                 // Populate hidden form fields
                 document.getElementById('orderIdInput').value = orderId;
                 document.getElementById('cartDetailsInput').value = cartDetails;
@@ -956,36 +988,90 @@
                 document.getElementById('deliveryDaysInput').value = window.deliveryDays || 'To be confirmed';
 
                 const options = {
-                    key: 'rzp_live_0ZX85z1FASJGfs', // Replace with your Razorpay test key
+                    key: 'rzp_live_0ZX85z1FASJGfs', // Test key
                     amount: totalAmount * 100,
                     currency: 'INR',
                     name: 'Janata Books Point',
                     description: 'Checkout Payment',
                     image: 'https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png',
-                    handler: function (response) {
-                        // Set payment ID
-                        orderData.paymentId = response.razorpay_payment_id;
-                        document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
+                    handler: async function (response) {
+                        try {
+                            // Set payment ID
+                            orderData.paymentId = response.razorpay_payment_id;
+                            document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
 
-                        // Store order data for success page
-                        localStorage.setItem('orderData', JSON.stringify(orderData));
+                            // Log payment success
+                            console.log('Razorpay payment successful', { paymentId: response.razorpay_payment_id });
 
-                        // Submit form to Web3Forms
-                        const form = document.getElementById('checkoutForm');
-                        form.submit();
+                            // Send order to Node.js server
+                            const serverResponse = await fetch('https://janata-book-backend.onrender.com/api/create-order', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(orderData)
+                            });
 
-                        // Clear state
-                        document.getElementById('couponInput').value = '';
-                        couponResult.textContent = '';
-                        window.cart = [];
-                        window.discount = 0;
-                        window.shippingDiscount = 0;
-                        window.appliedCoupon = null;
-                        localStorage.setItem('cart', JSON.stringify(window.cart));
-                        window.updateCartDisplay();
+                            const result = await serverResponse.json();
+                            if (!serverResponse.ok) {
+                                throw new Error(`Server responded with status ${serverResponse.status}: ${result.error || 'Unknown error'}`);
+                            }
+
+                            if (result.success) {
+                                document.getElementById('shiprocketOrderIdInput').value = result.shiprocketOrderId || 'Not generated';
+                                orderData.shiprocketOrderId = result.shiprocketOrderId;
+
+                                // Store order data for success page
+                                localStorage.setItem('orderData', JSON.stringify(orderData));
+
+                                // Log Shiprocket success
+                                console.log('Shiprocket order created', { shiprocketOrderId: result.shiprocketOrderId });
+
+                                // Submit form to Web3Forms
+                                const form = document.getElementById('checkoutForm');
+                                try {
+                                    const formResponse = await fetch(form.action, {
+                                        method: form.method,
+                                        body: new FormData(form)
+                                    });
+                                    if (!formResponse.ok) {
+                                        throw new Error(`Web3Forms submission failed: ${formResponse.statusText}`);
+                                    }
+                                    // Log Web3Forms success
+                                    console.log('Web3Forms submission successful');
+                                    // Clear state
+                                    document.getElementById('couponInput').value = '';
+                                    couponResult.textContent = '';
+                                    window.cart = [];
+                                    window.discount = 0;
+                                    window.shippingDiscount = 0;
+                                    window.appliedCoupon = null;
+                                    localStorage.setItem('cart', JSON.stringify(window.cart));
+                                    window.updateCartDisplay();
+                                    window.location.href = 'success.html';
+                                } catch (formError) {
+                                    console.error('Web3Forms submission error:', formError);
+                                    alert('Order placed, but confirmation email failed. Please contact support@jantabookspoint.com.');
+                                    window.location.href = 'success.html';
+                                }
+                            } else {
+                                console.error('Shiprocket order creation failed:', result.error, result.details);
+                                alert(`Order placement failed: ${result.error}. Please contact support@jantabookspoint.com.`);
+                                window.location.href = 'failure.html';
+                            }
+                        } catch (error) {
+                            console.error('Error during order processing:', error);
+                            alert('An error occurred while processing your order. Please try again or contact support@jantabookspoint.com.');
+                            window.location.href = 'failure.html';
+                        }
                     },
                     onerror: function (error) {
-                        console.error('Payment failed:', error);
+                        console.error('Razorpay payment failed:', error);
+                        let errorMessage = 'Payment failed. Please try again or contact support@jantabookspoint.com.';
+                        if (error.error && error.error.description) {
+                            errorMessage = `Payment failed: ${error.error.description}. Please try again or contact support@jantabookspoint.com.`;
+                        }
+                        alert(errorMessage);
                         window.location.href = 'failure.html';
                     },
                     prefill: {
@@ -996,8 +1082,31 @@
                     theme: { color: '#ff6b6b' }
                 };
 
-                const rzp = new Razorpay(options);
-                rzp.open();
+                try {
+                    // Check if Razorpay script is loaded
+                    if (!window.Razorpay) {
+                        console.error('Razorpay script not loaded');
+                        alert('Payment gateway failed to load. Please disable ad blockers and try again or contact support@jantabookspoint.com.');
+                        window.location.href = 'failure.html';
+                        return;
+                    }
+
+                    const rzp = new Razorpay(options);
+                    rzp.on('payment.error', function (error) {
+                        console.error('Razorpay payment error:', error);
+                        let errorMessage = 'Payment initialization failed. Please try again or contact support@jantabookspoint.com.';
+                        if (error.error && error.error.description) {
+                            errorMessage = `Payment initialization failed: ${error.error.description}. Please try again or contact support@jantabookspoint.com.`;
+                        }
+                        alert(errorMessage);
+                        window.location.href = 'failure.html';
+                    });
+                    rzp.open();
+                } catch (razorpayError) {
+                    console.error('Razorpay initialization failed:', razorpayError);
+                    alert('Failed to initialize payment gateway. Please disable ad blockers, check your internet connection, or contact support@jantabookspoint.com.');
+                    window.location.href = 'failure.html';
+                }
             });
         }
 

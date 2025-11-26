@@ -332,10 +332,10 @@
         <div class="form-container">
             <h3>Billing Details</h3>
             <form id="checkoutForm" action="https://api.web3forms.com/submit" method="POST">
-                <input type="hidden" name="access_key" value="8f814c56-3e30-4f2f-9764-41f6fd39eeaa"> <!-- Replace with your Web3Forms access key -->
+                <input type="hidden" name="access_key" value="8f814c56-3e30-4f2f-9764-41f6fd39eeaa">
                 <input type="hidden" name="subject" value="Order Confirmation - Janata Book Point">
                 <input type="hidden" name="from_name" value="Janata Book Point">
-                <input type="hidden" name="email" value="janatabookspoint@gmail.com"> <!-- Replace with your store email -->
+                <input type="hidden" name="email" value="janatabookspoint@gmail.com">
                 <input type="hidden" name="order_id" id="orderIdInput">
                 <input type="hidden" name="payment_id" id="paymentIdInput">
                 <input type="hidden" name="book_name" id="bookNameInput">
@@ -343,13 +343,15 @@
                 <input type="hidden" name="quantity" id="quantityInput">
                 <input type="hidden" name="subtotal" id="subtotalInput">
                 <input type="hidden" name="shipping_cost" id="shippingCostInput">
-                <input type="hidden" name="shipping_discount" id="shippingDiscountInput">
                 <input type="hidden" name="shipping_zone" id="shippingZoneInput">
                 <input type="hidden" name="delivery_days" id="deliveryDaysInput">
                 <input type="hidden" name="coupon" id="couponInputHidden">
                 <input type="hidden" name="discount" id="discountInput">
                 <input type="hidden" name="total" id="totalInput">
                 <input type="hidden" name="order_date" id="orderDateInput">
+                <input type="hidden" name="shiprocket_order_id" id="shiprocketOrderIdInput">
+                <input type="hidden" name="redirect_success" value="success.html">
+                <input type="hidden" name="redirect_error" value="failure.html">
                 <input type="hidden" name="customer_confirmation" value="true">
                 <span>Full Name</span>
                 <input type="text" class="box" placeholder="Enter your name" id="checkoutName" name="name" required aria-label="Name">
@@ -409,7 +411,7 @@
                 </div>
                 <div class="coupon-result" id="couponResult"></div>
                 <div class="cost" id="shippingCost"></div>
-                <div class="cost" id="discountCost">Discount: ₹0.00</div>
+                <div class="cost" id="couponDiscountCost">Coupon Discount: ₹0.00</div>
                 <div class="total" id="totalCost"></div>
                 <input type="button" value="Proceed to Payment" class="btn" id="proceedToPay" aria-label="Proceed">
             </form>
@@ -430,12 +432,11 @@
         let shippingZone = '';
         let discount = 0;
         let appliedCoupon = null;
-        let shippingDiscount = 0;
 
         const coupons = {
             'JBP50': 50,
             'JBP100': 100,
-            'JBP150': 150,
+            'JBP169': 169,
             'JBP200': 200
         };
 
@@ -493,7 +494,7 @@
             applyCouponBtn: document.getElementById('applyCouponBtn'),
             couponResult: document.getElementById('couponResult'),
             shippingCost: document.getElementById('shippingCost'),
-            discountCost: document.getElementById('discountCost'),
+            couponDiscountCost: document.getElementById('couponDiscountCost'),
             totalCost: document.getElementById('totalCost'),
             successMessage: document.getElementById('successMessage'),
             proceedToPay: document.getElementById('proceedToPay')
@@ -523,11 +524,10 @@
 
             let baseCost = shippingRates[state];
             let finalCost = 0;
-            shippingDiscount = 0;
+
             if (quantity >= 1) {
                 finalCost = baseCost;
                 if (quantity > 1) {
-                    shippingDiscount = (quantity - 1) * (baseCost * 0.5);
                     finalCost += (quantity - 1) * (baseCost * 0.5);
                 }
             }
@@ -556,7 +556,6 @@
                 elements.pincodeResult.classList.add('error');
                 elements.pincodeResult.classList.remove('success');
                 shippingCost = 0;
-                shippingDiscount = 0;
                 deliveryDays = '';
                 shippingZone = '';
             } else if (cost === 0 && (state === 'Ladakh' || state === 'Lakshadweep')) {
@@ -564,7 +563,6 @@
                 elements.pincodeResult.classList.add('error');
                 elements.pincodeResult.classList.remove('success');
                 shippingCost = 0;
-                shippingDiscount = 0;
                 deliveryDays = '';
                 shippingZone = '';
             } else if (pincode && !/^\d{6}$/.test(pincode)) {
@@ -572,17 +570,16 @@
                 elements.pincodeResult.classList.add('error');
                 elements.pincodeResult.classList.remove('success');
                 shippingCost = 0;
-                shippingDiscount = 0;
                 deliveryDays = '';
                 shippingZone = '';
             } else if (cost > 0) {
-                const discountText = quantity > 1 ? ` (50% shipping discount on ${quantity - 1} additional item${quantity > 2 ? 's' : ''})` : '';
+                const additionalText = quantity > 1 ? ` (50% shipping cost for ${quantity - 1} additional item${quantity > 2 ? 's' : ''})` : '';
                 if (pincode && /^\d{6}$/.test(pincode)) {
-                    elements.pincodeResult.textContent = `Delivery available to ${state}! Shipping: ₹${cost.toFixed(2)}${discountText}, Expected Delivery: ${days}, Zone: ${zone}`;
+                    elements.pincodeResult.textContent = `Delivery available to ${state}! Shipping: ₹${cost.toFixed(2)}${additionalText}, Expected Delivery: ${days}, Zone: ${zone}`;
                     deliveryDays = days;
                     shippingZone = zone;
                 } else {
-                    elements.pincodeResult.textContent = `Shipping to ${state}: ₹${cost.toFixed(2)}${discountText}`;
+                    elements.pincodeResult.textContent = `Shipping to ${state}: ₹${cost.toFixed(2)}${additionalText}`;
                     deliveryDays = '';
                     shippingZone = '';
                 }
@@ -594,7 +591,6 @@
                 elements.pincodeResult.classList.add('error');
                 elements.pincodeResult.classList.remove('success');
                 shippingCost = 0;
-                shippingDiscount = 0;
                 deliveryDays = '';
                 shippingZone = '';
             }
@@ -616,7 +612,7 @@
             if (coupons[code]) {
                 discount = coupons[code];
                 appliedCoupon = code;
-                elements.couponResult.textContent = `₹${discount} discount applied!`;
+                elements.couponResult.textContent = `₹${discount} coupon discount applied!`;
                 elements.couponResult.classList.add('success');
                 elements.couponResult.classList.remove('error');
             } else {
@@ -632,10 +628,10 @@
         function updateTotals() {
             const subtotal = selectedBook.price * quantity;
             elements.subtotal.textContent = `₹${subtotal.toFixed(2)}`;
-            elements.discountAmount.textContent = `₹${(discount + shippingDiscount).toFixed(2)}`;
+            elements.discountAmount.textContent = `₹${discount.toFixed(2)}`;
             elements.shippingCost.textContent = `Shipping Charges: ₹${shippingCost.toFixed(2)}`;
-            elements.discountCost.textContent = `Discount: ₹${(discount + shippingDiscount).toFixed(2)}`;
-            elements.totalCost.textContent = `Total: ₹${Math.max(0, subtotal + shippingCost - discount - shippingDiscount).toFixed(2)}`;
+            elements.couponDiscountCost.textContent = `Coupon Discount: ₹${discount.toFixed(2)}`;
+            elements.totalCost.textContent = `Total: ₹${Math.max(0, subtotal + shippingCost - discount).toFixed(2)}`;
         }
 
         function generateOrderId() {
@@ -679,7 +675,7 @@
             return isValid;
         }
 
-        function handleCheckoutSubmit(e) {
+        async function handleCheckoutSubmit(e) {
             e.preventDefault();
             const formData = {
                 name: document.getElementById('checkoutName').value,
@@ -691,16 +687,19 @@
             };
 
             if (!selectedBook.id) {
+                console.error('No product selected', { selectedBook });
                 alert('No product selected. Please select a product.');
                 return;
             }
 
             if (!validateForm()) {
+                console.error('Form validation failed');
                 alert('Please fill all required fields correctly.');
                 return;
             }
 
             if (!/^\d{6}$/.test(formData.pincode)) {
+                console.error('Invalid pincode', { pincode: formData.pincode });
                 alert('Invalid pincode. Please enter a valid 6-digit pin code.');
                 elements.pincodeResult.textContent = 'Invalid pincode. Please enter a valid 6-digit pincode.';
                 elements.pincodeResult.classList.add('error');
@@ -709,6 +708,7 @@
             }
 
             if (!formData.state) {
+                console.error('No state selected', { state: formData.state });
                 alert('Please select a state or union territory.');
                 elements.pincodeResult.textContent = 'Please select a state or union territory.';
                 elements.pincodeResult.classList.add('error');
@@ -718,6 +718,7 @@
 
             const { cost } = calculateShipping(formData.state, formData.pincode);
             if (cost === 0) {
+                console.error('Pincode not serviceable', { state: formData.state, pincode: formData.pincode });
                 alert('Pincode not serviceable. Please select a serviceable state and pincode.');
                 elements.pincodeResult.textContent = 'Pincode not serviceable.';
                 elements.pincodeResult.classList.add('error');
@@ -726,27 +727,31 @@
             }
 
             const subtotal = selectedBook.price * quantity;
-            const totalAmount = Math.max(0, subtotal + shippingCost - discount - shippingDiscount);
+            const totalAmount = Math.max(0, subtotal + shippingCost - discount);
+            if (totalAmount === 0) {
+                console.warn('Total amount is zero', { subtotal, shippingCost, discount });
+                alert('Order total is zero. Please verify your selection or contact support@jantabookspoint.com.');
+                return;
+            }
+
             const orderId = generateOrderId();
             const orderDate = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
 
             const orderData = {
                 orderId,
-                bookName: selectedBook.name,
-                bookPrice: selectedBook.price,
-                quantity,
-                subtotal,
-                shippingCost,
-                shippingDiscount,
-                shippingZone: shippingZone || 'None',
-                deliveryDays: deliveryDays || 'None',
-                coupon: appliedCoupon || 'None',
-                discount,
-                total: totalAmount,
+                cart: [{ id: selectedBook.id, name: selectedBook.name, price: selectedBook.price, quantity, image: selectedBook.image }],
                 formData,
+                totalAmount,
+                shippingCost,
+                shippingDiscount: quantity > 1 ? (quantity - 1) * (shippingRates[formData.state] * 0.5) : 0,
+                coupon: appliedCoupon || 'None',
+                couponDiscount: discount,
+                deliveryDays: deliveryDays || 'None',
                 paymentId: null,
                 orderDate
             };
+
+            console.log('Sending order data to server', orderData);
 
             // Populate hidden form fields
             document.getElementById('orderIdInput').value = orderId;
@@ -755,7 +760,6 @@
             document.getElementById('quantityInput').value = quantity;
             document.getElementById('subtotalInput').value = `₹${subtotal.toFixed(2)}`;
             document.getElementById('shippingCostInput').value = `₹${shippingCost.toFixed(2)}`;
-            document.getElementById('shippingDiscountInput').value = `₹${shippingDiscount.toFixed(2)}`;
             document.getElementById('shippingZoneInput').value = shippingZone || 'None';
             document.getElementById('deliveryDaysInput').value = deliveryDays || 'None';
             document.getElementById('couponInputHidden').value = appliedCoupon || 'None';
@@ -764,39 +768,85 @@
             document.getElementById('orderDateInput').value = orderDate;
 
             const options = {
-                key: 'rzp_test_XXXXXXXXXXXX', // Replace with your Razorpay test key
+                key: 'rzp_live_0ZX85z1FASJGfs', // Test key
                 amount: totalAmount * 100,
                 currency: 'INR',
                 name: 'Janata Book Point',
                 description: `Purchase of ${selectedBook.name} (${quantity})`,
                 image: 'https://i.ibb.co/Hp1GRfRz/Untitled-1-HUY.png',
-                handler: function(response) {
-                    // Set payment ID
-                    orderData.paymentId = response.razorpay_payment_id;
-                    document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
+                handler: async function(response) {
+                    try {
+                        orderData.paymentId = response.razorpay_payment_id;
+                        document.getElementById('paymentIdInput').value = response.razorpay_payment_id;
 
-                    // Store order data for success message
-                    localStorage.setItem('orderData', JSON.stringify(orderData));
+                        console.log('Razorpay payment successful', { paymentId: response.razorpay_payment_id });
 
-                    // Submit form to Web3Forms
-                    elements.checkoutForm.submit();
+                        // Send order to Node.js server
+                        const serverResponse = await fetch('https://janata-book-backend.onrender.com/api/create-order', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(orderData)
+                        });
 
-                    // Show success message
-                    elements.successMessage.classList.add('active');
+                        const result = await serverResponse.json();
+                        if (!serverResponse.ok) {
+                            throw new Error(`Server responded with status ${serverResponse.status}: ${result.error || 'Unknown error'}`);
+                        }
 
-                    // Clear state
-                    elements.checkoutForm.reset();
-                    elements.couponInput.value = '';
-                    elements.couponResult.textContent = '';
-                    discount = 0;
-                    shippingDiscount = 0;
-                    appliedCoupon = null;
-                    localStorage.removeItem('selectedBook');
-                    localStorage.removeItem('quantity');
+                        if (result.success) {
+                            document.getElementById('shiprocketOrderIdInput').value = result.shiprocketOrderId || 'Not generated';
+                            orderData.shiprocketOrderId = result.shiprocketOrderId;
+
+                            console.log('Shiprocket order created', { shiprocketOrderId: result.shiprocketOrderId });
+
+                            // Store order data for success page
+                            localStorage.setItem('orderData', JSON.stringify(orderData));
+
+                            // Submit form to Web3Forms
+                            const form = document.getElementById('checkoutForm');
+                            try {
+                                const formResponse = await fetch(form.action, {
+                                    method: form.method,
+                                    body: new FormData(form)
+                                });
+                                if (!formResponse.ok) {
+                                    throw new Error(`Web3Forms submission failed: ${formResponse.statusText}`);
+                                }
+                                console.log('Web3Forms submission successful');
+                                elements.successMessage.classList.add('active');
+                                elements.checkoutForm.reset();
+                                elements.couponInput.value = '';
+                                elements.couponResult.textContent = '';
+                                discount = 0;
+                                appliedCoupon = null;
+                                localStorage.removeItem('selectedBook');
+                                localStorage.removeItem('quantity');
+                            } catch (formError) {
+                                console.error('Web3Forms submission error:', formError);
+                                alert('Order placed, but confirmation email failed. Please contact support@jantabookspoint.com.');
+                                elements.successMessage.classList.add('active');
+                            }
+                        } else {
+                            console.error('Shiprocket order creation failed:', result.error, result.details);
+                            alert(`Order placement failed: ${result.error}. Please contact support@jantabookspoint.com.`);
+                            window.location.href = 'failure.html';
+                        }
+                    } catch (error) {
+                        console.error('Error during order processing:', error);
+                        alert('An error occurred while processing your order. Please try again or contact support@jantabookspoint.com.');
+                        window.location.href = 'failure.html';
+                    }
                 },
                 onerror: function(error) {
-                    console.error('Payment failed:', error);
-                    window.location.href = 'failuree.html';
+                    console.error('Razorpay payment failed:', error);
+                    let errorMessage = 'Payment failed. Please try again or contact support@jantabookspoint.com.';
+                    if (error.error && error.error.description) {
+                        errorMessage = `Payment failed: ${error.error.description}. Please try again or contact support@jantabookspoint.com.`;
+                    }
+                    alert(errorMessage);
+                    window.location.href = 'failure.html';
                 },
                 prefill: {
                     name: formData.name,
@@ -805,11 +855,30 @@
                 },
                 theme: { color: '#1e88e5' }
             };
+
             try {
+                if (!window.Razorpay) {
+                    console.error('Razorpay script not loaded');
+                    alert('Payment gateway failed to load. Please disable ad blockers and try again or contact support@jantabookspoint.com.');
+                    window.location.href = 'failure.html';
+                    return;
+                }
+
                 const rzp = new Razorpay(options);
+                rzp.on('payment.error', function(error) {
+                    console.error('Razorpay payment error:', error);
+                    let errorMessage = 'Payment initialization failed. Please try again or contact support@jantabookspoint.com.';
+                    if (error.error && error.error.description) {
+                        errorMessage = `Payment initialization failed: ${error.error.description}. Please try again or contact support@jantabookspoint.com.`;
+                    }
+                    alert(errorMessage);
+                    window.location.href = 'failure.html';
+                });
                 rzp.open();
-            } catch (error) {
-                alert('Error initiating payment: ' + error.message);
+            } catch (razorpayError) {
+                console.error('Razorpay initialization failed:', razorpayError);
+                alert('Failed to initialize payment gateway. Please disable ad blockers, check your internet connection, or contact support@jantabookspoint.com.');
+                window.location.href = 'failure.html';
             }
         }
 
